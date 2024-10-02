@@ -1,4 +1,4 @@
-package com.stasienko.medicament_outlet;
+package com.stasienko;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
