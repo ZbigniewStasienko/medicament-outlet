@@ -21,7 +21,7 @@ services:
     environment:
       - POSTGRES_PASSWORD=password
       - POSTGRES_USER=user
-      - POSTGRES_DB=medicine-outlet
+      - POSTGRES_DB=medicament-outlet
     logging:
       driver: "json-file"
       options:

@@ -11,3 +11,6 @@ clean:
 	docker ps -a | grep app && docker stop app && docker rm app || true
 	docker-compose down && \
 	./mvnw clean
+
+migrate:
+	./mvnw spring-boot:run -Dconsole=true -Dspring-boot.run.profiles=console-application
