@@ -3,33 +3,50 @@ package com.stasienko.controller;
 import com.stasienko.model.Company;
 import com.stasienko.service.CompanyService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.UUID;
-@RestController
+
+@Controller
 @RequestMapping("/companies")
 public class CompanyController {
+
     @Autowired
     private CompanyService companyService;
     @GetMapping
-    public List<Company> getAllCompanies() {
-        return companyService.getAllCompanies();
+    public String getAllCompanies(Model model) {
+        List<Company> companies = companyService.getAllCompanies();
+        model.addAttribute("companies", companies);
+        return "companies/list";
     }
-    @GetMapping("/{id}")
-    public Company getCompanyById(@PathVariable("id") UUID id) {
-        return companyService.getCompanyById(id);
+    @GetMapping("/new")
+    public String showAddCompanyForm(Model model) {
+        model.addAttribute("company", new Company());
+        return "companies/add";
     }
-    @PostMapping("")
-    public Company addCompany(@RequestBody Company company) {
-        return companyService.addCompany(company);
+    @PostMapping("/new")
+    public String addCompany(@ModelAttribute("company") Company company) {
+        companyService.addCompany(company);
+        return "redirect:/companies";
     }
-    @PutMapping("/{id}")
-    public Company updateCompany(@PathVariable("id") UUID id, @RequestBody Company updatedCompany) {
-        return companyService.updateCompany(id, updatedCompany);
+    @GetMapping("/edit/{id}")
+    public String showEditCompanyForm(@PathVariable("id") UUID id, Model model) {
+        Company company = companyService.getCompanyById(id);
+        model.addAttribute("company", company);
+        return "companies/edit";
     }
-    @DeleteMapping("/{id}")
-    public void deleteCompany(@PathVariable("id") UUID id) {
+
+    @PostMapping("/edit/{id}")
+    public String updateCompany(@PathVariable("id") UUID id, @ModelAttribute("company") Company company) {
+        companyService.updateCompany(id, company);
+        return "redirect:/companies";
+    }
+    @GetMapping("/delete/{id}")
+    public String deleteCompany(@PathVariable("id") UUID id) {
         companyService.deleteCompany(id);
+        return "redirect:/companies";
     }
 }
