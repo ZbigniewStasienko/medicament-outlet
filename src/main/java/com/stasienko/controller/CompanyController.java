@@ -16,22 +16,26 @@ public class CompanyController {
 
     @Autowired
     private CompanyService companyService;
+
     @GetMapping
     public String getAllCompanies(Model model) {
         List<Company> companies = companyService.getAllCompanies();
         model.addAttribute("companies", companies);
         return "companies/list";
     }
+
     @GetMapping("/new")
     public String showAddCompanyForm(Model model) {
         model.addAttribute("company", new Company());
         return "companies/add";
     }
+
     @PostMapping("/new")
     public String addCompany(@ModelAttribute("company") Company company) {
         companyService.addCompany(company);
         return "redirect:/companies";
     }
+
     @GetMapping("/edit/{id}")
     public String showEditCompanyForm(@PathVariable("id") UUID id, Model model) {
         Company company = companyService.getCompanyById(id);
@@ -44,6 +48,7 @@ public class CompanyController {
         companyService.updateCompany(id, company);
         return "redirect:/companies";
     }
+
     @GetMapping("/delete/{id}")
     public String deleteCompany(@PathVariable("id") UUID id) {
         companyService.deleteCompany(id);
