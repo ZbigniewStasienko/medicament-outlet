@@ -5,8 +5,8 @@ import org.hibernate.annotations.GenericGenerator;
 import java.util.UUID;
 
 @Entity
-@Table(name="reserved_products")
-public class ReservedProducts implements java.io.Serializable {
+@Table(name="reserved_product")
+public class ReservedProduct implements java.io.Serializable {
     @Id
     @GeneratedValue(generator = "UUID")
     @GenericGenerator(name = "UUID")
@@ -24,7 +24,7 @@ public class ReservedProducts implements java.io.Serializable {
     @Column(name="amount")
     private Integer amount;
 
-    public ReservedProducts() {}
+    public ReservedProduct() {}
 
     public UUID getId() {
         return id;

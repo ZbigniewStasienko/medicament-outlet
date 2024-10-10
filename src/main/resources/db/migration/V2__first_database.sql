@@ -1,11 +1,11 @@
-CREATE TABLE Pictures (
+CREATE TABLE Picture (
     id UUID PRIMARY KEY,
     picture TEXT NOT NULL
 );
 
 CREATE TABLE Pharmacy (
     id UUID PRIMARY KEY,
-    picture_id UUID REFERENCES Pictures(id),
+    picture_id UUID REFERENCES Picture(id),
     address TEXT NOT NULL,
     phone_number TEXT,
     name TEXT NOT NULL,
@@ -16,7 +16,7 @@ CREATE TABLE Pharmacy (
 CREATE TABLE Medicine (
     id UUID PRIMARY KEY,
     pharmacy_id UUID REFERENCES Pharmacy(id),
-    picture_id UUID REFERENCES Pictures(id),
+    picture_id UUID REFERENCES Picture(id),
     name TEXT NOT NULL,
     description TEXT,
     size INTEGER
@@ -47,7 +47,7 @@ CREATE TABLE Reservation (
     status INTEGER
 );
 
-CREATE TABLE ReservedProducts (
+CREATE TABLE ReservedProduct (
     id UUID PRIMARY KEY,
     product_id UUID REFERENCES Product(id),
     reservation_id UUID REFERENCES Reservation(id),

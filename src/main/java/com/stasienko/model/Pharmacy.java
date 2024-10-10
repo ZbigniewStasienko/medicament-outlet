@@ -15,7 +15,7 @@ public class Pharmacy implements java.io.Serializable {
 
     @ManyToOne
     @JoinColumn(name = "picture_id")
-    private Pictures picture;
+    private Picture picture;
 
     @Column(name="address", nullable=false, columnDefinition="TEXT")
     private String address;
@@ -42,11 +42,11 @@ public class Pharmacy implements java.io.Serializable {
         this.id = id;
     }
 
-    public Pictures getPicture() {
+    public Picture getPicture() {
         return picture;
     }
 
-    public void setPicture(Pictures picture) {
+    public void setPicture(Picture picture) {
         this.picture = picture;
     }
 

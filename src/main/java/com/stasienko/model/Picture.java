@@ -6,7 +6,7 @@ import java.util.UUID;
 
 @Entity
 @Table(name="pictures")
-public class Pictures implements java.io.Serializable {
+public class Picture implements java.io.Serializable {
     @Id
     @GeneratedValue(generator = "UUID")
     @GenericGenerator(name = "UUID")
@@ -16,7 +16,7 @@ public class Pictures implements java.io.Serializable {
     @Column(name="picture", nullable=false, columnDefinition="TEXT")
     private String picture;
 
-    public Pictures() {}
+    public Picture() {}
 
     public UUID getId() {
         return id;
