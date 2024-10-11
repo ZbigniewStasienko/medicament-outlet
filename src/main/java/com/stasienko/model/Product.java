@@ -21,9 +21,6 @@ public class Product implements java.io.Serializable {
     @Column(name="expiration_date")
     private Date expirationDate;
 
-    @Column(name="amount")
-    private Integer amount;
-
     @Column(name="is_reserved")
     private Boolean isReserved;
 
@@ -57,14 +54,6 @@ public class Product implements java.io.Serializable {
 
     public void setExpirationDate(Date expirationDate) {
         this.expirationDate = expirationDate;
-    }
-
-    public Integer getAmount() {
-        return amount;
-    }
-
-    public void setAmount(Integer amount) {
-        this.amount = amount;
     }
 
     public Boolean getReserved() {

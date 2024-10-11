@@ -26,7 +26,6 @@ CREATE TABLE Product (
     id UUID PRIMARY KEY,
     medicine_id UUID REFERENCES Medicine(id),
     expiration_date DATE,
-    amount INTEGER,
     is_reserved BOOLEAN,
     base_price DOUBLE PRECISION,
     price DOUBLE PRECISION
