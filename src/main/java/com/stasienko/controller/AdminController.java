@@ -71,9 +71,6 @@ public class AdminController {
         return "redirect:/admin";
     }
 
-
-
-
     @GetMapping("/delete/{id}")
     public String deletePharmacy(@PathVariable("id") UUID id) {
         pharmacyService.deletePharmacy(id);
