@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <title>Edit Product</title>
+</head>
+<body>
+<h1>Edit Product</h1>
+
+<form th:action="@{/pharmacy/edit-product/{productId}(productId=${product.id})}" method="post">
+
+  <label for="medicineSelect">Select Existing Medicine:</label>
+  <select id="medicineSelect" name="medicineId">
+    <option value="">-- Select Medicine --</option>
+    <option th:each="medicine : ${medicines}" th:value="${medicine.id}"
+            th:selected="${medicine.id == product.medicine.id}" th:text="${medicine.name}"></option>
+  </select>
+
+  <h2>Or Edit New Medicine</h2>
+  <label for="name">New Medicine Name:</label>
+  <input type="text" id="name" name="newMedicine.name" th:value="${product.medicine.name}"/><br/>
+
+  <label for="description">Description:</label>
+  <input type="text" id="description" name="newMedicine.description" th:value="${product.medicine.description}"/><br/>
+
+  <label for="expirationDate">Expiration Date:</label>
+  <input type="date" id="expirationDate" name="expirationDate" th:value="${#dates.format(product.expirationDate, 'yyyy-MM-dd')}"/><br/>
+
+  <label for="price">Price:</label>
+  <input type="text" id="price" name="price" th:value="${product.price}"/><br/>
+
+  <button type="submit">Update Product</button>
+</form>
+</body>
+</html>

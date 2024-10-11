@@ -28,6 +28,7 @@ public class AdminController {
     public String getAllPharmacies(Model model) {
         List<Pharmacy> pharmacies = pharmacyService.getAllPharmacies();
         model.addAttribute("pharmacies", pharmacies);
+        pharmacies.forEach(pharmacy -> System.out.println(pharmacy.getId()));
         return "admin/all-pharmacies";
     }
 

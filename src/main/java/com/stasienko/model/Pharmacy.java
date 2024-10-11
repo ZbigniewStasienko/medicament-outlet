@@ -1,15 +1,13 @@
 package com.stasienko.model;
 
 import jakarta.persistence.*;
-import org.hibernate.annotations.GenericGenerator;
 import java.util.UUID;
 
 @Entity
 @Table(name="pharmacy")
 public class Pharmacy implements java.io.Serializable {
     @Id
-    @GeneratedValue(generator = "UUID")
-    @GenericGenerator(name = "UUID", strategy = "org.hibernate.id.UUIDGenerator")
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(updatable = false, nullable = false)
     private UUID id;
 

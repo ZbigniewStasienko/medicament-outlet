@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Add Product</title>
+</head>
+<body>
+<h1>Add Product to Pharmacy</h1>
+
+<form th:action="@{/pharmacy/{id}/add-product(id=${pharmacyId})}" method="post">
+
+    <label for="medicineSelect">Select Existing Medicine:</label>
+    <select id="medicineSelect" name="medicineId">
+        <option value="">-- Select Medicine --</option>
+        <option th:each="medicine : ${medicines}" th:value="${medicine.id}" th:text="${medicine.name}"></option>
+    </select>
+
+    <br/>
+
+    <a th:href="@{/pharmacy/{id}/add-medicine(id=${pharmacyId})}">Add New Medicine</a>
+
+    <br/><br/>
+
+    <label for="expirationDate">Expiration Date:</label>
+    <input type="date" id="expirationDate" name="expirationDate"/><br/>
+
+    <label for="basePrice">Base Price:</label>
+    <input type="text" id="basePrice" name="basePrice"/><br/>
+
+    <label for="price">Price:</label>
+    <input type="text" id="price" name="price"/><br/>
+
+    <button type="submit">Add Product</button>
+</form>
+</body>
+</html>

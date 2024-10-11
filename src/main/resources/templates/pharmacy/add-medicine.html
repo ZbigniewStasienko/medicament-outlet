@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <title>Add Medicine</title>
+</head>
+<body>
+<h1>Add New Medicine</h1>
+
+<form th:action="@{/pharmacy/{id}/save-medicine(id=${pharmacyId})}" method="post" enctype="multipart/form-data">
+  <label for="name">Medicine Name:</label>
+  <input type="text" id="name" name="name" required/><br/>
+
+  <label for="description">Description:</label>
+  <input type="text" id="description" name="description"/><br/>
+
+  <label for="size">Size:</label>
+  <input type="number" id="size" name="size"/><br/>
+
+  <input type="file" name="file" accept="image/*" required><br/>
+
+  <button type="submit">Save Medicine</button>
+</form>
+
+</body>
+</html>

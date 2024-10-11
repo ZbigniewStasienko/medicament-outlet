@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <title>Pharmacy Products</title>
+</head>
+<body>
+<h1 th:text="${pharmacy.name}">Pharmacy Name</h1>
+<p th:text="${pharmacy.address}">Pharmacy Address</p>
+<p th:text="${pharmacy.phoneNumber}">Phone: </p>
+
+<h2>Products</h2>
+<a th:href="@{/pharmacy/{id}/add-product(id=${pharmacy.id})}">Add Product</a>
+<table border="1">
+  <thead>
+  <tr>
+    <th>Name</th>
+    <th>Description</th>
+    <th>Expiration Date</th>
+    <th>Price</th>
+    <th>Actions</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr th:each="product : ${products}">
+    <td th:text="${product.medicine.name}"></td>
+    <td th:text="${product.medicine.description}"></td>
+    <td th:text="${product.expirationDate != null ? product.expirationDate : 'N/A'}"></td>
+    <td th:text="${product.price}"></td>
+    <td>
+      <a th:href="@{/pharmacy/edit-product/{productId}(productId=${product.id})}">Edit</a>
+      <a th:href="@{/pharmacy/delete-product/{productId}(productId=${product.id})}">Delete</a>
+    </td>
+  </tr>
+  </tbody>
+</table>
+</body>
+</html>

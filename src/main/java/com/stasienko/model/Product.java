@@ -1,16 +1,15 @@
 package com.stasienko.model;
 
 import jakarta.persistence.*;
-import org.hibernate.annotations.GenericGenerator;
+
 import java.util.UUID;
-import java.util.Date;
+import java.time.LocalDate;
 
 @Entity
 @Table(name="product")
 public class Product implements java.io.Serializable {
     @Id
-    @GeneratedValue(generator = "UUID")
-    @GenericGenerator(name = "UUID")
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(updatable = false, nullable = false)
     private UUID id;
 
@@ -19,7 +18,7 @@ public class Product implements java.io.Serializable {
     private Medicine medicine;
 
     @Column(name="expiration_date")
-    private Date expirationDate;
+    private LocalDate expirationDate;
 
     @Column(name="is_reserved")
     private Boolean isReserved;
@@ -48,11 +47,11 @@ public class Product implements java.io.Serializable {
         this.medicine = medicine;
     }
 
-    public Date getExpirationDate() {
+    public LocalDate getExpirationDate() {
         return expirationDate;
     }
 
-    public void setExpirationDate(Date expirationDate) {
+    public void setExpirationDate(LocalDate expirationDate) {
         this.expirationDate = expirationDate;
     }
 
