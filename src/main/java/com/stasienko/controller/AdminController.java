@@ -55,14 +55,23 @@ public class AdminController {
     }
 
     @PostMapping("/edit/{id}")
-    public String updatePharmacy(@PathVariable("id") UUID id, @ModelAttribute("pharmacy") Pharmacy pharmacy, @RequestParam("picture") MultipartFile picture) throws IOException {
-        if (!picture.isEmpty()) {
-            Picture updatedPicture = pictureService.addPicture(picture);
+    public String updatePharmacy(@PathVariable("id") UUID id,
+                                 @ModelAttribute("pharmacy") Pharmacy pharmacy,
+                                 @RequestParam("file") MultipartFile file) throws IOException {
+
+        Pharmacy existingPharmacy = pharmacyService.getPharmacyById(id);
+        if (!file.isEmpty()) {
+            Picture updatedPicture = pictureService.addPicture(file);
             pharmacy.setPicture(updatedPicture);
+        } else {
+            pharmacy.setPicture(existingPharmacy.getPicture());
         }
+
         pharmacyService.updatePharmacy(id, pharmacy);
         return "redirect:/admin";
     }
+
+
 
 
     @GetMapping("/delete/{id}")

@@ -21,8 +21,7 @@
   <label for="openingHours">Opening Hours:</label>
   <input type="text" id="openingHours" name="openingHours" th:value="${pharmacy.openingHours}"/><br/>
 
-  <label for="picture">Upload New Picture:</label>
-  <input type="file" id="picture" name="picture"/><br/>
+  <input type="file" name="file" accept="image/*"><br/>
 
   <button type="submit">Update Pharmacy</button>
 </form>
