@@ -9,11 +9,11 @@ import java.util.UUID;
 public class Pharmacy implements java.io.Serializable {
     @Id
     @GeneratedValue(generator = "UUID")
-    @GenericGenerator(name = "UUID")
+    @GenericGenerator(name = "UUID", strategy = "org.hibernate.id.UUIDGenerator")
     @Column(updatable = false, nullable = false)
     private UUID id;
 
-    @ManyToOne
+    @OneToOne(fetch=FetchType.LAZY)
     @JoinColumn(name = "picture_id")
     private Picture picture;
 

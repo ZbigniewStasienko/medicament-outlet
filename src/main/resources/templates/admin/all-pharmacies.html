@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Pharmacy List</title>
+</head>
+<body>
+<h1>Pharmacy List</h1>
+<a href="/admin/new">Add New Pharmacy</a>
+<table border="1">
+    <thead>
+    <tr>
+        <th>Name</th>
+        <th>Address</th>
+        <th>Phone Number</th>
+        <th>Email</th>
+        <th>Opening Hours</th>
+        <th>Picture</th>
+        <th>Actions</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="pharmacy : ${pharmacies}">
+        <td th:text="${pharmacy.name}"></td>
+        <td th:text="${pharmacy.address}"></td>
+        <td th:text="${pharmacy.phoneNumber}"></td>
+        <td th:text="${pharmacy.email}"></td>
+        <td th:text="${pharmacy.openingHours}"></td>
+
+        <td th:if="${pharmacy.picture != null}">
+            <img th:src="@{'/pictures/' + ${pharmacy.picture.id}}" alt="Pharmacy Picture" width="100" height="100"/>
+        </td>
+        <td th:if="${pharmacy.picture == null}">
+            No picture
+        </td>
+
+        <td>
+            <a th:href="@{/admin/edit/{id}(id=${pharmacy.id})}">Edit</a>
+            <a th:href="@{/admin/delete/{id}(id=${pharmacy.id})}">Delete</a>
+        </td>
+    </tr>
+    </tbody>
+</table>
+</body>
+</html>

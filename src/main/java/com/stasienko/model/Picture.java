@@ -1,20 +1,18 @@
 package com.stasienko.model;
 
 import jakarta.persistence.*;
-import org.hibernate.annotations.GenericGenerator;
 import java.util.UUID;
 
 @Entity
-@Table(name="pictures")
+@Table(name="picture")
 public class Picture implements java.io.Serializable {
     @Id
-    @GeneratedValue(generator = "UUID")
-    @GenericGenerator(name = "UUID")
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(updatable = false, nullable = false)
     private UUID id;
 
-    @Column(name="picture", nullable=false, columnDefinition="TEXT")
-    private String picture;
+    @Column(name="data", nullable=false, columnDefinition="BYTEA")
+    private byte[] data;
 
     public Picture() {}
 
@@ -26,11 +24,11 @@ public class Picture implements java.io.Serializable {
         this.id = id;
     }
 
-    public String getPicture() {
-        return picture;
+    public byte[] getData() {
+        return data;
     }
 
-    public void setPicture(String picture) {
-        this.picture = picture;
+    public void setData(byte[] picture) {
+        this.data = picture;
     }
 }

@@ -1,6 +1,6 @@
 CREATE TABLE Picture (
     id UUID PRIMARY KEY,
-    picture TEXT NOT NULL
+    data BYTEA NOT NULL
 );
 
 CREATE TABLE Pharmacy (
