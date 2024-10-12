@@ -1,7 +1,6 @@
 package com.stasienko.model;
 
 import jakarta.persistence.*;
-import org.hibernate.annotations.GenericGenerator;
 import java.util.UUID;
 import java.util.Date;
 
@@ -9,8 +8,7 @@ import java.util.Date;
 @Table(name="reservation")
 public class Reservation implements java.io.Serializable {
     @Id
-    @GeneratedValue(generator = "UUID")
-    @GenericGenerator(name = "UUID")
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(updatable = false, nullable = false)
     private UUID id;
 
