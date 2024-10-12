@@ -15,8 +15,11 @@
   <tr>
     <th>Name</th>
     <th>Description</th>
+    <th>Size</th>
     <th>Expiration Date</th>
     <th>Price</th>
+    <th>IsReserved</th>
+    <th>Picture</th>
     <th>Actions</th>
   </tr>
   </thead>
@@ -24,15 +27,22 @@
   <tr th:each="product : ${products}">
     <td th:text="${product.medicine.name}"></td>
     <td th:text="${product.medicine.description}"></td>
+    <td th:text="${product.medicine.size}"></td>
     <td th:text="${product.expirationDate != null ? product.expirationDate : 'N/A'}"></td>
     <td th:text="${product.price}"></td>
+    <td th:text="${product.isReserved}"></td>
+    <td th:if="${product.medicine.picture != null}">
+      <img th:src="@{'/pictures/' + ${product.medicine.picture.id}}" alt="Medicine Picture" width="100" height="100"/>
+    </td>
+    <td th:if="${product.medicine.picture == null}">
+      No medicine picture
+    </td>
     <td>
       <a th:href="@{/pharmacy/edit-product/{productId}(productId=${product.id})}">Edit</a>
       <form th:action="@{/pharmacy/delete-product/{productId}(productId=${product.id})}" method="post"
             onsubmit="return confirm('Are you sure you want to delete this product?');">
         <button type="submit">Delete Product</button>
       </form>
-
     </td>
   </tr>
   </tbody>
