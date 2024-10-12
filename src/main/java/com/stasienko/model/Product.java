@@ -55,11 +55,11 @@ public class Product implements java.io.Serializable {
         this.expirationDate = expirationDate;
     }
 
-    public Boolean getReserved() {
+    public Boolean getIsReserved() {
         return isReserved;
     }
 
-    public void setReserved(Boolean reserved) {
+    public void setIsReserved(Boolean reserved) {
         isReserved = reserved;
     }
 

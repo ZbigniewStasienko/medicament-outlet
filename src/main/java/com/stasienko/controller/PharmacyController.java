@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.UUID;
 
@@ -39,12 +40,6 @@ public class PharmacyController {
         List<Product> products = productService.getProductsBasedOnPharmacyId(pharmacyId);
         model.addAttribute("pharmacy", pharmacyService.getPharmacyById(pharmacyId));
         model.addAttribute("products", products);
-        System.out.println(products.size());
-        System.out.println(productService.getSizeOfAllProductsDataset());
-        /*List<Product> all = productService.getProducts();
-        for(int i = 0; i < productService.getSizeOfAllProductsDataset(); i++) {
-            System.out.println(all.get(0).getMedicine().getPharmacy().getId());
-        }*/
         return "pharmacy/pharmacy-info";
     }
 
@@ -61,6 +56,13 @@ public class PharmacyController {
         model.addAttribute("medicine", new Medicine());
         model.addAttribute("pharmacyId", pharmacyId);
         return "pharmacy/add-medicine";
+    }
+
+    @GetMapping("/edit-product/{productId}")
+    public String showEditProductForm(@PathVariable("productId") UUID productId, Model model) {
+        Product product = productService.getProductById(productId);
+        model.addAttribute("product", product);
+        return "pharmacy/edit-product";
     }
 
     @PostMapping("/{id}/save-medicine")
@@ -88,10 +90,35 @@ public class PharmacyController {
             product.setMedicine(medicine);
         }
 
-        product.setReserved(false);
+        product.setIsReserved(false);
         productService.saveProduct(product);
 
         return "redirect:/pharmacy/" + pharmacyId;
+    }
+
+    @PostMapping("/edit-product/{productId}")
+    public String editProduct(@PathVariable("productId") UUID productId,
+                              @RequestParam("expirationDate") LocalDate expirationDate,
+                              @RequestParam("isReserved") Boolean isReserved,
+                              @RequestParam("basePrice") Double basePrice,
+                              @RequestParam("price") Double price) {
+        Product product = productService.getProductById(productId);
+
+        product.setExpirationDate(expirationDate);
+        product.setIsReserved(isReserved);
+        product.setBasePrice(basePrice);
+        product.setPrice(price);
+
+        productService.saveProduct(product);
+
+        return "redirect:/pharmacy/" + product.getMedicine().getPharmacy().getId();
+    }
+
+    @PostMapping("/delete-product/{productId}")
+    public String deleteProduct(@PathVariable("productId") UUID productId) {
+        UUID pharmacyID = productService.getProductById(productId).getMedicine().getPharmacy().getId();
+        productService.deleteProductById(productId);
+        return "redirect:/pharmacy/" + pharmacyID;
     }
 
 }

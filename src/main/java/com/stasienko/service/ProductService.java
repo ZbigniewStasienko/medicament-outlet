@@ -21,12 +21,12 @@ public class ProductService {
         return productRepository.findByMedicine_Pharmacy_Id(pharmacyId);
     }
 
-    public int getSizeOfAllProductsDataset() {
-        return productRepository.findAll().size();
+    public Product getProductById(UUID productId) {
+        return productRepository.findById(productId).orElseThrow(() -> new RuntimeException("Product not found"));
     }
 
-    public List<Product> getProducts() {
-        return productRepository.findAll();
+    public void deleteProductById(UUID productId) {
+        productRepository.deleteById(productId);
     }
 }
 

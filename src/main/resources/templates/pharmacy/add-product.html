@@ -9,7 +9,7 @@
 <form th:action="@{/pharmacy/{id}/add-product(id=${pharmacyId})}" method="post">
 
     <label for="medicineSelect">Select Existing Medicine:</label>
-    <select id="medicineSelect" name="medicineId">
+    <select id="medicineSelect" name="medicineId" required>
         <option value="">-- Select Medicine --</option>
         <option th:each="medicine : ${medicines}" th:value="${medicine.id}" th:text="${medicine.name}"></option>
     </select>

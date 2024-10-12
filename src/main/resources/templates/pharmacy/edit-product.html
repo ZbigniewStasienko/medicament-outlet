@@ -8,22 +8,24 @@
 
 <form th:action="@{/pharmacy/edit-product/{productId}(productId=${product.id})}" method="post">
 
-  <label for="medicineSelect">Select Existing Medicine:</label>
-  <select id="medicineSelect" name="medicineId">
-    <option value="">-- Select Medicine --</option>
-    <option th:each="medicine : ${medicines}" th:value="${medicine.id}"
-            th:selected="${medicine.id == product.medicine.id}" th:text="${medicine.name}"></option>
-  </select>
+  <label for="medicineName">Medicine:</label>
+  <input type="text" id="medicineName" name="medicineName" th:value="${product.medicine.name}" readonly/><br/>
 
-  <h2>Or Edit New Medicine</h2>
-  <label for="name">New Medicine Name:</label>
-  <input type="text" id="name" name="newMedicine.name" th:value="${product.medicine.name}"/><br/>
+  <label for="medicineDescription">Medicine Description:</label>
+  <input type="text" id="medicineDescription" name="medicineDescription" th:value="${product.medicine.description}" readonly/><br/>
 
-  <label for="description">Description:</label>
-  <input type="text" id="description" name="newMedicine.description" th:value="${product.medicine.description}"/><br/>
+  <label for="medicineSize">Medicine Size:</label>
+  <input type="text" id="medicineSize" name="medicineSize" th:value="${product.medicine.size}" readonly/><br/>
 
   <label for="expirationDate">Expiration Date:</label>
-  <input type="date" id="expirationDate" name="expirationDate" th:value="${#dates.format(product.expirationDate, 'yyyy-MM-dd')}"/><br/>
+  <input type="date" id="expirationDate" name="expirationDate" th:value="${product.expirationDate}"/><br/>
+
+  <input type="hidden" name="isReserved" value="false"/>
+  <label for="isReserved">Is Reserved:</label>
+  <input type="checkbox" id="isReserved" name="isReserved" th:checked="${product.isReserved}"/><br/>
+
+  <label for="basePrice">Base Price:</label>
+  <input type="text" id="basePrice" name="basePrice" th:value="${product.basePrice}"/><br/>
 
   <label for="price">Price:</label>
   <input type="text" id="price" name="price" th:value="${product.price}"/><br/>
