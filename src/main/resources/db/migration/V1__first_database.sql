@@ -19,7 +19,7 @@ CREATE TABLE Medicine (
     picture_id UUID REFERENCES Picture(id),
     name TEXT NOT NULL,
     description TEXT,
-    size INTEGER
+    size TEXT
 );
 
 CREATE TABLE Product (

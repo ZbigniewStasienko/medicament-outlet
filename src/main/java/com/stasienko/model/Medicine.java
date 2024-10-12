@@ -26,7 +26,7 @@ public class Medicine implements java.io.Serializable {
     private String description;
 
     @Column(name="size")
-    private Integer size;
+    private String size;
 
     public Medicine() {}
 
@@ -70,11 +70,11 @@ public class Medicine implements java.io.Serializable {
         this.description = description;
     }
 
-    public Integer getSize() {
+    public String getSize() {
         return size;
     }
 
-    public void setSize(Integer size) {
+    public void setSize(String size) {
         this.size = size;
     }
 }
