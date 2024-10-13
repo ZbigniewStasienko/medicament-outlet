@@ -51,15 +51,6 @@ public class MedicineController {
         return "redirect:/pharmacy/" + pharmacyId + "/add-product";
     }
 
-    @PostMapping("/{id}/delete-medicine")
-    public String deleteMedicine(@PathVariable("id") UUID pharmacyId, @RequestParam("medicineId") UUID medicineId) {
-        Medicine medicine = medicineService.getMedicineById(medicineId);
-        if (medicine.getPharmacy().getId().equals(pharmacyId)) {
-            medicineService.deleteMedicineById(medicineId);
-        }
-        return "redirect:/pharmacy/" + pharmacyId;
-    }
-
     @GetMapping("/edit-medicine/{medicineId}")
     public String showEditMedicineForm(@PathVariable("medicineId") UUID medicineId, Model model) {
         Medicine toEdit = medicineService.getMedicineById(medicineId);
@@ -86,5 +77,11 @@ public class MedicineController {
         return "redirect:/pharmacy/" + medicine.getPharmacy().getId();
     }
 
+    @PostMapping("/delete-medicine")
+    public String deleteMedicine(@RequestParam("medicineId") UUID medicineId) {
+        UUID pharmacyId = medicineService.getMedicineById(medicineId).getPharmacy().getId();
+        medicineService.deleteMedicineById(medicineId);
+        return "redirect:/pharmacy/" + pharmacyId;
+    }
 
 }

@@ -24,7 +24,7 @@
             <a th:href="@{/pharmacy/edit-medicine/{medicineId}(medicineId=${medicine.id})}">
                 Edit
             </a>
-            <form th:action="@{/pharmacy/{id}/delete-medicine(id=${pharmacyId}, medicineId=${medicine.id})}" method="post" style="display:inline;">
+            <form th:action="@{/pharmacy/delete-medicine(medicineId=${medicine.id})}" method="post" style="display:inline;">
                 <button type="submit">Delete</button>
             </form>
         </td>
