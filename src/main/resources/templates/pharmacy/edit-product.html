@@ -20,9 +20,10 @@
   <label for="expirationDate">Expiration Date:</label>
   <input type="date" id="expirationDate" name="expirationDate" th:value="${product.expirationDate}"/><br/>
 
-  <input type="hidden" name="isReserved" value="false"/>
   <label for="isReserved">Is Reserved:</label>
-  <input type="checkbox" id="isReserved" name="isReserved" th:checked="${product.isReserved}"/><br/>
+  <input type="radio" id="isReservedYes" name="isReserved" value="true" th:checked="${product.isReserved}"/> Yes
+  <input type="radio" id="isReservedNo" name="isReserved" value="false" th:checked="${!product.isReserved}"/> No
+  <br/>
 
   <label for="basePrice">Base Price:</label>
   <input type="text" id="basePrice" name="basePrice" th:value="${product.basePrice}"/><br/>

@@ -55,13 +55,13 @@ public class ProductController {
     @PostMapping("/edit-product/{productId}")
     public String editProduct(@PathVariable("productId") UUID productId,
                               @RequestParam("expirationDate") LocalDate expirationDate,
-                              @RequestParam("isReserved") Boolean isReserved,
+                              @RequestParam("isReserved") String isReserved,
                               @RequestParam("basePrice") Double basePrice,
                               @RequestParam("price") Double price) {
         Product product = productService.getProductById(productId);
 
         product.setExpirationDate(expirationDate);
-        product.setIsReserved(isReserved);
+        product.setIsReserved(Boolean.parseBoolean(isReserved));
         product.setBasePrice(basePrice);
         product.setPrice(price);
 
@@ -69,6 +69,7 @@ public class ProductController {
 
         return "redirect:/pharmacy/" + product.getMedicine().getPharmacy().getId();
     }
+
 
     @PostMapping("/delete-product/{productId}")
     public String deleteProduct(@PathVariable("productId") UUID productId) {
