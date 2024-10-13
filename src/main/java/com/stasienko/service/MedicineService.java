@@ -25,5 +25,10 @@ public class MedicineService {
     public Medicine saveMedicine(Medicine medicine) {
         return medicineRepository.save(medicine);
     }
+
+    public void deleteMedicineById(UUID medicineId) {
+        medicineRepository.deleteById(medicineId);
+    }
+
 }
 

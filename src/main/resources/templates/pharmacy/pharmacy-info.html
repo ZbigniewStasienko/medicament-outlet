@@ -7,6 +7,10 @@
 <h1 th:text="${pharmacy.name}">Pharmacy Name</h1>
 <p th:text="${pharmacy.address}">Pharmacy Address</p>
 <p th:text="${pharmacy.phoneNumber}">Phone: </p>
+<a th:href="@{/pharmacy/{id}/modify-medicine(id=${pharmacy.id})}" style="position: absolute; top: 10px; left: 10px;">
+  <button>Modify Medicine</button>
+</a>
+
 
 <h2>Products</h2>
 <a th:href="@{/pharmacy/{id}/add-product(id=${pharmacy.id})}">Add Product</a>

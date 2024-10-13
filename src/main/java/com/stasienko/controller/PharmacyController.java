@@ -121,4 +121,36 @@ public class PharmacyController {
         return "redirect:/pharmacy/" + pharmacyID;
     }
 
+    @GetMapping("/{id}/modify-medicine")
+    public String showEditMedicineForm(@PathVariable("id") UUID pharmacyId, Model model) {
+        List<Medicine> medicines = medicineService.getMedicinesByPharmacy(pharmacyId);
+        model.addAttribute("medicines", medicines);
+        model.addAttribute("pharmacyId", pharmacyId);
+        return "pharmacy/edit-medicine";
+    }
+
+    @PostMapping("/{id}/edit-medicine")
+    public String editMedicine(@PathVariable("id") UUID pharmacyId,
+                               @RequestParam("medicineId") UUID medicineId,
+                               @RequestParam("name") String name,
+                               @RequestParam("description") String description,
+                               @RequestParam("size") String size) {
+        Medicine medicine = medicineService.getMedicineById(medicineId);
+        if (medicine.getPharmacy().getId().equals(pharmacyId)) {
+            medicine.setName(name);
+            medicine.setDescription(description);
+            medicine.setSize(size);
+            medicineService.saveMedicine(medicine);
+        }
+        return "redirect:/pharmacy/" + pharmacyId + "/modify-medicine";
+    }
+
+    @PostMapping("/{id}/delete-medicine")
+    public String deleteMedicine(@PathVariable("id") UUID pharmacyId, @RequestParam("medicineId") UUID medicineId) {
+        Medicine medicine = medicineService.getMedicineById(medicineId);
+        if (medicine.getPharmacy().getId().equals(pharmacyId)) {
+            medicineService.deleteMedicineById(medicineId);
+        }
+        return "redirect:/pharmacy/" + pharmacyId + "/modify-medicine";
+    }
 }

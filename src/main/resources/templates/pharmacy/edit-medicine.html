@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <title>Edit Medicine</title>
+  <script>
+    function enableFields() {
+      const selectedMedicine = document.getElementById('medicine').value;
+      const isEnabled = selectedMedicine !== '';
+
+      document.getElementById('name').disabled = !isEnabled;
+      document.getElementById('description').disabled = !isEnabled;
+      document.getElementById('size').disabled = !isEnabled;
+      document.getElementById('picture').disabled = !isEnabled;
+      document.getElementById('updateButton').disabled = !isEnabled;
+      document.getElementById('deleteButton').disabled = !isEnabled;
+    }
+  </script>
+</head>
+<body>
+<h1>Edit Medicine</h1>
+
+<form th:action="@{/pharmacy/{id}/edit-medicine(id=${pharmacyId})}" method="post" enctype="multipart/form-data">
+  <label for="medicine">Select Medicine:</label>
+  <select name="medicineId" id="medicine" required onchange="enableFields()">
+    <option value="" disabled th:selected="${selectedMedicine == null}">Please select a medicine</option>
+    <option th:each="medicine : ${medicines}" th:value="${medicine.id}" th:selected="${selectedMedicine != null && selectedMedicine.id == medicine.id}" th:text="${medicine.name}"></option>
+  </select>
+
+  <br><br>
+
+  <label for="name">Medicine Name:</label>
+  <input type="text" id="name" name="name" th:value="${selectedMedicine != null ? selectedMedicine.name : ''}" th:disabled="${selectedMedicine == null}">
+
+  <label for="description">Description:</label>
+  <input type="text" id="description" name="description" th:value="${selectedMedicine != null ? selectedMedicine.description : ''}" th:disabled="${selectedMedicine == null}">
+
+  <label for="size">Size:</label>
+  <input type="text" id="size" name="size" th:value="${selectedMedicine != null ? selectedMedicine.size : ''}" th:disabled="${selectedMedicine == null}">
+
+  <label for="picture">Update Picture:</label>
+  <input type="file" id="picture" name="file" th:disabled="${selectedMedicine == null}">
+
+  <br><br>
+
+  <button type="submit" id="updateButton" th:disabled="${selectedMedicine == null}">Update Medicine</button>
+</form>
+
+<form th:action="@{/pharmacy/{id}/delete-medicine(id=${pharmacyId})}" method="post" onsubmit="return confirm('Are you sure you want to delete this medicine?');">
+  <input type="hidden" name="medicineId" th:value="${selectedMedicine != null ? selectedMedicine.id : ''}">
+  <button type="submit" id="deleteButton" th:disabled="${selectedMedicine == null}">Delete Medicine</button>
+</form>
+
+<script>
+  window.onload = enableFields;
+</script>
+
+</body>
+</html>
