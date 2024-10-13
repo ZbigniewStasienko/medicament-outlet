@@ -10,7 +10,7 @@ To run the project locally, ensure you have the following installed:
 - Docker 
 
 ## How to Run
-In the terminal in project folder run: 
+In the terminal in the project folder run: 
 
     make clean prepare migrate run
 
@@ -22,7 +22,7 @@ To see ``admin`` menu type following in web browser:
 
 This should open up menu that enables ``admin`` actions:
 
-![img.png](img.png)
+![Screenshot from 2024-10-13 21-20-15](https://github.com/user-attachments/assets/8ffa1ac5-570b-4df9-90e5-7ac305e4504a)
 
 To see ``pharmacy`` menu type following in web browser (pharmacy-id can be taken from 4th migration, for example: 00000000-0000-0000-0000-000000000003)
 
@@ -30,7 +30,7 @@ To see ``pharmacy`` menu type following in web browser (pharmacy-id can be taken
 
 This should open up menu that enables ``pharmacy`` actions:
 
-![img_1.png](img_1.png)
+![Screenshot from 2024-10-13 21-22-43](https://github.com/user-attachments/assets/240b1369-6ddb-4c0e-9ec4-677ea28a1ab2)
 
 To see ``user`` menu type following in web browser
 
@@ -38,4 +38,4 @@ To see ``user`` menu type following in web browser
 
 This should open up menu that enables ``user`` actions:
 
-![img_2.png](img_2.png)
+![Screenshot from 2024-10-13 21-24-12](https://github.com/user-attachments/assets/8d1d5095-5f64-4510-b4e1-fbbbf4ac78d7)
