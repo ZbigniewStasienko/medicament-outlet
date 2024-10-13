@@ -21,6 +21,10 @@ public class ProductService {
         return productRepository.findByMedicine_Pharmacy_Id(pharmacyId);
     }
 
+    public List<Product> getProductsBasedOnMedicineId(UUID medicineId) {
+        return productRepository.findByMedicine_Id(medicineId);
+    }
+
     public Product getProductById(UUID productId) {
         return productRepository.findById(productId).orElseThrow(() -> new RuntimeException("Product not found"));
     }

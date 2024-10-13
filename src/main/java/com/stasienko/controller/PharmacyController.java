@@ -121,11 +121,18 @@ public class PharmacyController {
         return "redirect:/pharmacy/" + pharmacyID;
     }
 
-    @GetMapping("/{id}/modify-medicine")
-    public String showEditMedicineForm(@PathVariable("id") UUID pharmacyId, Model model) {
+    @GetMapping("/{id}/list-medicines")
+    public String showAllPharmacyMedicines(@PathVariable("id") UUID pharmacyId, Model model) {
         List<Medicine> medicines = medicineService.getMedicinesByPharmacy(pharmacyId);
         model.addAttribute("medicines", medicines);
         model.addAttribute("pharmacyId", pharmacyId);
+        return "pharmacy/list-medicines";
+    }
+
+    @GetMapping("/{id}/edit-medicine")
+    public String showEditMedicineForm(@PathVariable("id") UUID pharmacyId, @RequestParam("medicineId") UUID medicineId, Model model) {
+        Medicine toEdit = medicineService.getMedicineById(medicineId);
+        model.addAttribute("medicine", toEdit);
         return "pharmacy/edit-medicine";
     }
 
@@ -142,7 +149,7 @@ public class PharmacyController {
             medicine.setSize(size);
             medicineService.saveMedicine(medicine);
         }
-        return "redirect:/pharmacy/" + pharmacyId + "/modify-medicine";
+        return "redirect:/pharmacy/" + pharmacyId;
     }
 
     @PostMapping("/{id}/delete-medicine")
@@ -151,6 +158,6 @@ public class PharmacyController {
         if (medicine.getPharmacy().getId().equals(pharmacyId)) {
             medicineService.deleteMedicineById(medicineId);
         }
-        return "redirect:/pharmacy/" + pharmacyId + "/modify-medicine";
+        return "redirect:/pharmacy/" + pharmacyId;
     }
 }
