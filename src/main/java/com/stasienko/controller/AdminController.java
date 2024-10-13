@@ -61,6 +61,7 @@ public class AdminController {
 
         Pharmacy existingPharmacy = pharmacyService.getPharmacyById(id);
         if (!file.isEmpty()) {
+            pictureService.deletePicture(existingPharmacy.getPicture().getId());
             Picture updatedPicture = pictureService.addPicture(file);
             pharmacy.setPicture(updatedPicture);
         } else {

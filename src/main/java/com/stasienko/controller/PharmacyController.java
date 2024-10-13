@@ -129,27 +129,30 @@ public class PharmacyController {
         return "pharmacy/list-medicines";
     }
 
-    @GetMapping("/{id}/edit-medicine")
-    public String showEditMedicineForm(@PathVariable("id") UUID pharmacyId, @RequestParam("medicineId") UUID medicineId, Model model) {
+    @GetMapping("/edit-medicine/{medicineId}")
+    public String showEditMedicineForm(@PathVariable("medicineId") UUID medicineId, Model model) {
         Medicine toEdit = medicineService.getMedicineById(medicineId);
         model.addAttribute("medicine", toEdit);
         return "pharmacy/edit-medicine";
     }
 
-    @PostMapping("/{id}/edit-medicine")
-    public String editMedicine(@PathVariable("id") UUID pharmacyId,
-                               @RequestParam("medicineId") UUID medicineId,
+    @PostMapping("/edit-medicine/{id}")
+    public String editMedicine(@PathVariable("id") UUID medicineId,
                                @RequestParam("name") String name,
                                @RequestParam("description") String description,
-                               @RequestParam("size") String size) {
+                               @RequestParam("size") String size,
+                               @RequestParam("file") MultipartFile file) throws IOException {
         Medicine medicine = medicineService.getMedicineById(medicineId);
-        if (medicine.getPharmacy().getId().equals(pharmacyId)) {
-            medicine.setName(name);
-            medicine.setDescription(description);
-            medicine.setSize(size);
-            medicineService.saveMedicine(medicine);
+        medicine.setName(name);
+        medicine.setDescription(description);
+        medicine.setSize(size);
+        if (!file.isEmpty()) {
+            pictureService.deletePicture(medicine.getPicture().getId());
+            Picture savedPicture = pictureService.addPicture(file);
+            medicine.setPicture(savedPicture);
         }
-        return "redirect:/pharmacy/" + pharmacyId;
+        medicineService.saveMedicine(medicine);
+        return "redirect:/pharmacy/" + medicine.getPharmacy().getId();
     }
 
     @PostMapping("/{id}/delete-medicine")
