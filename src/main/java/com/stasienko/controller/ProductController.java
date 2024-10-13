@@ -30,13 +30,6 @@ public class ProductController {
         return "pharmacy/add-product";
     }
 
-    @GetMapping("/edit-product/{productId}")
-    public String showEditProductForm(@PathVariable("productId") UUID productId, Model model) {
-        Product product = productService.getProductById(productId);
-        model.addAttribute("product", product);
-        return "pharmacy/edit-product";
-    }
-
     @PostMapping("/{id}/add-product")
     public String addProduct(@PathVariable("id") UUID pharmacyId,
                              @RequestParam("medicineId") UUID medicineId,
@@ -50,6 +43,13 @@ public class ProductController {
         productService.saveProduct(product);
 
         return "redirect:/pharmacy/" + pharmacyId;
+    }
+
+    @GetMapping("/edit-product/{productId}")
+    public String showEditProductForm(@PathVariable("productId") UUID productId, Model model) {
+        Product product = productService.getProductById(productId);
+        model.addAttribute("product", product);
+        return "pharmacy/edit-product";
     }
 
     @PostMapping("/edit-product/{productId}")
