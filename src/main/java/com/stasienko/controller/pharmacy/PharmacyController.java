@@ -1,4 +1,4 @@
-package com.stasienko.controller;
+package com.stasienko.controller.pharmacy;
 
 import com.stasienko.model.Medicine;
 import com.stasienko.model.Product;

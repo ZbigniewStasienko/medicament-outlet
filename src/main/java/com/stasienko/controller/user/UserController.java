@@ -1,4 +1,4 @@
-package com.stasienko.controller;
+package com.stasienko.controller.user;
 
 import com.stasienko.model.Product;
 import com.stasienko.service.ProductService;
