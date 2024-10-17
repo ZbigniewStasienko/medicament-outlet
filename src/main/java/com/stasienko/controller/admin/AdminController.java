@@ -2,9 +2,12 @@ package com.stasienko.controller.admin;
 
 import com.stasienko.model.Pharmacy;
 import com.stasienko.model.Picture;
+import com.stasienko.security.AuthorizationService;
 import com.stasienko.service.PharmacyService;
 import com.stasienko.service.PictureService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -25,8 +28,9 @@ public class AdminController {
     private PictureService pictureService;
 
     @GetMapping
-    public String getAllPharmacies(Model model) {
+    public String getAllPharmacies(@AuthenticationPrincipal OAuth2User principal, Model model) {
         List<Pharmacy> pharmacies = pharmacyService.getAllPharmacies();
+        model.addAttribute("isSuperAdmin", AuthorizationService.isSuperAdmin(principal));
         model.addAttribute("pharmacies", pharmacies);
         return "admin/all-pharmacies";
     }

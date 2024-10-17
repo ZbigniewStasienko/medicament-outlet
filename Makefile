@@ -5,7 +5,7 @@ prepare:
 run:
 	./mvnw clean package -DskipTests && \
     docker build -t medicament-outlet . && \
-    docker run --rm -p 7777:7777 --network=medicament-outlet_system --name app medicament-outlet
+    docker run --env-file .env --rm -p 8080:8080 --network=medicament-outlet_system --name app medicament-outlet
 
 clean:
 	docker ps -a | grep app && docker stop app && docker rm app || true

@@ -1,6 +1,8 @@
 server:
-  port: 7777
+  port: 8080
 spring:
+  application:
+    name: medicament_outlet
   datasource:
     url: jdbc:postgresql://postgresqldb:5432/medicament-outlet
     username: user
@@ -16,4 +18,29 @@ spring:
     suffix: .html
     mode: HTML
     encoding: UTF-8
-    cache: false
+  security:
+    oauth2:
+      client:
+        registration:
+          secureauthn:
+            client-id: ${CLIENT-ID}
+            provider: secureauthn-provider
+            client-authentication-method: none
+            authorization-grant-type: authorization_code
+            scope:
+              - profile
+              - openid
+              - view_ss_profile
+              - manage_ss_profile
+              - manage_sessions
+              - view_sessions
+              - list_clients_with_access
+              - revoke_client_access
+        provider:
+          secureauthn-provider:
+            token-uri: ${TOKEN-URI}
+            authorization-uri: ${AUTHORIZATION-URI}
+            issuer-uri: ${ISSUER-URI}
+            jwk-set-uri: ${JWK-SET-URI}
+            user-name-attribute: name
+            user-info-uri: ${USER-INFO-URI}
