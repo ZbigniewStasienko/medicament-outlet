@@ -28,15 +28,15 @@ public class MedicineController {
     @Autowired
     private PictureService pictureService;
 
-    @GetMapping("/{id}/add-medicine")
-    public String showAddMedicineForm(@PathVariable("id") UUID pharmacyId, Model model) {
+    @GetMapping("/add-medicine")
+    public String showAddMedicineForm(@RequestParam("pharmacyId") String pharmacyId, Model model) {
         model.addAttribute("medicine", new Medicine());
         model.addAttribute("pharmacyId", pharmacyId);
         return "pharmacy/add-medicine";
     }
 
-    @PostMapping("/{id}/add-medicine")
-    public String saveMedicine(@PathVariable("id") String pharmacyId, @ModelAttribute Medicine medicine,
+    @PostMapping("/add-medicine")
+    public String saveMedicine(@RequestParam("pharmacyId") String pharmacyId, @ModelAttribute Medicine medicine,
                                @RequestParam("file") MultipartFile file) throws IOException {
         if (!file.isEmpty()) {
             Picture savedPicture = pictureService.addPicture(file);
@@ -48,7 +48,7 @@ public class MedicineController {
 
         medicineService.saveMedicine(medicine);
 
-        return "redirect:/pharmacy/" + pharmacyId + "/add-product";
+        return "redirect:/pharmacy/add-product";
     }
 
     @GetMapping("/edit-medicine/{medicineId}")
@@ -74,14 +74,14 @@ public class MedicineController {
             medicine.setPicture(savedPicture);
         }
         medicineService.saveMedicine(medicine);
-        return "redirect:/pharmacy/" + medicine.getPharmacy().getId();
+        return "redirect:/pharmacy";
     }
 
     @PostMapping("/delete-medicine")
     public String deleteMedicine(@RequestParam("medicineId") UUID medicineId) {
         String pharmacyId = medicineService.getMedicineById(medicineId).getPharmacy().getId();
         medicineService.deleteMedicineById(medicineId);
-        return "redirect:/pharmacy/" + pharmacyId;
+        return "redirect:/pharmacy";
     }
 
 }

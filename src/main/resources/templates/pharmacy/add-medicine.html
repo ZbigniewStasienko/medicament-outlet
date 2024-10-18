@@ -6,7 +6,7 @@
 <body>
 <h1>Add New Medicine</h1>
 
-<form th:action="@{/pharmacy/{id}/add-medicine(id=${pharmacyId})}" method="post" enctype="multipart/form-data">
+<form th:action="@{/pharmacy/add-medicine(pharmacyId=${pharmacyId})}" method="post" enctype="multipart/form-data">
   <label for="name">Medicine Name:</label>
   <input type="text" id="name" name="name" required/><br/>
 

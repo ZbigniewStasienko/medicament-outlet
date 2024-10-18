@@ -14,13 +14,13 @@
     <h1 th:text="${pharmacy.name}">Pharmacy Name</h1>
     <p th:text="${pharmacy.address}">Pharmacy Address</p>
     <p th:text="${pharmacy.phoneNumber}">Phone: </p>
-    <a th:href="@{/pharmacy/{id}/list-medicines(id=${pharmacy.id})}">
+    <a th:href="@{/pharmacy/list-medicines(pharmacyId=${pharmacy.id})}">
         <button>Modify Medicines</button>
     </a>
 
 
     <h2>Products</h2>
-    <a th:href="@{/pharmacy/{id}/add-product(id=${pharmacy.id})}">Add Product</a>
+    <a th:href="@{/pharmacy/add-product}">Add Product</a>
     <table border="1">
         <thead>
         <tr>

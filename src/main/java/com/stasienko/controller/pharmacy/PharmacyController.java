@@ -1,7 +1,6 @@
 package com.stasienko.controller.pharmacy;
 
 import com.stasienko.model.Medicine;
-import com.stasienko.model.Pharmacy;
 import com.stasienko.model.Product;
 import com.stasienko.security.AuthorizationService;
 import com.stasienko.service.MedicineService;
@@ -41,8 +40,8 @@ public class PharmacyController {
         return "pharmacy/pharmacy-info";
     }
 
-    @GetMapping("/{id}/list-medicines")
-    public String showAllPharmacyMedicines(@PathVariable("id") String pharmacyId, Model model) {
+    @GetMapping("/list-medicines")
+    public String showAllPharmacyMedicines(@RequestParam("pharmacyId") String pharmacyId, Model model) {
         List<Medicine> medicines = medicineService.getMedicinesByPharmacy(pharmacyId);
         model.addAttribute("medicines", medicines);
         model.addAttribute("pharmacyId", pharmacyId);

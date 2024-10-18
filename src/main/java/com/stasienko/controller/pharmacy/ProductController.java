@@ -5,11 +5,14 @@ import com.stasienko.model.Product;
 import com.stasienko.service.MedicineService;
 import com.stasienko.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
+import java.util.List;
 import java.util.UUID;
 
 @Controller
@@ -22,17 +25,19 @@ public class ProductController {
     @Autowired
     private MedicineService medicineService;
 
-    @GetMapping("/{id}/add-product")
-    public String showAddProductForm(@PathVariable("id") String pharmacyId, Model model) {
-        model.addAttribute("product", new Product());
-        model.addAttribute("pharmacyId", pharmacyId);
-        model.addAttribute("medicines", medicineService.getMedicinesByPharmacy(pharmacyId));
+    @GetMapping("/add-product")
+    public String showAddProductForm(@AuthenticationPrincipal OAuth2User principal, Model model) {
+        if (principal != null) {
+            model.addAttribute("product", new Product());
+            String pharmacyId = principal.getAttribute("sub");
+            model.addAttribute("pharmacyId", pharmacyId);
+            model.addAttribute("medicines", medicineService.getMedicinesByPharmacy(pharmacyId));
+        }
         return "pharmacy/add-product";
     }
 
-    @PostMapping("/{id}/add-product")
-    public String addProduct(@PathVariable("id") UUID pharmacyId,
-                             @RequestParam("medicineId") UUID medicineId,
+    @PostMapping("/add-product")
+    public String addProduct(@RequestParam("medicineId") UUID medicineId,
                              @ModelAttribute Product product) {
         if (medicineId != null) {
             Medicine medicine = medicineService.getMedicineById(medicineId);
@@ -42,7 +47,7 @@ public class ProductController {
         product.setIsReserved(false);
         productService.saveProduct(product);
 
-        return "redirect:/pharmacy/" + pharmacyId;
+        return "redirect:/pharmacy";
     }
 
     @GetMapping("/edit-product/{productId}")
@@ -67,7 +72,7 @@ public class ProductController {
 
         productService.saveProduct(product);
 
-        return "redirect:/pharmacy/" + product.getMedicine().getPharmacy().getId();
+        return "redirect:/pharmacy";
     }
 
 
@@ -75,6 +80,6 @@ public class ProductController {
     public String deleteProduct(@PathVariable("productId") UUID productId) {
         String pharmacyID = productService.getProductById(productId).getMedicine().getPharmacy().getId();
         productService.deleteProductById(productId);
-        return "redirect:/pharmacy/" + pharmacyID;
+        return "redirect:/pharmacy";
     }
 }
