@@ -30,7 +30,7 @@ public class SecurityConfiguration {
         http
                 .requestCache(cache -> cache.requestCache(requestCache))
                 .authorizeHttpRequests(a -> a
-                        .requestMatchers("/", "/pictures/**", "/admin", "/favicon.ico", "/error").permitAll()
+                        .requestMatchers("/", "/pictures/**", "/admin", "/favicon.ico", "/error", "/pharmacy").permitAll()
                         .anyRequest().authenticated()
                 )
                 .exceptionHandling(e ->
