@@ -22,7 +22,7 @@ public class AuthorizationService {
         }
 
         String type = principal.getAttribute("type");
-        return type != null && type.equals("pharmacy");
+        return type != null && type.equals("pharmacy") && !isSuperAdmin(principal);
     }
 
 }
