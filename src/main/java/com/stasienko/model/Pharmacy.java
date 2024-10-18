@@ -7,7 +7,7 @@ import java.util.UUID;
 @Table(name="pharmacy")
 public class Pharmacy implements java.io.Serializable {
     @Id
-    @Column(updatable = false, nullable = false, columnDefinition="TEXT")
+    @Column(columnDefinition="TEXT")
     private String id;
 
     @OneToOne(fetch=FetchType.LAZY)
