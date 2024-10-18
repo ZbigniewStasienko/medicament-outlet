@@ -1,5 +1,6 @@
 package com.stasienko.service;
 
+import com.stasienko.model.Medicine;
 import com.stasienko.model.Pharmacy;
 import com.stasienko.repository.PharmacyRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +13,9 @@ import java.util.UUID;
 public class PharmacyService {
     @Autowired
     private PharmacyRepository pharmacyRepository;
+
+    @Autowired
+    private MedicineService medicineService;
 
     public List<Pharmacy> getAllPharmacies() {
         return pharmacyRepository.findAll();
@@ -42,6 +46,10 @@ public class PharmacyService {
     }
 
     public void deletePharmacy(String id) {
+        List<Medicine> toDel = medicineService.getMedicinesByPharmacy(id);
+        for (Medicine toDelete : toDel) {
+            medicineService.deleteMedicineById(toDelete.getId());
+        }
         pharmacyRepository.deleteById(id);
     }
 }
