@@ -18,10 +18,13 @@ public class CustomAuthenticationSuccessHandler implements AuthenticationSuccess
         OAuth2User oauthUser = (OAuth2User) authentication.getPrincipal();
 
         boolean isAdmin = AuthorizationService.isSuperAdmin(oauthUser);
+        boolean isPharmacy = AuthorizationService.isPharmacy(oauthUser);
 
         if (isAdmin) {
             response.sendRedirect("/admin");
-        } else {
+        } if (isPharmacy) {
+            response.sendRedirect("/pharmacy");
+        }else {
             response.sendRedirect("/");
         }
     }

@@ -9,7 +9,7 @@
     <p>Please <a href="/oauth2/authorization/secureauthn?idp=pharmacies">login</a> to see pharmacy panel</p>
 </div>
 
-<div class="container" th:if="${isSuperAdmin}">
+<div class="container" th:if="${isPharmacy}">
 
     <h1 th:text="${pharmacy.name}">Pharmacy Name</h1>
     <p th:text="${pharmacy.address}">Pharmacy Address</p>
