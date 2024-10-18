@@ -9,7 +9,7 @@ target/
 *.iml
 *.ipr
 .env
-src/main/resources/db/migration/V4__add_sample_data.sql
+src/main/resources/db/migration/
 
 ### Eclipse ###
 .apt_generated
