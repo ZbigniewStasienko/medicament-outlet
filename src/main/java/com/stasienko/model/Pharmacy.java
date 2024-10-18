@@ -7,9 +7,8 @@ import java.util.UUID;
 @Table(name="pharmacy")
 public class Pharmacy implements java.io.Serializable {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(updatable = false, nullable = false)
-    private UUID id;
+    @Column(updatable = false, nullable = false, columnDefinition="TEXT")
+    private String id;
 
     @OneToOne(fetch=FetchType.LAZY)
     @JoinColumn(name = "picture_id")
@@ -32,11 +31,11 @@ public class Pharmacy implements java.io.Serializable {
 
     public Pharmacy() {}
 
-    public UUID getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(UUID id) {
+    public void setId(String id) {
         this.id = id;
     }
 

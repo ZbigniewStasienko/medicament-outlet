@@ -4,7 +4,7 @@ CREATE TABLE Picture (
 );
 
 CREATE TABLE Pharmacy (
-    id UUID PRIMARY KEY,
+    id TEXT PRIMARY KEY,
     picture_id UUID REFERENCES Picture(id),
     address TEXT NOT NULL,
     phone_number TEXT,
@@ -15,7 +15,7 @@ CREATE TABLE Pharmacy (
 
 CREATE TABLE Medicine (
     id UUID PRIMARY KEY,
-    pharmacy_id UUID REFERENCES Pharmacy(id),
+    pharmacy_id TEXT REFERENCES Pharmacy(id),
     picture_id UUID REFERENCES Picture(id),
     name TEXT NOT NULL,
     description TEXT,
@@ -32,15 +32,15 @@ CREATE TABLE Product (
 );
 
 CREATE TABLE "User" (
-    id UUID PRIMARY KEY,
+    id TEXT PRIMARY KEY,
     name TEXT NOT NULL,
     surname TEXT NOT NULL
 );
 
 CREATE TABLE Reservation (
     id UUID PRIMARY KEY,
-    user_id UUID REFERENCES "User"(id),
-    pharmacy_id UUID REFERENCES Pharmacy(id),
+    user_id TEXT REFERENCES "User"(id),
+    pharmacy_id TEXT REFERENCES Pharmacy(id),
     realization_date DATE,
     is_realized BOOLEAN,
     status INTEGER

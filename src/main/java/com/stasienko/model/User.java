@@ -7,9 +7,8 @@ import java.util.UUID;
 @Table(name="\"User\"")
 public class User implements java.io.Serializable {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(updatable = false, nullable = false)
-    private UUID id;
+    @Column(updatable = false, nullable = false, columnDefinition="TEXT")
+    private String id;
 
     @Column(name="name", nullable=false, columnDefinition="TEXT")
     private String name;
@@ -19,11 +18,11 @@ public class User implements java.io.Serializable {
 
     public User() {}
 
-    public UUID getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(UUID id) {
+    public void setId(String id) {
         this.id = id;
     }
 

@@ -23,7 +23,7 @@ public class ProductController {
     private MedicineService medicineService;
 
     @GetMapping("/{id}/add-product")
-    public String showAddProductForm(@PathVariable("id") UUID pharmacyId, Model model) {
+    public String showAddProductForm(@PathVariable("id") String pharmacyId, Model model) {
         model.addAttribute("product", new Product());
         model.addAttribute("pharmacyId", pharmacyId);
         model.addAttribute("medicines", medicineService.getMedicinesByPharmacy(pharmacyId));
@@ -73,7 +73,7 @@ public class ProductController {
 
     @PostMapping("/delete-product/{productId}")
     public String deleteProduct(@PathVariable("productId") UUID productId) {
-        UUID pharmacyID = productService.getProductById(productId).getMedicine().getPharmacy().getId();
+        String pharmacyID = productService.getProductById(productId).getMedicine().getPharmacy().getId();
         productService.deleteProductById(productId);
         return "redirect:/pharmacy/" + pharmacyID;
     }

@@ -9,6 +9,6 @@ import java.util.UUID;
 
 @Repository
 public interface ProductRepository extends JpaRepository<Product, UUID> {
-    List<Product> findByMedicine_Pharmacy_Id(UUID pharmacyId);
+    List<Product> findByMedicine_Pharmacy_Id(String pharmacyId);
     List<Product> findByMedicine_Id(UUID medicineId);
 }

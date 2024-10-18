@@ -6,6 +6,10 @@
 <body>
 <h1>Add New Pharmacy</h1>
 <form th:action="@{/admin/new}" method="post" enctype="multipart/form-data">
+
+    <label for="pharmacyId">Name:</label>
+    <input type="text" id="pharmacyId" name="pharmacyId" th:value="${pharmacy.id}"/><br/>
+
     <label for="name">Name:</label>
     <input type="text" id="name" name="name" th:value="${pharmacy.name}"/><br/>
 

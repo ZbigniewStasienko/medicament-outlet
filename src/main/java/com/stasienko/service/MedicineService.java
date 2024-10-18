@@ -18,7 +18,7 @@ public class MedicineService {
     @Autowired
     private ProductService productService;
 
-    public List<Medicine> getMedicinesByPharmacy(UUID pharmacyId) {
+    public List<Medicine> getMedicinesByPharmacy(String pharmacyId) {
         return medicineRepository.findByPharmacyId(pharmacyId);
     }
 

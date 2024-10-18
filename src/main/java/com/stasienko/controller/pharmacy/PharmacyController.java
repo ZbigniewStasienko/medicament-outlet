@@ -27,7 +27,7 @@ public class PharmacyController {
     private MedicineService medicineService;
 
     @GetMapping("/{id}")
-    public String viewPharmacyProducts(@PathVariable("id") UUID pharmacyId, Model model) {
+    public String viewPharmacyProducts(@PathVariable("id") String pharmacyId, Model model) {
         List<Product> products = productService.getProductsBasedOnPharmacyId(pharmacyId);
         model.addAttribute("pharmacy", pharmacyService.getPharmacyById(pharmacyId));
         model.addAttribute("products", products);
@@ -35,7 +35,7 @@ public class PharmacyController {
     }
 
     @GetMapping("/{id}/list-medicines")
-    public String showAllPharmacyMedicines(@PathVariable("id") UUID pharmacyId, Model model) {
+    public String showAllPharmacyMedicines(@PathVariable("id") String pharmacyId, Model model) {
         List<Medicine> medicines = medicineService.getMedicinesByPharmacy(pharmacyId);
         model.addAttribute("medicines", medicines);
         model.addAttribute("pharmacyId", pharmacyId);

@@ -36,7 +36,7 @@ public class MedicineController {
     }
 
     @PostMapping("/{id}/add-medicine")
-    public String saveMedicine(@PathVariable("id") UUID pharmacyId, @ModelAttribute Medicine medicine,
+    public String saveMedicine(@PathVariable("id") String pharmacyId, @ModelAttribute Medicine medicine,
                                @RequestParam("file") MultipartFile file) throws IOException {
         if (!file.isEmpty()) {
             Picture savedPicture = pictureService.addPicture(file);
@@ -79,7 +79,7 @@ public class MedicineController {
 
     @PostMapping("/delete-medicine")
     public String deleteMedicine(@RequestParam("medicineId") UUID medicineId) {
-        UUID pharmacyId = medicineService.getMedicineById(medicineId).getPharmacy().getId();
+        String pharmacyId = medicineService.getMedicineById(medicineId).getPharmacy().getId();
         medicineService.deleteMedicineById(medicineId);
         return "redirect:/pharmacy/" + pharmacyId;
     }

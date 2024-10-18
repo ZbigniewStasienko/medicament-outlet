@@ -17,7 +17,7 @@ public class ProductService {
         return productRepository.save(product);
     }
 
-    public List<Product> getProductsBasedOnPharmacyId(UUID pharmacyId) {
+    public List<Product> getProductsBasedOnPharmacyId(String pharmacyId) {
         return productRepository.findByMedicine_Pharmacy_Id(pharmacyId);
     }
 
