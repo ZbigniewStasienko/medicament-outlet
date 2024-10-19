@@ -22,7 +22,7 @@ public class CustomAuthenticationSuccessHandler implements AuthenticationSuccess
 
         if (isAdmin) {
             response.sendRedirect("/admin");
-        } if (isPharmacy) {
+        } else if (isPharmacy) {
             response.sendRedirect("/pharmacy");
         }else {
             response.sendRedirect("/");
