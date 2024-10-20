@@ -31,7 +31,8 @@ public class SecurityConfiguration {
                 .requestCache(cache -> cache.requestCache(requestCache))
                 .authorizeHttpRequests(a -> a
                         .requestMatchers("/", "/pictures/**", "/admin", "/favicon.ico", "/error", "/pharmacy",
-                                "/reservation/addToCart", "/reservation/showCart").permitAll()
+                                "/reservation/addToCart", "/reservation/showCart", "/reservation/deleteProducts", "/reservation/deleteProduct",
+                                "/reservation/purchase").permitAll()
                         .anyRequest().authenticated()
                 )
                 .exceptionHandling(e ->
