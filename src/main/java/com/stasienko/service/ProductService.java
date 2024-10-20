@@ -36,5 +36,13 @@ public class ProductService {
     public List<Product> getAllProducts() {
         return productRepository.findAll();
     }
+
+    public Product updateProductAvailability(UUID productId, boolean isReserved) {
+        Product product = getProductById(productId);
+        product.setIsReserved(isReserved);
+        saveProduct(product);
+        return product;
+    }
+
 }
 
