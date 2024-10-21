@@ -29,14 +29,14 @@ public class MedicineController {
     private PictureService pictureService;
 
     @GetMapping("/add-medicine")
-    public String showAddMedicineForm(@RequestParam("pharmacyId") String pharmacyId, Model model) {
+    public String showAddMedicineForm(@RequestParam("pharmacyId") UUID pharmacyId, Model model) {
         model.addAttribute("medicine", new Medicine());
         model.addAttribute("pharmacyId", pharmacyId);
         return "pharmacy/add-medicine";
     }
 
     @PostMapping("/add-medicine")
-    public String saveMedicine(@RequestParam("pharmacyId") String pharmacyId, @ModelAttribute Medicine medicine,
+    public String saveMedicine(@RequestParam("pharmacyId") UUID pharmacyId, @ModelAttribute Medicine medicine,
                                @RequestParam("file") MultipartFile file) throws IOException {
         if (!file.isEmpty()) {
             Picture savedPicture = pictureService.addPicture(file);
@@ -79,7 +79,6 @@ public class MedicineController {
 
     @PostMapping("/delete-medicine")
     public String deleteMedicine(@RequestParam("medicineId") UUID medicineId) {
-        String pharmacyId = medicineService.getMedicineById(medicineId).getPharmacy().getId();
         medicineService.deleteMedicineById(medicineId);
         return "redirect:/pharmacy";
     }

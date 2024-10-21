@@ -21,7 +21,7 @@ public class PharmacyService {
         return pharmacyRepository.findAll();
     }
 
-    public Pharmacy getPharmacyById(String id) {
+    public Pharmacy getPharmacyById(UUID id) {
         return pharmacyRepository.findById(id).orElse(null);
     }
 
@@ -29,7 +29,7 @@ public class PharmacyService {
         return pharmacyRepository.save(pharmacy);
     }
 
-    public Pharmacy updatePharmacy(String id, Pharmacy updatedPharmacy) {
+    public Pharmacy updatePharmacy(UUID id, Pharmacy updatedPharmacy) {
         return pharmacyRepository.findById(id)
                 .map(pharmacy -> {
                     pharmacy.setAddress(updatedPharmacy.getAddress());
@@ -45,7 +45,7 @@ public class PharmacyService {
                 });
     }
 
-    public void deletePharmacy(String id) {
+    public void deletePharmacy(UUID id) {
         List<Medicine> toDel = medicineService.getMedicinesByPharmacy(id);
         for (Medicine toDelete : toDel) {
             medicineService.deleteMedicineById(toDelete.getId());

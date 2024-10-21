@@ -4,6 +4,7 @@ import com.stasienko.model.Medicine;
 import com.stasienko.model.Product;
 import com.stasienko.service.MedicineService;
 import com.stasienko.service.ProductService;
+import com.stasienko.service.UUIDConverter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.oauth2.core.user.OAuth2User;
@@ -29,7 +30,8 @@ public class ProductController {
     public String showAddProductForm(@AuthenticationPrincipal OAuth2User principal, Model model) {
         if (principal != null) {
             model.addAttribute("product", new Product());
-            String pharmacyId = principal.getAttribute("sub");
+            String tempId = principal.getAttribute("user_id");
+            UUID pharmacyId = UUIDConverter.convertStringToUUID(tempId);
             model.addAttribute("pharmacyId", pharmacyId);
             model.addAttribute("medicines", medicineService.getMedicinesByPharmacy(pharmacyId));
         }
@@ -78,7 +80,6 @@ public class ProductController {
 
     @PostMapping("/delete-product/{productId}")
     public String deleteProduct(@PathVariable("productId") UUID productId) {
-        String pharmacyID = productService.getProductById(productId).getMedicine().getPharmacy().getId();
         productService.deleteProductById(productId);
         return "redirect:/pharmacy";
     }

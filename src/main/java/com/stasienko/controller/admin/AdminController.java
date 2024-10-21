@@ -15,6 +15,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.UUID;
 
 @Controller
 @RequestMapping("/admin")
@@ -51,14 +52,14 @@ public class AdminController {
     }
 
     @GetMapping("/edit/{id}")
-    public String showEditPharmacyForm(@PathVariable("id") String id, Model model) {
+    public String showEditPharmacyForm(@PathVariable("id") UUID id, Model model) {
         Pharmacy pharmacy = pharmacyService.getPharmacyById(id);
         model.addAttribute("pharmacy", pharmacy);
         return "admin/edit-pharmacy";
     }
 
     @PostMapping("/edit/{id}")
-    public String updatePharmacy(@PathVariable("id") String id,
+    public String updatePharmacy(@PathVariable("id") UUID id,
                                  @ModelAttribute("pharmacy") Pharmacy pharmacy,
                                  @RequestParam("file") MultipartFile file) throws IOException {
 
@@ -76,7 +77,7 @@ public class AdminController {
     }
 
     @GetMapping("/delete/{id}")
-    public String deletePharmacy(@PathVariable("id") String id) {
+    public String deletePharmacy(@PathVariable("id") UUID id) {
         pharmacyService.deletePharmacy(id);
         return "redirect:/admin";
     }
