@@ -32,14 +32,14 @@ CREATE TABLE Product (
 );
 
 CREATE TABLE "User" (
-    id TEXT PRIMARY KEY,
+    id UUID PRIMARY KEY,
     name TEXT NOT NULL,
     surname TEXT NOT NULL
 );
 
 CREATE TABLE Reservation (
     id UUID PRIMARY KEY,
-    user_id TEXT REFERENCES "User"(id),
+    user_id UUID REFERENCES "User"(id),
     pharmacy_id UUID REFERENCES Pharmacy(id),
     realization_date DATE,
     is_realized BOOLEAN,
