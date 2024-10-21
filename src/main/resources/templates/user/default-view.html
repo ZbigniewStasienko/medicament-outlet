@@ -6,13 +6,13 @@
   <nav>
     <ul>
       <li>
-        <div class="container" th:if="${isUser}">
+        <div class="container">
           <a th:href="@{/reservation/showCart}">Show Cart</a>
         </div>
       </li>
       <li>
         <div class="container" th:if="${!isUser}">
-          <a href="/oauth2/authorization/secureauthn?idp=users">login</a>
+          <a href="/oauth2/authorization/secureauthn?idp=users">Login</a>
         </div>
       </li>
     </ul>

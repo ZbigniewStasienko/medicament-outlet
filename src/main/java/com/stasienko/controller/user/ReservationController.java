@@ -1,9 +1,14 @@
 package com.stasienko.controller.user;
 
 import com.stasienko.model.Product;
+import com.stasienko.security.AuthorizationService;
 import com.stasienko.service.ProductService;
+import com.stasienko.service.ReservationService;
+import com.stasienko.service.UUIDConverter;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -18,6 +23,9 @@ public class ReservationController {
 
     @Autowired
     ProductService productService;
+
+    @Autowired
+    ReservationService reservationService;
 
     @PostMapping("/addToCart")
     public String addProductToCart(@RequestParam("productId") UUID productId, HttpSession session) {
@@ -60,10 +68,20 @@ public class ReservationController {
 
 
     @PostMapping("/purchase")
-    public String purchaseCart(HttpSession session) {
+    public String purchaseCart(HttpSession session, @AuthenticationPrincipal OAuth2User principal, Model model) {
+        if (!AuthorizationService.isUser(principal)) {
+            List<Product> productsInCart = (List<Product>) session.getAttribute("inCart");
+            model.addAttribute("productsInCart", productsInCart);
+            model.addAttribute("error", "To purchase products you have to be logged in!");
+            return "user/cart";
+        }
         List<Product> productsInCart = (List<Product>) session.getAttribute("inCart");
+        String tempId = principal.getAttribute("user_id");
+        UUID userId = UUIDConverter.convertStringToUUID(tempId);
+        int numOfPharmacies = reservationService.saveProducts(userId, productsInCart);
         session.removeAttribute("inCart");
-        return "redirect:/";
+        model.addAttribute("numberOfPharmacies", numOfPharmacies);
+        return "user/successful-purchase";
     }
 
     @PostMapping("/deleteProducts")

@@ -31,7 +31,7 @@ CREATE TABLE Product (
     price DOUBLE PRECISION
 );
 
-CREATE TABLE "User" (
+CREATE TABLE users (
     id UUID PRIMARY KEY,
     name TEXT NOT NULL,
     surname TEXT NOT NULL
@@ -39,7 +39,7 @@ CREATE TABLE "User" (
 
 CREATE TABLE Reservation (
     id UUID PRIMARY KEY,
-    user_id UUID REFERENCES "User"(id),
+    user_id UUID REFERENCES users(id),
     pharmacy_id UUID REFERENCES Pharmacy(id),
     realization_date DATE,
     is_realized BOOLEAN,
@@ -49,6 +49,5 @@ CREATE TABLE Reservation (
 CREATE TABLE ReservedProduct (
     id UUID PRIMARY KEY,
     product_id UUID REFERENCES Product(id),
-    reservation_id UUID REFERENCES Reservation(id),
-    amount INTEGER
+    reservation_id UUID REFERENCES Reservation(id)
 );

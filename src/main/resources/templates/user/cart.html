@@ -51,6 +51,10 @@
     </tbody>
 </table>
 
+<div th:if="${error}">
+    <p th:text="${error}" style="color:red;"></p>
+</div>
+
 <form th:action="@{/reservation/purchase}" method="post">
     <button type="submit">Purchase</button>
 </form>

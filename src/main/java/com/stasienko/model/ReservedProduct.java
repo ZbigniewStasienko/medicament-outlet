@@ -4,7 +4,7 @@ import jakarta.persistence.*;
 import java.util.UUID;
 
 @Entity
-@Table(name="reserved_product")
+@Table(name="reservedproduct")
 public class ReservedProduct implements java.io.Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -18,9 +18,6 @@ public class ReservedProduct implements java.io.Serializable {
     @ManyToOne
     @JoinColumn(name = "reservation_id")
     private Reservation reservation;
-
-    @Column(name="amount")
-    private Integer amount;
 
     public ReservedProduct() {}
 
@@ -38,14 +35,6 @@ public class ReservedProduct implements java.io.Serializable {
 
     public void setProduct(Product product) {
         this.product = product;
-    }
-
-    public Integer getAmount() {
-        return amount;
-    }
-
-    public void setAmount(Integer amount) {
-        this.amount = amount;
     }
 
     public Reservation getReservation() {
