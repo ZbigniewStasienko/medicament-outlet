@@ -40,8 +40,9 @@ public class ReservationController {
     }
 
     @GetMapping("/showCart")
-    public String showCart(Model model, HttpSession session) {
+    public String showCart(Model model, HttpSession session, @AuthenticationPrincipal OAuth2User principal) {
         List<Product> productsInCart = (List<Product>) session.getAttribute("inCart");
+        model.addAttribute("isUser", AuthorizationService.isUser(principal));
         model.addAttribute("productsInCart", productsInCart);
         return "user/cart";
     }
@@ -73,6 +74,7 @@ public class ReservationController {
             List<Product> productsInCart = (List<Product>) session.getAttribute("inCart");
             model.addAttribute("productsInCart", productsInCart);
             model.addAttribute("error", "To purchase products you have to be logged in!");
+            model.addAttribute("isUser", false);
             return "user/cart";
         }
         List<Product> productsInCart = (List<Product>) session.getAttribute("inCart");

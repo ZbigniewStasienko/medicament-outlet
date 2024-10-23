@@ -1,6 +1,19 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <body>
+
+<header>
+    <nav>
+        <ul>
+            <li>
+                <div class="container" th:if="${!isUser}">
+                    <a href="/oauth2/authorization/secureauthn?idp=users">Login</a>
+                </div>
+            </li>
+        </ul>
+    </nav>
+</header>
+
 <h1>User Cart</h1>
 <table border="1">
     <thead>
