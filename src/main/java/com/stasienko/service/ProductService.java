@@ -2,6 +2,7 @@ package com.stasienko.service;
 
 import com.stasienko.model.Product;
 import com.stasienko.repository.ProductRepository;
+import jakarta.annotation.PreDestroy;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 ;import java.util.List;
@@ -44,5 +45,16 @@ public class ProductService {
         return product;
     }
 
+    public List<Product> getProductsFromCart() {
+        return productRepository.findReservedProductsNotInReservedProductTable();
+    }
+
+    @PreDestroy
+    public void onShutdown() {
+        List<Product> toBeRestored = getProductsFromCart();
+        for (Product product : toBeRestored) {
+            updateProductAvailability(product.getId(), false);
+        }
+    }
 }
 
