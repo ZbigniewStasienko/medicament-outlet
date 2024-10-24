@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.util.List;
 import java.util.UUID;
 
 @Controller
@@ -27,6 +28,14 @@ public class MedicineController {
 
     @Autowired
     private PictureService pictureService;
+
+    @GetMapping("/list-medicines")
+    public String showAllPharmacyMedicines(@RequestParam("pharmacyId") UUID pharmacyId, Model model) {
+        List<Medicine> medicines = medicineService.getMedicinesByPharmacy(pharmacyId);
+        model.addAttribute("medicines", medicines);
+        model.addAttribute("pharmacyId", pharmacyId);
+        return "pharmacy/list-medicines";
+    }
 
     @GetMapping("/add-medicine")
     public String showAddMedicineForm(@RequestParam("pharmacyId") UUID pharmacyId, Model model) {

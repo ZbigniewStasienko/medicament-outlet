@@ -18,6 +18,10 @@
         <button>Modify Medicines</button>
     </a>
 
+    <a th:href="@{/pharmacy/list-reservations(pharmacyId=${pharmacy.id})}">
+        <button>Show Reservations</button>
+    </a>
+
 
     <h2>Products</h2>
     <a th:href="@{/pharmacy/add-product}">Add Product</a>

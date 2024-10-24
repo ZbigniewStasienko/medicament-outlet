@@ -45,4 +45,8 @@ public class ReservationService {
         }
         return reservations.size();
     }
+
+    public List<Reservation> getReservationByPharmacyId(UUID pharmacyId) {
+        return reservationRepository.findByPharmacyId(pharmacyId);
+    }
 }

@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <title>Pharmacy Reservations</title>
+  <link rel="stylesheet" th:href="@{/css/style.css}" />
+</head>
+<body>
+
+<h1>Reservations for Pharmacy</h1>
+
+<div th:if="${reservations != null}">
+  <div th:each="reservation : ${reservations}">
+    <p>Realization Date:
+      <span th:text="${#dates.format(reservation.realizationDate, 'yyyy-MM-dd')}"></span>
+    </p>
+    <p>Status: <span th:text="${reservation.status}"></span></p>
+    <p>Is Realized:
+      <span th:if="${reservation.realized}" th:text="'Yes'"></span>
+      <span th:if="${!reservation.realized}" th:text="'No'"></span>
+    </p>
+    <div th:if="${products[reservation.id] != null}">
+      <h3>Products in this Reservation:</h3>
+      <ul>
+        <li th:each="product : ${products[reservation.id]}">
+          <span th:text="${product.medicine.name}"></span>
+        </li>
+      </ul>
+    </div>
+    <div th:if="${products[reservation.id] == null}">
+      <p>No products assigned to this reservation.</p>
+    </div>
+
+    <hr/>
+  </div>
+</div>
+
+<div th:if="${reservations == null || reservations.isEmpty()}">
+  <p>No reservations found for this pharmacy.</p>
+</div>
+
+</body>
+</html>

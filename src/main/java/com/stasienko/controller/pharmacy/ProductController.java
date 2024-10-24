@@ -2,7 +2,9 @@ package com.stasienko.controller.pharmacy;
 
 import com.stasienko.model.Medicine;
 import com.stasienko.model.Product;
+import com.stasienko.security.AuthorizationService;
 import com.stasienko.service.MedicineService;
+import com.stasienko.service.PharmacyService;
 import com.stasienko.service.ProductService;
 import com.stasienko.service.UUIDConverter;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +27,21 @@ public class ProductController {
 
     @Autowired
     private MedicineService medicineService;
+
+    @Autowired
+    private PharmacyService pharmacyService;
+
+    @GetMapping()
+    public String viewPharmacyProducts(@AuthenticationPrincipal OAuth2User principal, Model model) {
+        if (principal != null) {
+            UUID pharmacyId = UUIDConverter.convertToUUID(principal);
+            List<Product> products = productService.getProductsBasedOnPharmacyId(pharmacyId);
+            model.addAttribute("pharmacy", pharmacyService.getPharmacyById(pharmacyId));
+            model.addAttribute("products", products);
+        }
+        model.addAttribute("isPharmacy", AuthorizationService.isPharmacy(principal));
+        return "pharmacy/pharmacy-info";
+    }
 
     @GetMapping("/add-product")
     public String showAddProductForm(@AuthenticationPrincipal OAuth2User principal, Model model) {

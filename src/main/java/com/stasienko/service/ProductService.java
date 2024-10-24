@@ -1,11 +1,13 @@
 package com.stasienko.service;
 
 import com.stasienko.model.Product;
+import com.stasienko.model.ReservedProduct;
 import com.stasienko.repository.ProductRepository;
 import jakarta.annotation.PreDestroy;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-;import java.util.List;
+;import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 @Service
@@ -47,6 +49,14 @@ public class ProductService {
 
     public List<Product> getProductsFromCart() {
         return productRepository.findReservedProductsNotInReservedProductTable();
+    }
+
+    public List<Product> getProductsForReservation(List<ReservedProduct> reservedProducts) {
+        List<Product> out = new ArrayList<>();
+        for (ReservedProduct reservedProduct : reservedProducts) {
+            out.add(getProductById(reservedProduct.getProduct().getId()));
+        }
+        return out;
     }
 
     @PreDestroy
