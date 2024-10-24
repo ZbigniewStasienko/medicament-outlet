@@ -19,7 +19,8 @@
 
         <form th:action="@{/pharmacy/updateReservationStatus}" method="post">
             <input type="hidden" name="reservationId" th:value="${reservation.id}" />
-            <p>Status:
+            <p th:style="${reservation.status == 0} ? 'color:red;' : 'color:green;'">
+                Status:
                 <select name="status" id="status-${reservation.id}">
                     <option value="0" th:selected="${reservation.status == 0}">waiting for completion</option>
                     <option value="1" th:selected="${reservation.status == 1}">ready to collect</option>
