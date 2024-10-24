@@ -30,8 +30,7 @@ public class ProductController {
     public String showAddProductForm(@AuthenticationPrincipal OAuth2User principal, Model model) {
         if (principal != null) {
             model.addAttribute("product", new Product());
-            String tempId = principal.getAttribute("user_id");
-            UUID pharmacyId = UUIDConverter.convertStringToUUID(tempId);
+            UUID pharmacyId = UUIDConverter.convertToUUID(principal);
             model.addAttribute("pharmacyId", pharmacyId);
             model.addAttribute("medicines", medicineService.getMedicinesByPharmacy(pharmacyId));
         }

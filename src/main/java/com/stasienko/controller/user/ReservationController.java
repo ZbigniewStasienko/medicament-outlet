@@ -78,8 +78,7 @@ public class ReservationController {
             return "user/cart";
         }
         List<Product> productsInCart = (List<Product>) session.getAttribute("inCart");
-        String tempId = principal.getAttribute("user_id");
-        UUID userId = UUIDConverter.convertStringToUUID(tempId);
+        UUID userId = UUIDConverter.convertToUUID(principal);
         int numOfPharmacies = reservationService.saveProducts(userId, productsInCart);
         session.removeAttribute("inCart");
         model.addAttribute("numberOfPharmacies", numOfPharmacies);

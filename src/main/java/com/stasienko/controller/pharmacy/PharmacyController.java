@@ -33,8 +33,7 @@ public class PharmacyController {
     @GetMapping()
     public String viewPharmacyProducts(@AuthenticationPrincipal OAuth2User principal, Model model) {
         if (principal != null) {
-            String tempId = principal.getAttribute("user_id");
-            UUID pharmacyId = UUIDConverter.convertStringToUUID(tempId);
+            UUID pharmacyId = UUIDConverter.convertToUUID(principal);
             List<Product> products = productService.getProductsBasedOnPharmacyId(pharmacyId);
             model.addAttribute("pharmacy", pharmacyService.getPharmacyById(pharmacyId));
             model.addAttribute("products", products);

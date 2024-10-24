@@ -1,14 +1,18 @@
 package com.stasienko.service;
 
+import org.springframework.security.oauth2.core.user.OAuth2User;
+
 import java.util.UUID;
 
 public class UUIDConverter {
 
-    public static UUID convertStringToUUID(String uuidString) {
-        String cleanedUUIDString = uuidString.replaceAll("-", "");
+    public static UUID convertToUUID(OAuth2User principal) {
+        String inputId = principal.getAttribute("user_id");
+        String cleanedUUIDString = inputId.replaceAll("-", "");
 
         if (cleanedUUIDString.length() != 32) {
-            System.out.println("Invalid UUID length: " + uuidString);
+            System.out.println("Invalid UUID length: " + inputId);
+
             return null;
         }
 

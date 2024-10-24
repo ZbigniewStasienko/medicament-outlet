@@ -30,8 +30,7 @@ public class UserController {
     @GetMapping()
     public String viewAllProducts(Model model, @AuthenticationPrincipal OAuth2User principal) {
         if (AuthorizationService.isUser(principal)) {
-            String tempId = principal.getAttribute("user_id");
-            UUID userId = UUIDConverter.convertStringToUUID(tempId);
+            UUID userId = UUIDConverter.convertToUUID(principal);
             if (userService.findUserById(userId) == null) {
                 User user = new User();
                 user.setId(userId);
