@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -45,5 +46,11 @@ public class ReservationsController {
         model.addAttribute("products", products);
         model.addAttribute("pharmacyId", pharmacyId);
         return "pharmacy/list-reservations";
+    }
+
+    @PostMapping("/updateReservationStatus")
+    public String updateStatus(@RequestParam("reservationId") UUID reservationId, @RequestParam("status") String status) {
+        Reservation reservation = reservationService.updateReservationStatus(reservationId, Integer.parseInt(status));
+        return "redirect:/pharmacy/list-reservations?pharmacyId=" + reservation.getPharmacy().getId();
     }
 }

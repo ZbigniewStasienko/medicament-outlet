@@ -49,4 +49,10 @@ public class ReservationService {
     public List<Reservation> getReservationByPharmacyId(UUID pharmacyId) {
         return reservationRepository.findByPharmacyId(pharmacyId);
     }
+
+    public Reservation updateReservationStatus(UUID reservationId, Integer status) {
+        Reservation foundReservation = reservationRepository.findById(reservationId).orElse(null);
+        foundReservation.setStatus(status);
+        return reservationRepository.save(foundReservation);
+    }
 }
