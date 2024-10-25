@@ -45,8 +45,8 @@ public class CustomAuthorizationRequestResolver implements OAuth2AuthorizationRe
     private OAuth2AuthorizationRequest customAuthorizationRequest(OAuth2AuthorizationRequest authorizationRequest, IDP requestedIDP) {
         Map<String, Object> additionalParameters = new LinkedHashMap<>(authorizationRequest.getAdditionalParameters());
         switch (requestedIDP) {
-            case USERS -> additionalParameters.put("idp_hint", "8f95d4d853ef4588a475c65c97f70019");
-            case PHARMACIES -> additionalParameters.put("idp_hint", "639a76563b304a3da2412308987a7025");
+            case USERS -> additionalParameters.put("idp_hint", "8573d8734b1b4d89aaa7745ce5a2b8dc");
+            case PHARMACIES -> additionalParameters.put("idp_hint", "951a250761be451489390b1f94799fa9");
         }
         return OAuth2AuthorizationRequest.from(authorizationRequest)
                 .additionalParameters(additionalParameters)

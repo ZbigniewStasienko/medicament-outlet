@@ -30,7 +30,7 @@ public class AuthorizationService {
             return false;
         }
         String idp = principal.getAttribute("idp");
-        return idp != null && idp.equals("8f95d4d853ef4588a475c65c97f70019");
+        return idp != null && idp.equals("8573d8734b1b4d89aaa7745ce5a2b8dc");
     }
 
 }
