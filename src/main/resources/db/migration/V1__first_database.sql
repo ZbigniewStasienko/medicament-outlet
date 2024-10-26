@@ -10,6 +10,8 @@ CREATE TABLE Pharmacy (
     phone_number TEXT,
     name TEXT NOT NULL,
     email TEXT,
+    latitude TEXT,
+    longitude TEXT,
     opening_hours TEXT
 );
 

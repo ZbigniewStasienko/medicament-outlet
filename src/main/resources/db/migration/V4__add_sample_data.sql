@@ -1,7 +1,7 @@
-INSERT INTO Pharmacy (id, picture_id, address, phone_number, name, email, opening_hours) VALUES
-('4c0d0a34-c4bd-4118-b982-311aa27dc32c', '00000000-0000-0000-0000-000000000011', '789 Elm Street', '555-7890', 'Pharmacy One', 'support@pharmacy.com', 'Mon-Sun 7am-9pm'),
-('00000000-0000-0000-0000-000000000004', '00000000-0000-0000-0000-000000000012', '1010 Oak Avenue', '555-1010', 'Pharmacy Two', 'contact@pharmacy.com', 'Mon-Fri 8am-6pm'),
-('00000000-0000-0000-0000-000000000005', '00000000-0000-0000-0000-000000000013', '202 Maple Road', '555-2020', 'Pharmacy Three', 'info@pharmacy.com', '24/7');
+INSERT INTO Pharmacy (id, picture_id, address, phone_number, name, email, latitude, longitude, opening_hours) VALUES
+('4c0d0a34-c4bd-4118-b982-311aa27dc32c', '00000000-0000-0000-0000-000000000011', '789 Elm Street', '555-7890', 'Pharmacy One', 'support@pharmacy.com', '51.1115269', '17.104899', 'Mon-Sun 7am-9pm'),
+('00000000-0000-0000-0000-000000000004', '00000000-0000-0000-0000-000000000012', '1010 Oak Avenue', '555-1010', 'Pharmacy Two', 'contact@pharmacy.com', '51.1115279', '17.104999', 'Mon-Fri 8am-6pm'),
+('00000000-0000-0000-0000-000000000005', '00000000-0000-0000-0000-000000000013', '202 Maple Road', '555-2020', 'Pharmacy Three', 'info@pharmacy.com', '51.1115369', '17.105899',  '24/7');
 
 INSERT INTO Medicine (id, pharmacy_id, picture_id, name, description, size) VALUES
 ('00000000-0000-0000-0000-000000000013', '4c0d0a34-c4bd-4118-b982-311aa27dc32c', '00000000-0000-0000-0000-000000000001','Paracetamol', 'Fever reducer', '500mg'),

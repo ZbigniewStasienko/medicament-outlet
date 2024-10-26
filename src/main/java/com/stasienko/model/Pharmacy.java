@@ -27,6 +27,12 @@ public class Pharmacy implements java.io.Serializable {
     @Column(name="email", columnDefinition="TEXT")
     private String email;
 
+    @Column(name="latitude", columnDefinition="TEXT")
+    private String latitude;
+
+    @Column(name="longitude", columnDefinition="TEXT")
+    private String longitude;
+
     @Column(name="opening_hours", columnDefinition="TEXT")
     private String openingHours;
 
@@ -86,5 +92,21 @@ public class Pharmacy implements java.io.Serializable {
 
     public void setOpeningHours(String openingHours) {
         this.openingHours = openingHours;
+    }
+
+    public String getLongitude() {
+        return longitude;
+    }
+
+    public void setLongitude(String longitude) {
+        this.longitude = longitude;
+    }
+
+    public String getLatitude() {
+        return latitude;
+    }
+
+    public void setLatitude(String latitude) {
+        this.latitude = latitude;
     }
 }

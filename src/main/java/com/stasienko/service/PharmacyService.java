@@ -36,6 +36,8 @@ public class PharmacyService {
                     pharmacy.setPhoneNumber(updatedPharmacy.getPhoneNumber());
                     pharmacy.setName(updatedPharmacy.getName());
                     pharmacy.setEmail(updatedPharmacy.getEmail());
+                    pharmacy.setLatitude(updatedPharmacy.getLatitude());
+                    pharmacy.setLongitude(updatedPharmacy.getLongitude());
                     pharmacy.setOpeningHours(updatedPharmacy.getOpeningHours());
                     pharmacy.setPicture(updatedPharmacy.getPicture());
                     return pharmacyRepository.save(pharmacy);
