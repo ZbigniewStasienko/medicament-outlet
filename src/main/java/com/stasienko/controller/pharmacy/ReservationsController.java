@@ -59,4 +59,11 @@ public class ReservationsController {
         Reservation reservation = reservationService.updateReservationStatus(reservationId, 3);
         return "redirect:/pharmacy/list-reservations?pharmacyId=" + reservation.getPharmacy().getId();
     }
+
+    @PostMapping("/deleteReservation")
+    public String deleteReservation(@RequestParam("reservationId") UUID reservationId) {
+        Reservation reservation = reservationService.updateReservationStatus(reservationId, 4);
+        reservationService.deleteReservation(reservationId);
+        return "redirect:/pharmacy/list-reservations?pharmacyId=" + reservation.getPharmacy().getId();
+    }
 }

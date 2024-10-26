@@ -9,7 +9,7 @@
 <h1>Reservations for Pharmacy</h1>
 
 <div th:if="${reservations != null}">
-    <div th:each="reservation, status : ${reservations}" th:if="${reservation.status != 3}">
+    <div th:each="reservation, status : ${reservations}" th:if="${reservation.status == 1 ||  reservation.status == 0}">
 
     <h2>Reservation <span th:text="${status.index + 1}"></span></h2>
 
@@ -32,6 +32,11 @@
         <form th:action="@{/pharmacy/reservationCollected}" method="post">
             <input type="hidden" name="reservationId" th:value="${reservation.id}"/>
             <button type="submit">Reservation collected</button>
+        </form>
+
+        <form th:action="@{/pharmacy/deleteReservation}" method="post">
+            <input type="hidden" name="reservationId" th:value="${reservation.id}"/>
+            <button type="submit">Delete Reservation - Time is up!</button>
         </form>
 
         <li th:each="product : ${products[reservation.id]}">

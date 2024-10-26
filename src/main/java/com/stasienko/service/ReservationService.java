@@ -71,9 +71,14 @@ public class ReservationService {
         }
     }
 
-    public UUID getPharmacyId(UUID reservationId) {
-        Reservation foundReservation = reservationRepository.findById(reservationId).orElse(null);
-        assert foundReservation != null;
-        return foundReservation.getPharmacy().getId();
+    public void deleteReservation(UUID reservationId) {
+        List<ReservedProduct> reservedProducts = reservedProductService.getProductsAssignedForReservation(reservationId);
+        List<Product> products = productService.getProductsForReservation(reservedProducts);
+        for (Product product : products) {
+            productService.updateProductAvailability(product.getId(), false);
+        }
+        for(ReservedProduct reservedProduct : reservedProducts) {
+            reservedProductService.deleteReservedProduct(reservedProduct.getId());
+        }
     }
 }
