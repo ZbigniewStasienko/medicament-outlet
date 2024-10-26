@@ -8,6 +8,7 @@ import jakarta.annotation.PreDestroy;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 ;import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.UUID;
 import java.util.regex.Matcher;
@@ -82,6 +83,12 @@ public class ProductService {
             return Double.compare(distanceToP1, distanceToP2);
         });
 
+        return products;
+    }
+
+    public List<Product> sortByPrice() {
+        List<Product> products = getAllProducts();
+        products.sort(Comparator.comparingDouble(Product::getPrice));
         return products;
     }
 
