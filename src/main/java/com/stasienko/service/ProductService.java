@@ -1,5 +1,6 @@
 package com.stasienko.service;
 
+import com.stasienko.model.Medicine;
 import com.stasienko.model.Product;
 import com.stasienko.model.ReservedProduct;
 import com.stasienko.repository.ProductRepository;
@@ -9,6 +10,9 @@ import org.springframework.stereotype.Service;
 ;import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+import java.util.stream.Collectors;
 
 @Service
 public class ProductService {
@@ -79,6 +83,29 @@ public class ProductService {
         });
 
         return products;
+    }
+
+    public List<Product> searchProducts(String searchTerm) {
+        List<Product> products = getAllProducts();
+        Pattern pattern = Pattern.compile(Pattern.quote(searchTerm), Pattern.CASE_INSENSITIVE);
+        return products.stream()
+                .filter(product -> {
+                    Medicine medicine = product.getMedicine();
+                    if (medicine == null) {
+                        return false;
+                    }
+
+                    String name = medicine.getName();
+                    String description = medicine.getDescription();
+                    if (name == null) name = "";
+                    if (description == null) description = "";
+
+                    Matcher nameMatcher = pattern.matcher(name);
+                    Matcher descriptionMatcher = pattern.matcher(description);
+
+                    return nameMatcher.find() || descriptionMatcher.find();
+                })
+                .collect(Collectors.toList());
     }
 
     private double calculateDistance(

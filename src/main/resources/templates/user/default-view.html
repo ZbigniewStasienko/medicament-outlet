@@ -19,6 +19,11 @@
   </nav>
 </header>
 
+<form th:action="@{/product/search}" method="get">
+  <input type="text" name="searchTerm" placeholder="Search products..." />
+  <button type="submit">Search</button>
+</form>
+
 <form id="locationForm" th:action="@{/product/sortedByLocation}" method="get">
   <input type="hidden" id="latitude" name="latitude" />
   <input type="hidden" id="longitude" name="longitude" />

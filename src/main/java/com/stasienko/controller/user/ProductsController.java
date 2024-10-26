@@ -47,4 +47,23 @@ public class ProductsController {
         model.addAttribute("isUser", AuthorizationService.isUser(principal));
         return "user/default-view";
     }
+
+    @GetMapping("/search")
+    public String searchProducts(@RequestParam("searchTerm") String searchTerm, @AuthenticationPrincipal OAuth2User principal,
+                                 Model model) {
+        if (AuthorizationService.isUser(principal)) {
+            UUID userId = UUIDConverter.convertToUUID(principal);
+            if (userService.findUserById(userId) == null) {
+                User user = new User();
+                user.setId(userId);
+                user.setName("test");
+                user.setSurname("surname");
+                userService.saveUser(user);
+            }
+        }
+        List<Product> products = productService.searchProducts(searchTerm);
+        model.addAttribute("products", products);
+        model.addAttribute("isUser", AuthorizationService.isUser(principal));
+        return "user/default-view";
+    }
 }

@@ -32,7 +32,7 @@ public class SecurityConfiguration {
                 .authorizeHttpRequests(a -> a
                         .requestMatchers("/", "/pictures/**", "/admin", "/favicon.ico", "/error", "/pharmacy",
                                 "/reservation/addToCart", "/reservation/showCart", "/reservation/deleteProducts", "/reservation/deleteProduct",
-                                "/reservation/purchase", "/product/sortedByLocation").permitAll()
+                                "/reservation/purchase", "/product/sortedByLocation", "/product/search").permitAll()
                         .anyRequest().authenticated()
                 )
                 .exceptionHandling(e ->
