@@ -3,6 +3,7 @@ package com.stasienko.service;
 import com.stasienko.model.Product;
 import com.stasienko.model.Pharmacy;
 import com.stasienko.model.Reservation;
+import com.stasienko.model.ReservedProduct;
 import com.stasienko.repository.ReservationRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -22,6 +23,9 @@ public class ReservationService {
 
     @Autowired
     ReservationRepository reservationRepository;
+
+    @Autowired
+    ProductService productService;
 
     public int saveProducts(UUID userId, List<Product> products) {
         Map<UUID, Reservation> reservations = new HashMap<>();
@@ -54,5 +58,22 @@ public class ReservationService {
         Reservation foundReservation = reservationRepository.findById(reservationId).orElse(null);
         foundReservation.setStatus(status);
         return reservationRepository.save(foundReservation);
+    }
+
+    public void reservationCollected(UUID reservationId) {
+        List<ReservedProduct> reservedProducts = reservedProductService.getProductsAssignedForReservation(reservationId);
+        for(ReservedProduct reservedProduct : reservedProducts) {
+            reservedProductService.deleteReservedProduct(reservedProduct.getId());
+        }
+        List<Product> products = productService.getProductsForReservation(reservedProducts);
+        for (Product product : products) {
+            productService.deleteProductById(product.getId());
+        }
+    }
+
+    public UUID getPharmacyId(UUID reservationId) {
+        Reservation foundReservation = reservationRepository.findById(reservationId).orElse(null);
+        assert foundReservation != null;
+        return foundReservation.getPharmacy().getId();
     }
 }

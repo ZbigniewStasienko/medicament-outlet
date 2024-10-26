@@ -26,4 +26,7 @@ public class ReservedProductService {
         return reservedProductRepository.findByReservationId(reservationId);
     }
 
+    public void deleteReservedProduct(UUID reservedProductId) {
+        reservedProductRepository.deleteById(reservedProductId);
+    }
 }

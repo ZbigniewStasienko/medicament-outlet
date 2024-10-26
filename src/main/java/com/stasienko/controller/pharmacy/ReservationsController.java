@@ -52,4 +52,11 @@ public class ReservationsController {
         Reservation reservation = reservationService.updateReservationStatus(reservationId, Integer.parseInt(status));
         return "redirect:/pharmacy/list-reservations?pharmacyId=" + reservation.getPharmacy().getId();
     }
+
+    @PostMapping("/reservationCollected")
+    public String collectedReservation(@RequestParam("reservationId") UUID reservationId) {
+        reservationService.reservationCollected(reservationId);
+        Reservation reservation = reservationService.updateReservationStatus(reservationId, 3);
+        return "redirect:/pharmacy/list-reservations?pharmacyId=" + reservation.getPharmacy().getId();
+    }
 }
