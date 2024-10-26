@@ -19,6 +19,12 @@
   </nav>
 </header>
 
+<form id="locationForm" th:action="@{/product/sortedByLocation}" method="get">
+  <input type="hidden" id="latitude" name="latitude" />
+  <input type="hidden" id="longitude" name="longitude" />
+  <button type="button" onclick="getUserLocation()">Sort by Location</button>
+</form>
+
 <table border="1">
   <thead>
   <tr>
@@ -64,6 +70,20 @@
   </tr>
   </tbody>
 </table>
+
+<script>
+  function getUserLocation() {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(position => {
+        document.getElementById("latitude").value = position.coords.latitude;
+        document.getElementById("longitude").value = position.coords.longitude;
+        document.getElementById("locationForm").submit();
+      });
+    } else {
+      console.log("Geolocation is not supported by this browser.");
+    }
+  }
+</script>
 
 </body>
 </html>

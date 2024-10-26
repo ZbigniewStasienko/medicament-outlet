@@ -21,7 +21,6 @@ import java.util.UUID;
 
 @Controller
 @RequestMapping("/pharmacy")
-
 public class ReservationsController {
 
     @Autowired
