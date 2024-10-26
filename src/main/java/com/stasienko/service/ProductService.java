@@ -109,23 +109,29 @@ public class ProductService {
 
     public List<Product> searchProducts(String searchTerm) {
         List<Product> products = getAllProducts();
-        Pattern pattern = Pattern.compile(Pattern.quote(searchTerm), Pattern.CASE_INSENSITIVE);
+
+        if (searchTerm == null || searchTerm.trim().isEmpty()) {
+            return products;
+        }
+
+        String[] searchWords = searchTerm.trim().split("\\s+");
+
         return products.stream()
                 .filter(product -> {
                     Medicine medicine = product.getMedicine();
                     if (medicine == null) {
                         return false;
                     }
+                    String name = medicine.getName() != null ? medicine.getName().toLowerCase() : "";
+                    String description = medicine.getDescription() != null ? medicine.getDescription().toLowerCase() : "";
 
-                    String name = medicine.getName();
-                    String description = medicine.getDescription();
-                    if (name == null) name = "";
-                    if (description == null) description = "";
-
-                    Matcher nameMatcher = pattern.matcher(name);
-                    Matcher descriptionMatcher = pattern.matcher(description);
-
-                    return nameMatcher.find() || descriptionMatcher.find();
+                    for (String word : searchWords) {
+                        String lowerCaseWord = word.toLowerCase();
+                        if (name.contains(lowerCaseWord) || description.contains(lowerCaseWord)) {
+                            return true;
+                        }
+                    }
+                    return false;
                 })
                 .collect(Collectors.toList());
     }
