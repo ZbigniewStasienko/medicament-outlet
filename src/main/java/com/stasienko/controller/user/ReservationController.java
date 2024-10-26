@@ -1,10 +1,12 @@
 package com.stasienko.controller.user;
 
 import com.stasienko.model.Product;
+import com.stasienko.model.User;
 import com.stasienko.security.AuthorizationService;
 import com.stasienko.service.ProductService;
 import com.stasienko.service.ReservationService;
 import com.stasienko.service.UUIDConverter;
+import com.stasienko.service.UserService;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -26,6 +28,9 @@ public class ReservationController {
 
     @Autowired
     ReservationService reservationService;
+
+    @Autowired
+    UserService userService;
 
     @PostMapping("/addToCart")
     public String addProductToCart(@RequestParam("productId") UUID productId, HttpSession session) {

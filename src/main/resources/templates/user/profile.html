@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>User Reservations</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}"/>
+</head>
+<body>
+
+<a>Manage profile</a>
+
+<h1>User Reservations</h1>
+
+<div th:if="${reservations != null}">
+    <div th:each="reservation, status : ${reservations}">
+
+        <h2>Reservation <span th:text="${status.index + 1}"></span></h2>
+
+        <p>Realization Date:
+            <span th:text="${#dates.format(reservation.realizationDate, 'yyyy-MM-dd')}"></span>
+        </p>
+
+        <li th:each="product : ${products[reservation.id]}">
+            <span th:text="${product.medicine.name}"></span>
+            <span th:text="${product.medicine.size}"></span>
+            <div th:if="${product.medicine.picture != null}">
+                <img th:src="@{'/pictures/' + ${product.medicine.picture.id}}" alt="Medicine Picture" width="100"
+                     height="100"/>
+            </div>
+            <div th:if="${product.medicine.picture == null}">
+                No medicine picture
+            </div>
+        </li>
+
+        <div th:if="${products[reservation.id] == null}">
+            <p>No products assigned to this reservation.</p>
+        </div>
+
+        <hr/>
+    </div>
+</div>
+
+<div th:if="${reservations == null || reservations.isEmpty()}">
+    <p>No reservations found for this user.</p>
+</div>
+
+</body>
+</html>

@@ -21,10 +21,10 @@
         <td th:text="${medicine.description}"></td>
         <td th:text="${medicine.size}"></td>
         <td>
-            <a th:href="@{/pharmacy/edit-medicine/{medicineId}(medicineId=${medicine.id})}">
+            <a th:href="@{/pharmacy/editMedicine/{medicineId}(medicineId=${medicine.id})}">
                 Edit
             </a>
-            <form th:action="@{/pharmacy/delete-medicine(medicineId=${medicine.id})}" method="post" style="display:inline;">
+            <form th:action="@{/pharmacy/deleteMedicine(medicineId=${medicine.id})}" method="post" style="display:inline;">
                 <button type="submit">Delete</button>
             </form>
         </td>

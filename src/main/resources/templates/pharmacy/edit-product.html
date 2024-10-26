@@ -6,7 +6,7 @@
 <body>
 <h1>Edit Product</h1>
 
-<form th:action="@{/pharmacy/edit-product/{productId}(productId=${product.id})}" method="post">
+<form th:action="@{/pharmacy/editProduct/{productId}(productId=${product.id})}" method="post">
 
   <label for="medicineName">Medicine:</label>
   <input type="text" id="medicineName" name="medicineName" th:value="${product.medicine.name}" readonly/><br/>

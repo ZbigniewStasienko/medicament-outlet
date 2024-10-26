@@ -1,9 +1,6 @@
 package com.stasienko.service;
 
-import com.stasienko.model.Product;
-import com.stasienko.model.Pharmacy;
-import com.stasienko.model.Reservation;
-import com.stasienko.model.ReservedProduct;
+import com.stasienko.model.*;
 import com.stasienko.repository.ReservationRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -36,8 +33,14 @@ public class ReservationService {
             if (reservations.containsKey(pharmacyId)) {
                 reservation = reservations.get(pharmacyId);
             } else {
+                User user = userService.findUserById(userId);
+                if(user == null) {
+                    user = new User();
+                    user.setId(userId);
+                    userService.saveUser(user);
+                }
                 reservation = new Reservation();
-                reservation.setUser(userService.findUserById(userId));
+                reservation.setUser(user);
                 reservation.setPharmacy(pharmacy);
                 reservation.setRealizationDate(Date.from(LocalDate.now().plusDays(3).atStartOfDay(ZoneId.systemDefault()).toInstant()));
                 reservation.setRealized(false);
@@ -54,10 +57,22 @@ public class ReservationService {
         return reservationRepository.findByPharmacyId(pharmacyId);
     }
 
+    public List<Reservation> getReservationByUserId(UUID userId) {
+        return reservationRepository.findByUserId(userId);
+    }
+
+    public List<Reservation> getAllReservations() {
+        return reservationRepository.findAll();
+    }
+
     public Reservation updateReservationStatus(UUID reservationId, Integer status) {
         Reservation foundReservation = reservationRepository.findById(reservationId).orElse(null);
         foundReservation.setStatus(status);
         return reservationRepository.save(foundReservation);
+    }
+
+    public UUID getPharmacyId(UUID reservationId) {
+        return Objects.requireNonNull(reservationRepository.findById(reservationId).orElse(null)).getPharmacy().getId();
     }
 
     public void reservationCollected(UUID reservationId) {
@@ -69,6 +84,7 @@ public class ReservationService {
         for (Product product : products) {
             productService.deleteProductById(product.getId());
         }
+        reservationRepository.deleteById(reservationId);
     }
 
     public void deleteReservation(UUID reservationId) {
@@ -80,5 +96,6 @@ public class ReservationService {
         for(ReservedProduct reservedProduct : reservedProducts) {
             reservedProductService.deleteReservedProduct(reservedProduct.getId());
         }
+        reservationRepository.deleteById(reservationId);
     }
 }

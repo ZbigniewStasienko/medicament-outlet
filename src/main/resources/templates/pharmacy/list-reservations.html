@@ -9,7 +9,7 @@
 <h1>Reservations for Pharmacy</h1>
 
 <div th:if="${reservations != null}">
-    <div th:each="reservation, status : ${reservations}" th:if="${reservation.status == 1 ||  reservation.status == 0}">
+    <div th:each="reservation, status : ${reservations}">
 
     <h2>Reservation <span th:text="${status.index + 1}"></span></h2>
 

@@ -11,6 +11,11 @@
         </div>
       </li>
       <li>
+        <div class="container" th:if="${isUser}">
+          <a th:href="@{/userProfile}">Manage profile</a>
+        </div>
+      </li>
+      <li>
         <div class="container" th:if="${!isUser}">
           <a href="/oauth2/authorization/secureauthn?idp=users">Login</a>
         </div>

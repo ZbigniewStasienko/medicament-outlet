@@ -80,7 +80,7 @@
 
     <div class="select-container">
         <h2>Select Existing Medicine</h2>
-        <form th:action="@{/pharmacy/add-product}" method="post">
+        <form th:action="@{/pharmacy/addProduct}" method="post">
             <table>
                 <thead>
                 <tr>
@@ -106,7 +106,7 @@
             </table>
 
             <div class="button-center">
-                <a th:href="@{/pharmacy/add-medicine(pharmacyId=${pharmacyId})}" class="add-button">Add New Medicine</a>
+                <a th:href="@{/pharmacy/addMedicine(pharmacyId=${pharmacyId})}" class="add-button">Add New Medicine</a>
             </div>
     </div>
 

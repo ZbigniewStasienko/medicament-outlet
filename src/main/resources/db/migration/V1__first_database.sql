@@ -34,9 +34,7 @@ CREATE TABLE Product (
 );
 
 CREATE TABLE users (
-    id UUID PRIMARY KEY,
-    name TEXT NOT NULL,
-    surname TEXT NOT NULL
+    id UUID PRIMARY KEY
 );
 
 CREATE TABLE Reservation (

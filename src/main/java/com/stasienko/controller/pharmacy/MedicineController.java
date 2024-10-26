@@ -29,7 +29,7 @@ public class MedicineController {
     @Autowired
     private PictureService pictureService;
 
-    @GetMapping("/list-medicines")
+    @GetMapping("/listMedicines")
     public String showAllPharmacyMedicines(@RequestParam("pharmacyId") UUID pharmacyId, Model model) {
         List<Medicine> medicines = medicineService.getMedicinesByPharmacy(pharmacyId);
         model.addAttribute("medicines", medicines);
@@ -37,14 +37,14 @@ public class MedicineController {
         return "pharmacy/list-medicines";
     }
 
-    @GetMapping("/add-medicine")
+    @GetMapping("/addMedicine")
     public String showAddMedicineForm(@RequestParam("pharmacyId") UUID pharmacyId, Model model) {
         model.addAttribute("medicine", new Medicine());
         model.addAttribute("pharmacyId", pharmacyId);
         return "pharmacy/add-medicine";
     }
 
-    @PostMapping("/add-medicine")
+    @PostMapping("/addMedicine")
     public String saveMedicine(@RequestParam("pharmacyId") UUID pharmacyId, @ModelAttribute Medicine medicine,
                                @RequestParam("file") MultipartFile file) throws IOException {
         if (!file.isEmpty()) {
@@ -60,14 +60,14 @@ public class MedicineController {
         return "redirect:/pharmacy/add-product";
     }
 
-    @GetMapping("/edit-medicine/{medicineId}")
+    @GetMapping("/editMedicine/{medicineId}")
     public String showEditMedicineForm(@PathVariable("medicineId") UUID medicineId, Model model) {
         Medicine toEdit = medicineService.getMedicineById(medicineId);
         model.addAttribute("medicine", toEdit);
         return "pharmacy/edit-medicine";
     }
 
-    @PostMapping("/edit-medicine/{id}")
+    @PostMapping("/editMedicine/{id}")
     public String editMedicine(@PathVariable("id") UUID medicineId,
                                @RequestParam("name") String name,
                                @RequestParam("description") String description,
@@ -86,7 +86,7 @@ public class MedicineController {
         return "redirect:/pharmacy";
     }
 
-    @PostMapping("/delete-medicine")
+    @PostMapping("/deleteMedicine")
     public String deleteMedicine(@RequestParam("medicineId") UUID medicineId) {
         medicineService.deleteMedicineById(medicineId);
         return "redirect:/pharmacy";

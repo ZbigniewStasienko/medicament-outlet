@@ -32,7 +32,7 @@ public class ReservationsController {
     @Autowired
     private ReservedProductService reservedProductService;
 
-    @GetMapping("/list-reservations")
+    @GetMapping("/listReservations")
     public String viewPharmacyReservations(@RequestParam("pharmacyId") UUID pharmacyId, Model model) {
         List<Reservation> reservations = reservationService.getReservationByPharmacyId(pharmacyId);
         Map<UUID, List<Product>> products = new HashMap<>();
@@ -50,20 +50,18 @@ public class ReservationsController {
     @PostMapping("/updateReservationStatus")
     public String updateStatus(@RequestParam("reservationId") UUID reservationId, @RequestParam("status") String status) {
         Reservation reservation = reservationService.updateReservationStatus(reservationId, Integer.parseInt(status));
-        return "redirect:/pharmacy/list-reservations?pharmacyId=" + reservation.getPharmacy().getId();
+        return "redirect:/pharmacy/listReservations?pharmacyId=" + reservation.getPharmacy().getId();
     }
 
     @PostMapping("/reservationCollected")
     public String collectedReservation(@RequestParam("reservationId") UUID reservationId) {
         reservationService.reservationCollected(reservationId);
-        Reservation reservation = reservationService.updateReservationStatus(reservationId, 3);
-        return "redirect:/pharmacy/list-reservations?pharmacyId=" + reservation.getPharmacy().getId();
+        return "redirect:/pharmacy/listReservations?pharmacyId=" + reservationService.getPharmacyId(reservationId);
     }
 
     @PostMapping("/deleteReservation")
     public String deleteReservation(@RequestParam("reservationId") UUID reservationId) {
-        Reservation reservation = reservationService.updateReservationStatus(reservationId, 4);
         reservationService.deleteReservation(reservationId);
-        return "redirect:/pharmacy/list-reservations?pharmacyId=" + reservation.getPharmacy().getId();
+        return "redirect:/pharmacy/listReservations?pharmacyId=" + reservationService.getPharmacyId(reservationId);
     }
 }

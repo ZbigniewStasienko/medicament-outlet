@@ -43,7 +43,7 @@ public class ProductController {
         return "pharmacy/pharmacy-info";
     }
 
-    @GetMapping("/add-product")
+    @GetMapping("/addProduct")
     public String showAddProductForm(@AuthenticationPrincipal OAuth2User principal, Model model) {
         if (principal != null) {
             model.addAttribute("product", new Product());
@@ -54,7 +54,7 @@ public class ProductController {
         return "pharmacy/add-product";
     }
 
-    @PostMapping("/add-product")
+    @PostMapping("/addProduct")
     public String addProduct(@RequestParam("medicineId") UUID medicineId,
                              @ModelAttribute Product product) {
         if (medicineId != null) {
@@ -68,14 +68,14 @@ public class ProductController {
         return "redirect:/pharmacy";
     }
 
-    @GetMapping("/edit-product/{productId}")
+    @GetMapping("/editProduct/{productId}")
     public String showEditProductForm(@PathVariable("productId") UUID productId, Model model) {
         Product product = productService.getProductById(productId);
         model.addAttribute("product", product);
         return "pharmacy/edit-product";
     }
 
-    @PostMapping("/edit-product/{productId}")
+    @PostMapping("/editProduct/{productId}")
     public String editProduct(@PathVariable("productId") UUID productId,
                               @RequestParam("expirationDate") LocalDate expirationDate,
                               @RequestParam("isReserved") String isReserved,
@@ -94,7 +94,7 @@ public class ProductController {
     }
 
 
-    @PostMapping("/delete-product/{productId}")
+    @PostMapping("/deleteProduct/{productId}")
     public String deleteProduct(@PathVariable("productId") UUID productId) {
         productService.deleteProductById(productId);
         return "redirect:/pharmacy";
