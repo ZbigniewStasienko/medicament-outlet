@@ -12,7 +12,9 @@ import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 import java.util.UUID;
@@ -22,13 +24,30 @@ import java.util.UUID;
 public class UserController {
 
     @Autowired
-    private ProductService productService;
+    UserService userService;
 
     @Autowired
-    private UserService userService;
+    ProductService productService;
 
     @GetMapping()
-    public String viewAllProducts(Model model, @AuthenticationPrincipal OAuth2User principal) {
+    public String getProducts(Model model,
+                              @AuthenticationPrincipal OAuth2User principal,
+                              @RequestParam(value = "searchTerm", required = false) String searchTerm,
+                              @RequestParam(value = "sortBy", required = false) String sortBy,
+                              @RequestParam(value = "latitude", required = false) Double latitude,
+                              @RequestParam(value = "longitude", required = false) Double longitude) {
+
+        ensureUserExists(principal);
+
+        List<Product> products = productService.getProducts(searchTerm, sortBy, latitude, longitude);
+
+        model.addAttribute("products", products);
+        model.addAttribute("isUser", AuthorizationService.isUser(principal));
+        model.addAttribute("searchTerm", searchTerm);
+        return "user/default-view";
+    }
+
+    private void ensureUserExists(OAuth2User principal) {
         if (AuthorizationService.isUser(principal)) {
             UUID userId = UUIDConverter.convertToUUID(principal);
             if (userService.findUserById(userId) == null) {
@@ -39,9 +58,6 @@ public class UserController {
                 userService.saveUser(user);
             }
         }
-        List<Product> products = productService.getAllProducts();
-        model.addAttribute("products", products);
-        model.addAttribute("isUser", AuthorizationService.isUser(principal));
-        return "user/default-view";
     }
+
 }

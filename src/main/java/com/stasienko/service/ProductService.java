@@ -64,9 +64,25 @@ public class ProductService {
         return out;
     }
 
-    public List<Product> getSortedByDistance(double latitude, double longitude) {
-        List<Product> products = getAllProducts();
+    public List<Product> getProducts(String searchTerm, String sortBy, Double latitude, Double longitude) {
+        List<Product> products;
 
+        if (searchTerm != null && !searchTerm.isEmpty()) {
+            products = searchProducts(searchTerm);
+        } else {
+            products = getAllProducts();
+        }
+
+        if ("price".equals(sortBy)) {
+            products = sortByPrice(products);
+        } else if ("location".equals(sortBy) && latitude != null && longitude != null) {
+            products = getSortedByDistance(products, latitude, longitude);
+        }
+
+        return products;
+    }
+
+    public List<Product> getSortedByDistance(List<Product> products, double latitude, double longitude) {
         products.sort((p1, p2) -> {
             double distanceToP1 = calculateDistance(
                     latitude,
@@ -86,8 +102,7 @@ public class ProductService {
         return products;
     }
 
-    public List<Product> sortByPrice() {
-        List<Product> products = getAllProducts();
+    public List<Product> sortByPrice(List<Product> products) {
         products.sort(Comparator.comparingDouble(Product::getPrice));
         return products;
     }

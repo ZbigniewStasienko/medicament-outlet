@@ -19,18 +19,23 @@
   </nav>
 </header>
 
-<form th:action="@{/product/search}" method="get">
-  <input type="text" name="searchTerm" placeholder="Search products..." />
+<form th:action="@{/}" method="get">
+  <input type="text" name="searchTerm" placeholder="Search products..." th:value="${searchTerm}" />
   <button type="submit">Search</button>
 </form>
 
-<form th:action="@{/product/sortedByPrice}" method="get">
+
+<form th:action="@{/}" method="get">
+  <input type="hidden" name="searchTerm" th:value="${param.searchTerm}" />
+  <input type="hidden" name="sortBy" value="price" />
   <button type="submit">Sort by price</button>
 </form>
 
-<form id="locationForm" th:action="@{/product/sortedByLocation}" method="get">
+<form id="locationForm" th:action="@{/}" method="get">
   <input type="hidden" id="latitude" name="latitude" />
   <input type="hidden" id="longitude" name="longitude" />
+  <input type="hidden" name="sortBy" value="location" />
+  <input type="hidden" name="searchTerm" th:value="${param.searchTerm}" />
   <button type="button" onclick="getUserLocation()">Sort by Location</button>
 </form>
 
