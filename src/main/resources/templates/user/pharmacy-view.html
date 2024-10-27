@@ -24,25 +24,23 @@
   </nav>
 </header>
 
-<form th:action="@{/}" method="get">
+<h1 th:text="${pharmacy.name}">Pharmacy Name</h1>
+<p th:text="${pharmacy.address}">Pharmacy Address</p>
+<img th:src="@{'/pictures/' + ${pharmacy.picture.id}}" alt="Pharmacy Picture" width="200" height="200"/>
+
+<form th:action="@{/viewPharmacy}" method="get">
+  <input type="hidden" name="pharmacyId" th:value="${pharmacy.id}" />
   <input type="text" name="searchTerm" placeholder="Search products..." th:value="${searchTerm}" />
   <button type="submit">Search</button>
 </form>
 
-
-<form th:action="@{/}" method="get">
+<form th:action="@{/viewPharmacy}" method="get">
+  <input type="hidden" name="pharmacyId" th:value="${pharmacy.id}" />
   <input type="hidden" name="searchTerm" th:value="${param.searchTerm}" />
   <input type="hidden" name="sortBy" value="price" />
   <button type="submit">Sort by price</button>
 </form>
 
-<form id="locationForm" th:action="@{/}" method="get">
-  <input type="hidden" id="latitude" name="latitude" />
-  <input type="hidden" id="longitude" name="longitude" />
-  <input type="hidden" name="sortBy" value="location" />
-  <input type="hidden" name="searchTerm" th:value="${param.searchTerm}" />
-  <button type="button" onclick="getUserLocation()">Sort by Location</button>
-</form>
 
 <table border="1">
   <thead>
@@ -56,7 +54,6 @@
     <th>Pharmacy Name</th>
     <th>Pharmacy Address</th>
     <th>Pharmacy Picture</th>
-    <th th:if="${!areDistancesEmpty}">Distance (km)</th>
     <th>Add to Cart</th>
   </tr>
   </thead>
@@ -75,9 +72,7 @@
         No medicine picture
       </div>
     </td>
-    <td>
-      <a th:href="@{/viewPharmacy(pharmacyId=${product.medicine.pharmacy.id})}" th:text="${product.medicine.pharmacy.name}"></a>
-    </td>
+    <td th:text="${product.medicine.pharmacy.name}"></td>
     <td th:text="${product.medicine.pharmacy.address}"></td>
     <td>
       <div th:if="${product.medicine.pharmacy.picture != null}">
@@ -86,9 +81,6 @@
       <div th:if="${product.medicine.pharmacy.picture == null}">
         No pharmacy picture
       </div>
-    </td>
-    <td th:if="${!areDistancesEmpty}">
-      <span th:text="${distances[product.medicine.pharmacy.id]} + ' km'"></span>
     </td>
     <td>
       <form th:action="@{/reservation/addToCart}" method="post">
@@ -99,20 +91,6 @@
   </tr>
   </tbody>
 </table>
-
-<script>
-  function getUserLocation() {
-    if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(position => {
-        document.getElementById("latitude").value = position.coords.latitude;
-        document.getElementById("longitude").value = position.coords.longitude;
-        document.getElementById("locationForm").submit();
-      });
-    } else {
-      console.log("Geolocation is not supported by this browser.");
-    }
-  }
-</script>
 
 </body>
 </html>

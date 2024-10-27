@@ -134,6 +134,16 @@ public class ProductService {
                 .collect(Collectors.toList());
     }
 
+    public List<Product> filterProductsBasedOnPharmacyId(List<Product> products, UUID pharmacyId) {
+        List<Product> out = new ArrayList<>();
+        for(Product product : products) {
+            if(product.getMedicine().getPharmacy().getId().equals(pharmacyId)) {
+                out.add(product);
+            }
+        }
+        return out;
+    }
+
     private double calculateDistance(
             double lat1, double lon1,
             double lat2, double lon2
