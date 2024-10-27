@@ -44,15 +44,27 @@ public class ProductController {
     }
 
     @GetMapping("/addProduct")
-    public String showAddProductForm(@AuthenticationPrincipal OAuth2User principal, Model model) {
+    public String showAddProductForm(@AuthenticationPrincipal OAuth2User principal,
+                                     @RequestParam(value = "search", required = false) String search,
+                                     Model model) {
         if (principal != null) {
             model.addAttribute("product", new Product());
             UUID pharmacyId = UUIDConverter.convertToUUID(principal);
             model.addAttribute("pharmacyId", pharmacyId);
-            model.addAttribute("medicines", medicineService.getMedicinesByPharmacy(pharmacyId));
+
+            List<Medicine> medicines;
+            if (search != null && !search.isEmpty()) {
+                medicines = medicineService.getMedicinesByPharmacyAndName(pharmacyId, search);
+            } else {
+                medicines = medicineService.getMedicinesByPharmacy(pharmacyId);
+            }
+
+            model.addAttribute("medicines", medicines);
+            model.addAttribute("search", search);
         }
         return "pharmacy/add-product";
     }
+
 
     @PostMapping("/addProduct")
     public String addProduct(@RequestParam("medicineId") UUID medicineId,

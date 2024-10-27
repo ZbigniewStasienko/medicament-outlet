@@ -7,4 +7,5 @@ import java.util.List;
 import java.util.UUID;
 public interface MedicineRepository extends JpaRepository<Medicine, UUID> {
     List<Medicine> findByPharmacyId(UUID pharmacyId);
+    List<Medicine> findByPharmacyIdAndNameContainingIgnoreCase(UUID pharmacyId, String name);
 }

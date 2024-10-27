@@ -65,7 +65,7 @@ public class MedicineController {
 
         medicineService.saveMedicine(medicine);
 
-        return "redirect:/pharmacy/add-product";
+        return "redirect:/pharmacy/addProduct";
     }
 
     @GetMapping("/editMedicine/{medicineId}")

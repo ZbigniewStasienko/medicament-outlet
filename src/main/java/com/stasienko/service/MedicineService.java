@@ -48,5 +48,10 @@ public class MedicineService {
         return out;
     }
 
+    public List<Medicine> getMedicinesByPharmacyAndName(UUID pharmacyId, String name) {
+        return medicineRepository.findByPharmacyIdAndNameContainingIgnoreCase(pharmacyId, name);
+    }
+
+
 }
 

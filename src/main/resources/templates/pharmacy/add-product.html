@@ -80,7 +80,14 @@
 
     <div class="select-container">
         <h2>Select Existing Medicine</h2>
-        <form th:action="@{/pharmacy/addProduct}" method="post">
+        <form th:action="@{/pharmacy/addProduct}" method="get">
+            <input type="text" name="search" placeholder="Search medicine..." th:value="${search}" />
+            <button type="submit">Search</button>
+        </form>
+    </div>
+
+    <form th:action="@{/pharmacy/addProduct}" method="post" th:object="${product}">
+        <div class="select-container">
             <table>
                 <thead>
                 <tr>
@@ -92,7 +99,9 @@
                 </thead>
                 <tbody>
                 <tr th:each="medicine : ${medicines}">
-                    <td><input type="radio" name="medicineId" th:value="${medicine.id}" required></td>
+                    <td>
+                        <input type="radio" name="medicineId" th:value="${medicine.id}" required>
+                    </td>
                     <td th:text="${medicine.name}">Medicine Name</td>
                     <td th:text="${medicine.size}">Medicine Size</td>
                     <td th:if="${medicine.picture != null}">
@@ -108,25 +117,25 @@
             <div class="button-center">
                 <a th:href="@{/pharmacy/addMedicine(pharmacyId=${pharmacyId})}" class="add-button">Add New Medicine</a>
             </div>
-    </div>
-
-    <div class="form-container">
-        <h2>Add Information</h2>
-
-        <label for="expirationDate">Expiration Date:</label>
-        <input type="date" id="expirationDate" name="expirationDate" required/><br/>
-
-        <label for="basePrice">Base Price:</label>
-        <input type="text" id="basePrice" name="basePrice" required/><br/>
-
-        <label for="price">Price:</label>
-        <input type="text" id="price" name="price" required/><br/>
-
-        <div class="button-center">
-            <button type="submit">Add Product</button>
         </div>
-        </form>
-    </div>
+
+        <div class="form-container">
+            <h2>Add Information</h2>
+
+            <label for="expirationDate">Expiration Date:</label>
+            <input type="date" id="expirationDate" th:field="*{expirationDate}" required/><br/>
+
+            <label for="basePrice">Base Price:</label>
+            <input type="text" id="basePrice" th:field="*{basePrice}" required/><br/>
+
+            <label for="price">Price:</label>
+            <input type="text" id="price" th:field="*{price}" required/><br/>
+
+            <div class="button-center">
+                <button type="submit">Add Product</button>
+            </div>
+        </div>
+    </form>
 </div>
 </body>
 </html>
