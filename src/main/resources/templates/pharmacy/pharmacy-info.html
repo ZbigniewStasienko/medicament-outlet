@@ -2,6 +2,15 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <title>Pharmacy Products</title>
+    <style>
+        .pending-reservations {
+            margin-left: 10px;
+            font-weight: bold;
+        }
+        .pending-reservations.red {
+            color: red;
+        }
+    </style>
 </head>
 <body>
 
@@ -18,10 +27,14 @@
         <button>Modify Medicines</button>
     </a>
 
-    <a th:href="@{/pharmacy/listReservations(pharmacyId=${pharmacy.id})}">
-        <button>Show Reservations</button>
-    </a>
-
+    <div style="display: inline-block; margin-left: 10px;">
+        <a th:href="@{/pharmacy/listReservations(pharmacyId=${pharmacy.id})}">
+            <button>Show Reservations</button>
+        </a>
+        <span th:text="${numOfPendingReservations}"
+              th:classappend="${numOfPendingReservations > 0} ? 'pending-reservations red' : 'pending-reservations'">
+        </span>
+    </div>
 
     <h2>Products</h2>
     <a th:href="@{/pharmacy/addProduct}">Add Product</a>

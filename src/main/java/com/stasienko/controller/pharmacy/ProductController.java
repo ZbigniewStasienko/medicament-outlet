@@ -2,11 +2,9 @@ package com.stasienko.controller.pharmacy;
 
 import com.stasienko.model.Medicine;
 import com.stasienko.model.Product;
+import com.stasienko.model.Reservation;
 import com.stasienko.security.AuthorizationService;
-import com.stasienko.service.MedicineService;
-import com.stasienko.service.PharmacyService;
-import com.stasienko.service.ProductService;
-import com.stasienko.service.UUIDConverter;
+import com.stasienko.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.oauth2.core.user.OAuth2User;
@@ -31,13 +29,18 @@ public class ProductController {
     @Autowired
     private PharmacyService pharmacyService;
 
+    @Autowired
+    private ReservationService reservationService;
+
     @GetMapping()
     public String viewPharmacyProducts(@AuthenticationPrincipal OAuth2User principal, Model model) {
         if (principal != null) {
             UUID pharmacyId = UUIDConverter.convertToUUID(principal);
             List<Product> products = productService.getProductsBasedOnPharmacyId(pharmacyId);
+            int numOfPendingReservations = reservationService.numOfPendingReservations(pharmacyId);
             model.addAttribute("pharmacy", pharmacyService.getPharmacyById(pharmacyId));
             model.addAttribute("products", products);
+            model.addAttribute("numOfPendingReservations", numOfPendingReservations);
         }
         model.addAttribute("isPharmacy", AuthorizationService.isPharmacy(principal));
         return "pharmacy/pharmacy-info";

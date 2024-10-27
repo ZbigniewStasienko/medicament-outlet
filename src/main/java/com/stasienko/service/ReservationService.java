@@ -61,8 +61,15 @@ public class ReservationService {
         return reservationRepository.findByUserId(userId);
     }
 
-    public List<Reservation> getAllReservations() {
-        return reservationRepository.findAll();
+    public int numOfPendingReservations(UUID pharmacyId) {
+        List<Reservation> reservations = getReservationByPharmacyId(pharmacyId);
+        int counter = 0;
+        for (Reservation reservation : reservations) {
+            if(reservation.getStatus() == 0) {
+                counter++;
+            }
+        }
+        return counter;
     }
 
     public Reservation updateReservationStatus(UUID reservationId, Integer status) {
