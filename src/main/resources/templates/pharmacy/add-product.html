@@ -20,7 +20,10 @@
             margin: 5px 0 10px 0;
             border: 1px solid #ccc;
             border-radius: 4px;
-            width: 100%;
+        }
+        input[type="text"].search-input {
+            width: 60%;
+            display: inline-block;
         }
         button, .add-button {
             background-color: #b55fc7;
@@ -32,7 +35,13 @@
             cursor: pointer;
             font-size: 16px;
             text-align: center;
-            width: 150px;
+        }
+        button.search-button {
+            width: auto;
+            padding: 10px;
+            display: inline-block;
+            vertical-align: middle;
+            margin-left: 5px;
         }
         button:hover, .add-button:hover {
             background-color: #a24fb4;
@@ -43,18 +52,25 @@
             align-items: center;
             padding: 20px;
         }
+        .search-container {
+            background-color: #e9c9e9;
+            padding: 20px;
+            border-radius: 10px;
+            width: 70%;
+            max-width: 600px;
+            margin-bottom: 20px;
+        }
         .select-container, .form-container {
             background-color: #e9c9e9;
             padding: 20px;
             border-radius: 10px;
-            width: 80%;
+            width: 100%;
+            max-width: 600px;
             margin-bottom: 20px;
         }
         .select-container {
-            display: flex;
-            flex-direction: column;
-            max-height: 300px;
-            overflow-y: scroll;
+            max-height: 400px;
+            overflow-y: auto;
         }
         table {
             width: 100%;
@@ -78,11 +94,11 @@
 <div class="container">
     <h1>Add Product</h1>
 
-    <div class="select-container">
-        <h2>Select Existing Medicine</h2>
-        <form th:action="@{/pharmacy/addProduct}" method="get">
-            <input type="text" name="search" placeholder="Search medicine..." th:value="${search}" />
-            <button type="submit">Search</button>
+    <div class="search-container">
+        <h2>Search for Medicine</h2>
+        <form th:action="@{/pharmacy/addProduct}" method="get" style="display: flex; align-items: center;">
+            <input type="text" name="search" class="search-input" placeholder="Search medicine..." th:value="${search}" />
+            <button type="submit" class="search-button">Search</button>
         </form>
     </div>
 
