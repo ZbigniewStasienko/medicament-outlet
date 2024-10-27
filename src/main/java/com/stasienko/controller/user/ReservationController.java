@@ -7,6 +7,7 @@ import com.stasienko.service.ProductService;
 import com.stasienko.service.ReservationService;
 import com.stasienko.service.UUIDConverter;
 import com.stasienko.service.UserService;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -33,7 +34,8 @@ public class ReservationController {
     UserService userService;
 
     @PostMapping("/addToCart")
-    public String addProductToCart(@RequestParam("productId") UUID productId, HttpSession session) {
+    public String addProductToCart(@RequestParam("productId") UUID productId,
+            HttpSession session, HttpServletRequest request) {
         List<Product> productsInCart = (List<Product>) session.getAttribute("inCart");
         if (productsInCart == null) {
             productsInCart = new ArrayList<>();
@@ -41,8 +43,10 @@ public class ReservationController {
         Product product = productService.updateProductAvailability(productId, true);
         productsInCart.add(product);
         session.setAttribute("inCart", productsInCart);
-        return "redirect:/";
+        String referer = request.getHeader("Referer");
+        return "redirect:" + referer;
     }
+
 
     @GetMapping("/showCart")
     public String showCart(Model model, HttpSession session, @AuthenticationPrincipal OAuth2User principal) {
