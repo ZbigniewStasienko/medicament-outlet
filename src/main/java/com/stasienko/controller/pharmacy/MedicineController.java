@@ -12,7 +12,9 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.print.attribute.IntegerSyntax;
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
 import java.util.UUID;
 
@@ -32,8 +34,10 @@ public class MedicineController {
     @GetMapping("/listMedicines")
     public String showAllPharmacyMedicines(@RequestParam("pharmacyId") UUID pharmacyId, Model model) {
         List<Medicine> medicines = medicineService.getMedicinesByPharmacy(pharmacyId);
+        HashMap<UUID, Integer> numOfProducts = medicineService.productsAssignedToMedicines(medicines);
         model.addAttribute("medicines", medicines);
         model.addAttribute("pharmacyId", pharmacyId);
+        model.addAttribute("numOfProducts", numOfProducts);
         return "pharmacy/list-medicines";
     }
 

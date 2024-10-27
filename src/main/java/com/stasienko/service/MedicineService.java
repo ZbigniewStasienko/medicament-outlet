@@ -6,6 +6,7 @@ import com.stasienko.repository.MedicineRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.UUID;
 
@@ -36,6 +37,15 @@ public class MedicineService {
             productService.deleteProductById(toDel.getId());
         }
         medicineRepository.deleteById(medicineId);
+    }
+
+    public HashMap<UUID, Integer> productsAssignedToMedicines(List<Medicine> medicines) {
+        HashMap<UUID, Integer> out = new HashMap<>();
+        for (Medicine medicine : medicines) {
+            int numOfProducts = productService.getProductsBasedOnMedicineId(medicine.getId()).size();
+            out.put(medicine.getId(), numOfProducts);
+        }
+        return out;
     }
 
 }
