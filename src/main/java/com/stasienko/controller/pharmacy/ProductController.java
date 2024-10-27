@@ -41,6 +41,7 @@ public class ProductController {
             model.addAttribute("pharmacy", pharmacyService.getPharmacyById(pharmacyId));
             model.addAttribute("products", products);
             model.addAttribute("numOfPendingReservations", numOfPendingReservations);
+            model.addAttribute("todaysDate", LocalDate.now());
         }
         model.addAttribute("isPharmacy", AuthorizationService.isPharmacy(principal));
         return "pharmacy/pharmacy-info";

@@ -53,7 +53,10 @@
         </thead>
         <tbody>
         <tr th:each="product : ${products}">
-            <td th:text="${product.medicine.name}"></td>
+            <td th:text="${product.medicine.name}"
+                class="pending-reservations"
+                th:classappend="${product.expirationDate != null and product.expirationDate.isBefore(todaysDate) ? ' red' : ''}">
+            </td>
             <td th:text="${product.medicine.description}"></td>
             <td th:text="${product.medicine.size}"></td>
             <td th:text="${product.expirationDate != null ? product.expirationDate : 'N/A'}"></td>
