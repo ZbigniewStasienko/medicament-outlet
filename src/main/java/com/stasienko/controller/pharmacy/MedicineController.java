@@ -6,6 +6,7 @@ import com.stasienko.model.Picture;
 import com.stasienko.service.MedicineService;
 import com.stasienko.service.PharmacyService;
 import com.stasienko.service.PictureService;
+import com.stasienko.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -27,6 +28,9 @@ public class MedicineController {
 
     @Autowired
     private MedicineService medicineService;
+
+    @Autowired
+    private ProductService productService;
 
     @Autowired
     private PictureService pictureService;
@@ -67,7 +71,9 @@ public class MedicineController {
     @GetMapping("/editMedicine/{medicineId}")
     public String showEditMedicineForm(@PathVariable("medicineId") UUID medicineId, Model model) {
         Medicine toEdit = medicineService.getMedicineById(medicineId);
+        int affectedItems = productService.getProductsBasedOnMedicineId(medicineId).size();
         model.addAttribute("medicine", toEdit);
+        model.addAttribute("affectedItems", affectedItems);
         return "pharmacy/edit-medicine";
     }
 

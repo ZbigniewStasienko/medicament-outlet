@@ -2,11 +2,21 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
   <title>Edit Medicine</title>
+  <script type="text/javascript">
+    function confirmEdit(productCount) {
+        const message = productCount > 0
+            ? `Editing this medicine will affect ${productCount} product(s). Are you sure you want to proceed?`
+            : "Are you sure you want to update this medicine's details?";
+        return confirm(message);
+    }
+  </script>
 </head>
 <body>
 <h1>Edit Medicine</h1>
 
-<form th:action="@{/pharmacy/editMedicine/{medicineId}(medicineId=${medicine.id})}" method="post" enctype="multipart/form-data">
+<form th:action="@{/pharmacy/editMedicine/{medicineId}(medicineId=${medicine.id})}" method="post"
+      enctype="multipart/form-data"
+      th:onsubmit="return confirmEdit([[${affectedItems}]])">
 
   <label for="medicineName">Medicine Name:</label>
   <input type="text" id="medicineName" name="name" th:value="${medicine.name}"/><br/>
