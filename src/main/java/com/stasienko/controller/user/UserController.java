@@ -37,6 +37,9 @@ public class UserController {
     @Autowired
     ReservedProductService reservedProductService;
 
+    @Autowired
+    PharmacyService pharmacyService;
+
     @GetMapping()
     public String getProducts(Model model,
                               @AuthenticationPrincipal OAuth2User principal,
@@ -52,6 +55,14 @@ public class UserController {
         model.addAttribute("products", products);
         model.addAttribute("isUser", AuthorizationService.isUser(principal));
         model.addAttribute("searchTerm", searchTerm);
+
+        HashMap<UUID, Double> distances = new HashMap<>();
+
+        if(latitude != null && longitude != null) {
+            distances = pharmacyService.calculateDistances(products, latitude, longitude);
+        }
+        model.addAttribute("distances", distances);
+        model.addAttribute("areDistancesEmpty", distances.isEmpty());
         return "user/default-view";
     }
 

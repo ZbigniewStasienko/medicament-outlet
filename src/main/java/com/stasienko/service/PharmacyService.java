@@ -2,10 +2,12 @@ package com.stasienko.service;
 
 import com.stasienko.model.Medicine;
 import com.stasienko.model.Pharmacy;
+import com.stasienko.model.Product;
 import com.stasienko.repository.PharmacyRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.UUID;
 
@@ -53,5 +55,35 @@ public class PharmacyService {
             medicineService.deleteMedicineById(toDelete.getId());
         }
         pharmacyRepository.deleteById(id);
+    }
+
+    public HashMap<UUID, Double> calculateDistances(List<Product> products, double latitude, double longitude) {
+        HashMap<UUID, Double> out = new HashMap<>();
+        for(Product product : products) {
+            double distance =
+                    calculateDistance(latitude, longitude, Double.parseDouble(product.getMedicine().getPharmacy().getLatitude()),
+                            Double.parseDouble(product.getMedicine().getPharmacy().getLongitude()));
+            distance = Math.round(distance * 100.0) / 100.0;
+            out.put(product.getMedicine().getPharmacy().getId(), distance);
+        }
+        return out;
+    }
+
+    private double calculateDistance(
+            double lat1, double lon1,
+            double lat2, double lon2
+    ) {
+        final int EARTH_RADIUS_KM = 6371;
+
+        double latDistance = Math.toRadians(lat2 - lat1);
+        double lonDistance = Math.toRadians(lon2 - lon1);
+
+        double a = Math.sin(latDistance / 2) * Math.sin(latDistance / 2)
+                + Math.cos(Math.toRadians(lat1)) * Math.cos(Math.toRadians(lat2))
+                * Math.sin(lonDistance / 2) * Math.sin(lonDistance / 2);
+
+        double c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+
+        return EARTH_RADIUS_KM * c;
     }
 }
