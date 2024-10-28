@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -93,6 +94,7 @@ public class UserController {
             products.put(reservation.getId(), productsReservation);
         }
         model.addAttribute("name", userName);
+        model.addAttribute("dateToCompare", LocalDate.now().plusDays(2));
         model.addAttribute("reservations", reservations);
         model.addAttribute("products", products);
         return "user/profile";
