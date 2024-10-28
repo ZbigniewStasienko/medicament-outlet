@@ -29,4 +29,8 @@ public class ReservedProductService {
     public void deleteReservedProduct(UUID reservedProductId) {
         reservedProductRepository.deleteById(reservedProductId);
     }
+
+    public List<ReservedProduct> getReservedProductsByProduct(Product product) {
+        return product != null ? reservedProductRepository.findByProduct(product) : List.of();
+    }
 }

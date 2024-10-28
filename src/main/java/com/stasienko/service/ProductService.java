@@ -7,7 +7,8 @@ import com.stasienko.repository.ProductRepository;
 import jakarta.annotation.PreDestroy;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-;import java.util.ArrayList;
+;import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.UUID;
@@ -52,6 +53,10 @@ public class ProductService {
 
     public List<Product> getProductsFromCart() {
         return productRepository.findReservedProductsNotInReservedProductTable();
+    }
+
+    public List<Product> getExpiredProducts() {
+        return productRepository.findByExpirationDateBefore(LocalDate.now());
     }
 
     public List<Product> getProductsForReservation(List<ReservedProduct> reservedProducts) {
