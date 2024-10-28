@@ -1,6 +1,8 @@
 package com.stasienko.model;
 
 import jakarta.persistence.*;
+
+import java.time.LocalDate;
 import java.util.UUID;
 import java.util.Date;
 
@@ -21,7 +23,7 @@ public class Reservation implements java.io.Serializable {
     private Pharmacy pharmacy;
 
     @Column(name="realization_date")
-    private Date realizationDate;
+    private LocalDate realizationDate;
 
     @Column(name="is_realized")
     private Boolean isRealized;
@@ -55,11 +57,11 @@ public class Reservation implements java.io.Serializable {
         this.pharmacy = pharmacy;
     }
 
-    public Date getRealizationDate() {
+    public LocalDate getRealizationDate() {
         return realizationDate;
     }
 
-    public void setRealizationDate(Date realizationDate) {
+    public void setRealizationDate(LocalDate realizationDate) {
         this.realizationDate = realizationDate;
     }
 

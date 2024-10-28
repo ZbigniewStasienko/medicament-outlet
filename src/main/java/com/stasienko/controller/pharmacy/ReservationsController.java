@@ -14,8 +14,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import java.sql.Timestamp;
-import java.time.Instant;
 import java.time.LocalDate;
 import java.util.*;
 
@@ -44,7 +42,7 @@ public class ReservationsController {
         model.addAttribute("reservations", reservations);
         model.addAttribute("products", products);
         model.addAttribute("pharmacyId", pharmacyId);
-        model.addAttribute("todaysDate", new java.util.Date());
+        model.addAttribute("todaysDate", LocalDate.now());
         return "pharmacy/list-reservations";
     }
 

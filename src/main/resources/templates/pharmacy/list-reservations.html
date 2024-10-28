@@ -14,8 +14,8 @@
     <h2>Reservation <span th:text="${status.index + 1}"></span></h2>
 
         <p>Realization Date:
-            <span th:text="${#dates.format(reservation.realizationDate, 'yyyy-MM-dd')}"
-                  th:style="${reservation.realizationDate.before(todaysDate)} ? 'background-color:yellow;' : ''">
+            <span th:text="${reservation.realizationDate}"
+                  th:style="${reservation.realizationDate.isBefore(todaysDate)} ? 'background-color:yellow;' : ''">
             </span>
         </p>
 

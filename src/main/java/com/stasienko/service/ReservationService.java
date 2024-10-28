@@ -42,7 +42,7 @@ public class ReservationService {
                 reservation = new Reservation();
                 reservation.setUser(user);
                 reservation.setPharmacy(pharmacy);
-                reservation.setRealizationDate(Date.from(LocalDate.now().plusDays(3).atStartOfDay(ZoneId.systemDefault()).toInstant()));
+                reservation.setRealizationDate(LocalDate.now().plusDays(3));
                 reservation.setRealized(false);
                 reservation.setStatus(0);
                 reservationRepository.save(reservation);
