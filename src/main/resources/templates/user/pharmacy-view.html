@@ -51,9 +51,6 @@
         <th>Expiration Date</th>
         <th>Price</th>
         <th>Medicine Picture</th>
-        <th>Pharmacy Name</th>
-        <th>Pharmacy Address</th>
-        <th>Pharmacy Picture</th>
         <th>Add to Cart</th>
     </tr>
     </thead>
@@ -71,17 +68,6 @@
             </div>
             <div th:if="${product.medicine.picture == null}">
                 No medicine picture
-            </div>
-        </td>
-        <td th:text="${product.medicine.pharmacy.name}"></td>
-        <td th:text="${product.medicine.pharmacy.address}"></td>
-        <td>
-            <div th:if="${product.medicine.pharmacy.picture != null}">
-                <img th:src="@{'/pictures/' + ${product.medicine.pharmacy.picture.id}}" alt="Pharmacy Picture"
-                     width="100" height="100"/>
-            </div>
-            <div th:if="${product.medicine.pharmacy.picture == null}">
-                No pharmacy picture
             </div>
         </td>
         <td>
