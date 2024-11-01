@@ -17,7 +17,7 @@ CREATE TABLE Pharmacy (
 
 CREATE TABLE Medicine (
     id UUID PRIMARY KEY,
-    pharmacy_id UUID REFERENCES Pharmacy(id),
+    pharmacy_id UUID REFERENCES Pharmacy(id) ON DELETE CASCADE,
     picture_id UUID REFERENCES Picture(id),
     name TEXT NOT NULL,
     description TEXT,
@@ -26,7 +26,7 @@ CREATE TABLE Medicine (
 
 CREATE TABLE Product (
     id UUID PRIMARY KEY,
-    medicine_id UUID REFERENCES Medicine(id),
+    medicine_id UUID REFERENCES Medicine(id) ON DELETE CASCADE,
     expiration_date DATE,
     is_reserved BOOLEAN,
     base_price DOUBLE PRECISION,
@@ -40,7 +40,7 @@ CREATE TABLE users (
 CREATE TABLE Reservation (
     id UUID PRIMARY KEY,
     user_id UUID REFERENCES users(id),
-    pharmacy_id UUID REFERENCES Pharmacy(id),
+    pharmacy_id UUID REFERENCES Pharmacy(id) ON DELETE CASCADE,
     realization_date DATE,
     is_realized BOOLEAN,
     status INTEGER
@@ -48,6 +48,6 @@ CREATE TABLE Reservation (
 
 CREATE TABLE ReservedProduct (
     id UUID PRIMARY KEY,
-    product_id UUID REFERENCES Product(id),
-    reservation_id UUID REFERENCES Reservation(id)
+    product_id UUID REFERENCES Product(id) ON DELETE CASCADE,
+    reservation_id UUID REFERENCES Reservation(id) ON DELETE CASCADE
 );
