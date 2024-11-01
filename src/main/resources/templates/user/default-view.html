@@ -66,7 +66,10 @@
     <td th:text="${product.medicine.description}"></td>
     <td th:text="${product.medicine.size}"></td>
     <td th:text="${product.expirationDate != null ? product.expirationDate : 'N/A'}"></td>
-    <td th:text="${product.price}"></td>
+    <td>
+      <s th:text="${product.basePrice} + '$'"></s>
+      <span th:text="${product.price} + '$'"></span>
+    </td>
     <td>
       <div th:if="${product.medicine.picture != null}">
         <img th:src="@{'/pictures/' + ${product.medicine.picture.id}}" alt="Medicine Picture" width="100" height="100"/>
