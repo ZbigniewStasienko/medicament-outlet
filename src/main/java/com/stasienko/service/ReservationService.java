@@ -24,6 +24,9 @@ public class ReservationService {
     @Autowired
     ProductService productService;
 
+    @Autowired
+    EmailService emailService;
+
     public int saveProducts(UUID userId, List<Product> products) {
         Map<UUID, Reservation> reservations = new HashMap<>();
         for (Product product : products) {
@@ -74,6 +77,14 @@ public class ReservationService {
 
     public Reservation updateReservationStatus(UUID reservationId, Integer status) {
         Reservation foundReservation = reservationRepository.findById(reservationId).orElse(null);
+        if(foundReservation.getStatus() == 0 && status == 1) {
+            System.out.println("Changing status");
+            try{
+                emailService.sendMail("Reservation Confirmation","Your reservation from " + foundReservation.getPharmacy().getName() + " is ready to collect");
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
+        }
         foundReservation.setStatus(status);
         return reservationRepository.save(foundReservation);
     }
