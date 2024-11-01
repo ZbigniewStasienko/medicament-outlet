@@ -2,7 +2,6 @@ package com.stasienko.controller.pharmacy;
 
 import com.stasienko.model.Medicine;
 import com.stasienko.model.Product;
-import com.stasienko.model.Reservation;
 import com.stasienko.security.AuthorizationService;
 import com.stasienko.service.*;
 import org.springframework.beans.factory.annotation.Autowired;

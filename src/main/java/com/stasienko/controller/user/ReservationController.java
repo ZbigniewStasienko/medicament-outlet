@@ -1,7 +1,6 @@
 package com.stasienko.controller.user;
 
 import com.stasienko.model.Product;
-import com.stasienko.model.User;
 import com.stasienko.security.AuthorizationService;
 import com.stasienko.service.ProductService;
 import com.stasienko.service.ReservationService;
@@ -29,9 +28,6 @@ public class ReservationController {
 
     @Autowired
     ReservationService reservationService;
-
-    @Autowired
-    UserService userService;
 
     @PostMapping("/addToCart")
     public String addProductToCart(@RequestParam("productId") UUID productId,
