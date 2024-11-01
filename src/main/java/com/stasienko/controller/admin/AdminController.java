@@ -51,31 +51,6 @@ public class AdminController {
         return "redirect:/admin";
     }
 
-    @GetMapping("/edit/{id}")
-    public String showEditPharmacyForm(@PathVariable("id") UUID id, Model model) {
-        Pharmacy pharmacy = pharmacyService.getPharmacyById(id);
-        model.addAttribute("pharmacy", pharmacy);
-        return "admin/edit-pharmacy";
-    }
-
-    @PostMapping("/edit/{id}")
-    public String updatePharmacy(@PathVariable("id") UUID id,
-                                 @ModelAttribute("pharmacy") Pharmacy pharmacy,
-                                 @RequestParam("file") MultipartFile file) throws IOException {
-
-        Pharmacy existingPharmacy = pharmacyService.getPharmacyById(id);
-        if (!file.isEmpty()) {
-            pictureService.deletePicture(existingPharmacy.getPicture().getId());
-            Picture updatedPicture = pictureService.addPicture(file);
-            pharmacy.setPicture(updatedPicture);
-        } else {
-            pharmacy.setPicture(existingPharmacy.getPicture());
-        }
-
-        pharmacyService.updatePharmacy(id, pharmacy);
-        return "redirect:/admin";
-    }
-
     @GetMapping("/delete/{id}")
     public String deletePharmacy(@PathVariable("id") UUID id) {
         pharmacyService.deletePharmacy(id);

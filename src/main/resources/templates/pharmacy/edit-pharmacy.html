@@ -5,7 +5,7 @@
 </head>
 <body>
 <h1>Edit Pharmacy</h1>
-<form th:action="@{/admin/edit/{id}(id=${pharmacy.id})}" method="post" enctype="multipart/form-data">
+<form th:action="@{/pharmacy/edit(pharmacyId=${pharmacy.id})}" method="post" enctype="multipart/form-data">
   <label for="name">Name:</label>
   <input type="text" id="name" name="name" th:value="${pharmacy.name}"/><br/>
 
