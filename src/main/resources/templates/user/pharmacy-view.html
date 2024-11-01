@@ -3,25 +3,25 @@
 <body>
 
 <header>
-  <nav>
-    <ul>
-      <li>
-        <div class="container">
-          <a th:href="@{/reservation/showCart}">Show Cart</a>
-        </div>
-      </li>
-      <li>
-        <div class="container" th:if="${isUser}">
-          <a th:href="@{/userProfile}">Manage profile</a>
-        </div>
-      </li>
-      <li>
-        <div class="container" th:if="${!isUser}">
-          <a href="/oauth2/authorization/secureauthn?idp=users">Login</a>
-        </div>
-      </li>
-    </ul>
-  </nav>
+    <nav>
+        <ul>
+            <li>
+                <div class="container">
+                    <a th:href="@{/reservation/showCart}">Show Cart</a>
+                </div>
+            </li>
+            <li>
+                <div class="container" th:if="${isUser}">
+                    <a th:href="@{/userProfile}">Manage profile</a>
+                </div>
+            </li>
+            <li>
+                <div class="container" th:if="${!isUser}">
+                    <a href="/oauth2/authorization/secureauthn?idp=users">Login</a>
+                </div>
+            </li>
+        </ul>
+    </nav>
 </header>
 
 <h1 th:text="${pharmacy.name}">Pharmacy Name</h1>
@@ -29,67 +29,69 @@
 <img th:src="@{'/pictures/' + ${pharmacy.picture.id}}" alt="Pharmacy Picture" width="200" height="200"/>
 
 <form th:action="@{/viewPharmacy}" method="get">
-  <input type="hidden" name="pharmacyId" th:value="${pharmacy.id}" />
-  <input type="text" name="searchTerm" placeholder="Search products..." th:value="${searchTerm}" />
-  <button type="submit">Search</button>
+    <input type="hidden" name="pharmacyId" th:value="${pharmacy.id}"/>
+    <input type="text" name="searchTerm" placeholder="Search products..." th:value="${searchTerm}"/>
+    <button type="submit">Search</button>
 </form>
 
 <form th:action="@{/viewPharmacy}" method="get">
-  <input type="hidden" name="pharmacyId" th:value="${pharmacy.id}" />
-  <input type="hidden" name="searchTerm" th:value="${param.searchTerm}" />
-  <input type="hidden" name="sortBy" value="price" />
-  <button type="submit">Sort by price</button>
+    <input type="hidden" name="pharmacyId" th:value="${pharmacy.id}"/>
+    <input type="hidden" name="searchTerm" th:value="${param.searchTerm}"/>
+    <input type="hidden" name="sortBy" value="price"/>
+    <button type="submit">Sort by price</button>
 </form>
 
 
 <table border="1">
-  <thead>
-  <tr>
-    <th>Name</th>
-    <th>Description</th>
-    <th>Size</th>
-    <th>Expiration Date</th>
-    <th>Price</th>
-    <th>Medicine Picture</th>
-    <th>Pharmacy Name</th>
-    <th>Pharmacy Address</th>
-    <th>Pharmacy Picture</th>
-    <th>Add to Cart</th>
-  </tr>
-  </thead>
-  <tbody>
-  <tr th:each="product : ${products}" th:if="${!product.isReserved}">
-    <td th:text="${product.medicine.name}"></td>
-    <td th:text="${product.medicine.description}"></td>
-    <td th:text="${product.medicine.size}"></td>
-    <td th:text="${product.expirationDate != null ? product.expirationDate : 'N/A'}"></td>
-    <td th:text="${product.price}"></td>
-    <td>
-      <div th:if="${product.medicine.picture != null}">
-        <img th:src="@{'/pictures/' + ${product.medicine.picture.id}}" alt="Medicine Picture" width="100" height="100"/>
-      </div>
-      <div th:if="${product.medicine.picture == null}">
-        No medicine picture
-      </div>
-    </td>
-    <td th:text="${product.medicine.pharmacy.name}"></td>
-    <td th:text="${product.medicine.pharmacy.address}"></td>
-    <td>
-      <div th:if="${product.medicine.pharmacy.picture != null}">
-        <img th:src="@{'/pictures/' + ${product.medicine.pharmacy.picture.id}}" alt="Pharmacy Picture" width="100" height="100"/>
-      </div>
-      <div th:if="${product.medicine.pharmacy.picture == null}">
-        No pharmacy picture
-      </div>
-    </td>
-    <td>
-      <form th:action="@{/reservation/addToCart}" method="post">
-        <input type="hidden" th:name="productId" th:value="${product.id}" />
-        <button type="submit">Add to Cart</button>
-      </form>
-    </td>
-  </tr>
-  </tbody>
+    <thead>
+    <tr>
+        <th>Name</th>
+        <th>Description</th>
+        <th>Size</th>
+        <th>Expiration Date</th>
+        <th>Price</th>
+        <th>Medicine Picture</th>
+        <th>Pharmacy Name</th>
+        <th>Pharmacy Address</th>
+        <th>Pharmacy Picture</th>
+        <th>Add to Cart</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="product : ${products}" th:if="${!product.isReserved}">
+        <td th:text="${product.medicine.name}"></td>
+        <td th:text="${product.medicine.description}"></td>
+        <td th:text="${product.medicine.size}"></td>
+        <td th:text="${product.expirationDate != null ? product.expirationDate : 'N/A'}"></td>
+        <td th:text="${product.price}"></td>
+        <td>
+            <div th:if="${product.medicine.picture != null}">
+                <img th:src="@{'/pictures/' + ${product.medicine.picture.id}}" alt="Medicine Picture" width="100"
+                     height="100"/>
+            </div>
+            <div th:if="${product.medicine.picture == null}">
+                No medicine picture
+            </div>
+        </td>
+        <td th:text="${product.medicine.pharmacy.name}"></td>
+        <td th:text="${product.medicine.pharmacy.address}"></td>
+        <td>
+            <div th:if="${product.medicine.pharmacy.picture != null}">
+                <img th:src="@{'/pictures/' + ${product.medicine.pharmacy.picture.id}}" alt="Pharmacy Picture"
+                     width="100" height="100"/>
+            </div>
+            <div th:if="${product.medicine.pharmacy.picture == null}">
+                No pharmacy picture
+            </div>
+        </td>
+        <td>
+            <form th:action="@{/reservation/addToCart}" method="post">
+                <input type="hidden" th:name="productId" th:value="${product.id}"/>
+                <button type="submit">Add to Cart</button>
+            </form>
+        </td>
+    </tr>
+    </tbody>
 </table>
 
 </body>

@@ -24,6 +24,14 @@ Logged in as: <span th:text="${name}"></span>
             </span>
         </p>
 
+        <p th:style="${reservation.status == 0} ? 'color:red;' : 'color:green;'">
+            Status:
+            <span th:text="${reservation.status == 0} ? 'waiting for completion' : 'ready to collect'"></span>
+        </p>
+
+        <td th:text="${reservation.pharmacy.name}"></td>
+        <td th:text="${reservation.pharmacy.address}"></td>
+
         <li th:each="product : ${products[reservation.id]}">
             <span th:text="${product.medicine.name}"></span>
             <span th:text="${product.medicine.size}"></span>

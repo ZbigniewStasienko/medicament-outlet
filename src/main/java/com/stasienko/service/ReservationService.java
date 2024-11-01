@@ -76,9 +76,8 @@ public class ReservationService {
     public Reservation updateReservationStatus(UUID reservationId, Integer status) {
         Reservation foundReservation = reservationRepository.findById(reservationId).orElse(null);
         if(foundReservation.getStatus() == 0 && status == 1) {
-            System.out.println("Changing status");
             try{
-                emailService.sendMail("Reservation Confirmation","Your reservation from " + foundReservation.getPharmacy().getName() + " is ready to collect");
+                //emailService.sendMail("Reservation Confirmation","Your reservation from " + foundReservation.getPharmacy().getName() + " is ready to collect");
             } catch (Exception e) {
                 throw new RuntimeException(e);
             }
