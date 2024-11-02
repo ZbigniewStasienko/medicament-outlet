@@ -14,6 +14,17 @@
         padding: 10px;
     }
 
+    .header {
+        display: flex;
+        justify-content: center;
+        padding: 10px;
+    }
+
+    .header img {
+        width: 100px;
+        height: auto;
+    }
+
     nav {
         max-width: 1200px;
         margin: 0 auto;
@@ -147,6 +158,12 @@
 <body>
 
 <header>
+  <div class="header">
+    <a th:href="@{/}">
+      <img th:src="@{/images/logo.png}" alt="Medicament Outlet Logo">
+    </a>
+  </div>
+
   <nav>
     <ul>
       <li>
