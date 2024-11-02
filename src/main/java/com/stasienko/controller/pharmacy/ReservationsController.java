@@ -54,13 +54,15 @@ public class ReservationsController {
 
     @PostMapping("/reservationCollected")
     public String collectedReservation(@RequestParam("reservationId") UUID reservationId) {
+        UUID pharmacyId = reservationService.getPharmacyId(reservationId);
         reservationService.reservationCollected(reservationId);
-        return "redirect:/pharmacy/listReservations?pharmacyId=" + reservationService.getPharmacyId(reservationId);
+        return "redirect:/pharmacy/listReservations?pharmacyId=" + pharmacyId;
     }
 
     @PostMapping("/deleteReservation")
     public String deleteReservation(@RequestParam("reservationId") UUID reservationId) {
+        UUID pharmacyId = reservationService.getPharmacyId(reservationId);
         reservationService.deleteReservation(reservationId);
-        return "redirect:/pharmacy/listReservations?pharmacyId=" + reservationService.getPharmacyId(reservationId);
+        return "redirect:/pharmacy/listReservations?pharmacyId=" + pharmacyId;
     }
 }

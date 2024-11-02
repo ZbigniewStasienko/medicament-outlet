@@ -2,68 +2,299 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <title>Pharmacy Reservations</title>
-    <link rel="stylesheet" th:href="@{/css/style.css}"/>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f6f7f8;
+            color: #333;
+            margin: 0;
+            padding: 0;
+        }
+
+        header {
+            background-color: #0d1f33;
+            padding: 10px 0;
+            margin: 0;
+        }
+
+        .header {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .header img {
+            width: 80px;
+            height: auto;
+            display: block;
+            margin: 0 auto;
+        }
+
+        .container {
+            width: 90%;
+            margin: 20px auto;
+            text-align: center;
+        }
+
+        h1, h2 {
+            text-align: center;
+        }
+
+        .reservation {
+            background-color: #fff;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .reservation h2,
+        .reservation p {
+            text-align: center;
+        }
+
+        .reservation h2 {
+            margin-top: 0;
+        }
+
+        .reservation p {
+            margin: 5px 0;
+        }
+
+        .reservation .products {
+            margin-top: 15px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .reservation .products h3 {
+            text-align: center;
+        }
+
+        .reservation .product-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+            width: 100%;
+            max-width: 400px;
+        }
+
+        .reservation .product-item img {
+            width: 100px;
+            height: 100px;
+            margin-right: 15px;
+        }
+
+        .reservation .product-item span {
+            display: block;
+        }
+
+        .no-reservations {
+            text-align: center;
+            font-size: 18px;
+            color: #626576;
+        }
+
+        footer {
+            text-align: center;
+            font-size: 12px;
+            color: #626576;
+            margin: 80px auto 32px auto;
+        }
+
+        .welcome-section {
+            margin-bottom: 20px;
+        }
+
+        .welcome-message {
+            font-size: 20px;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        /* Styles for Buttons and Forms */
+        .status-form {
+            margin-bottom: 10px;
+        }
+
+        .status-selection {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-top: 10px;
+        }
+
+        .status-selection label {
+            margin-right: 10px;
+            font-weight: bold;
+        }
+
+        .status-selection select {
+            margin-right: 10px;
+            padding: 5px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            min-width: 180px;
+            background-color: #fff;
+            appearance: none;
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            background-image: url('data:image/svg+xml;charset=US-ASCII,<svg xmlns="http://www.w3.org/2000/svg" width="10" height="5" viewBox="0 0 10 5"><path fill="%23999" d="M0 0l5 5 5-5z"/></svg>');
+            background-repeat: no-repeat;
+            background-position: right 10px center;
+            background-size: 10px 5px;
+        }
+
+        .status-selection select:focus {
+            outline: none;
+            border-color: #0d1f33;
+        }
+
+        .action-buttons {
+            margin-top: 15px;
+        }
+
+        .action-buttons form {
+            display: inline-block;
+            margin: 0 5px;
+        }
+
+        .button {
+            font-size: 14px;
+            text-decoration: none;
+            color: #0d1f33;
+            border: 1px solid #0d1f33;
+            padding: 7px 12px;
+            border-radius: 4px;
+            background-color: white;
+            cursor: pointer;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        .button:hover {
+            background-color: #0d1f33;
+            color: white;
+        }
+
+        /* Additional Styles for Status Selection */
+        .status-selection .status-label {
+            font-weight: bold;
+        }
+
+        .status-selection .status-select {
+            position: relative;
+            display: inline-block;
+        }
+
+        .status-selection .status-select::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            right: 10px;
+            width: 0;
+            height: 0;
+            pointer-events: none;
+            border-left: 5px solid transparent;
+            border-right: 5px solid transparent;
+            border-top: 5px solid #999;
+            transform: translateY(-50%);
+        }
+
+        .status-selection select {
+            padding-right: 30px;
+        }
+    </style>
 </head>
 <body>
 
-<h1>Reservations for Pharmacy</h1>
-
-<div th:if="${reservations != null}">
-    <div th:each="reservation, status : ${reservations}">
-
-    <h2>Reservation <span th:text="${status.index + 1}"></span></h2>
-
-        <p>Realization Date:
-            <span th:text="${reservation.realizationDate}"
-                  th:style="${reservation.realizationDate.isBefore(todaysDate)} ? 'background-color:yellow;' : ''">
-            </span>
-        </p>
-
-        <form th:action="@{/pharmacy/updateReservationStatus}" method="post">
-            <input type="hidden" name="reservationId" th:value="${reservation.id}" />
-            <p th:style="${reservation.status == 0} ? 'color:red;' : 'color:green;'">
-                Status:
-                <select name="status" id="status-${reservation.id}">
-                    <option value="0" th:selected="${reservation.status == 0}">waiting for completion</option>
-                    <option value="1" th:selected="${reservation.status == 1}">ready to collect</option>
-                </select>
-            </p>
-            <button type="submit">Update status</button>
-        </form>
-
-        <form th:action="@{/pharmacy/reservationCollected}" method="post">
-            <input type="hidden" name="reservationId" th:value="${reservation.id}"/>
-            <button type="submit">Reservation collected</button>
-        </form>
-
-        <form th:action="@{/pharmacy/deleteReservation}" method="post">
-            <input type="hidden" name="reservationId" th:value="${reservation.id}"/>
-            <button type="submit">Delete Reservation - Time is up!</button>
-        </form>
-
-        <li th:each="product : ${products[reservation.id]}">
-            <span th:text="${product.medicine.name}"></span>
-            <span th:text="${product.medicine.size}"></span>
-            <div th:if="${product.medicine.picture != null}">
-                <img th:src="@{'/pictures/' + ${product.medicine.picture.id}}" alt="Medicine Picture" width="100"
-                     height="100"/>
-            </div>
-            <div th:if="${product.medicine.picture == null}">
-                No medicine picture
-            </div>
-        </li>
-
-        <div th:if="${products[reservation.id] == null}">
-            <p>No products assigned to this reservation.</p>
-        </div>
-
-        <hr/>
+<header>
+    <div class="header">
+        <a th:href="@{/}">
+            <img th:src="@{/images/logo.png}" alt="Medicament Outlet Logo">
+        </a>
     </div>
+</header>
+
+<div class="container">
+
+    <div class="welcome-section">
+        <p class="welcome-message">Welcome <span th:text="${pharmacyName}"></span></p>
+    </div>
+
+    <h2>Pharmacy Reservations</h2>
+
+    <div th:if="${reservations != null && !reservations.isEmpty()}">
+        <div th:each="reservation, status : ${reservations}" class="reservation">
+
+            <h2>Reservation <span th:text="${status.index + 1}"></span></h2>
+
+            <p>
+                Realization Date:
+                <span th:text="${reservation.realizationDate}"
+                      th:style="${reservation.realizationDate.isBefore(todaysDate)} ? 'background-color:yellow;' : ''">
+                </span>
+            </p>
+
+            <form th:action="@{/pharmacy/updateReservationStatus}" method="post" class="status-form">
+                <input type="hidden" name="reservationId" th:value="${reservation.id}" />
+                <div class="status-selection" th:style="${reservation.status == 0} ? 'color:red;' : 'color:green;'">
+                    <label for="status-${reservation.id}" class="status-label">Status:</label>
+                    <div class="status-select">
+                        <select name="status" id="status-${reservation.id}">
+                            <option value="0" th:selected="${reservation.status == 0}">waiting for completion</option>
+                            <option value="1" th:selected="${reservation.status == 1}">ready to collect</option>
+                        </select>
+                    </div>
+                    <button type="submit" class="button">Update status</button>
+                </div>
+            </form>
+
+            <div class="action-buttons">
+                <form th:action="@{/pharmacy/reservationCollected}" method="post">
+                    <input type="hidden" name="reservationId" th:value="${reservation.id}"/>
+                    <button type="submit" class="button">Reservation collected</button>
+                </form>
+                <form th:action="@{/pharmacy/deleteReservation}" method="post">
+                    <input type="hidden" name="reservationId" th:value="${reservation.id}"/>
+                    <button type="submit" class="button">Delete Reservation - Time is up!</button>
+                </form>
+            </div>
+
+            <div class="products">
+                <h3>Products:</h3>
+                <div th:if="${products[reservation.id] != null}">
+                    <div th:each="product : ${products[reservation.id]}" class="product-item">
+                        <div>
+                            <div th:if="${product.medicine.picture != null}">
+                                <img th:src="@{'/pictures/' + ${product.medicine.picture.id}}" alt="Medicine Picture"/>
+                            </div>
+                            <div th:if="${product.medicine.picture == null}">
+                                <img src="/images/no-image.png" alt="No medicine picture" width="100" height="100"/>
+                            </div>
+                        </div>
+                        <div>
+                            <span th:text="${product.medicine.name}"></span>
+                            <span th:text="${product.medicine.size}"></span>
+                        </div>
+                    </div>
+                </div>
+                <div th:if="${products[reservation.id] == null}">
+                    <p>No products assigned to this reservation.</p>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <div th:if="${reservations == null || reservations.isEmpty()}">
+        <p class="no-reservations">No reservations found for this pharmacy.</p>
+    </div>
+
 </div>
 
-<div th:if="${reservations == null || reservations.isEmpty()}">
-    <p>No reservations found for this pharmacy.</p>
-</div>
+<footer>
+    <div>Copyright © 2024 Zbigniew Stasieńko. All Rights Reserved</div>
+</footer>
 
 </body>
 </html>
