@@ -14,10 +14,15 @@
         padding: 10px;
     }
 
+    nav {
+        max-width: 1200px;
+        margin: 0 auto;
+    }
+
     nav ul {
         list-style: none;
         display: flex;
-        justify-content: center;
+        justify-content: flex-end;
         align-items: center;
         margin: 0;
         padding: 0;
@@ -44,7 +49,6 @@
     }
 
     .search-container {
-        /* Removed the background color */
         padding: 20px;
         border-radius: 10px;
         width: 70%;
@@ -146,19 +150,13 @@
   <nav>
     <ul>
       <li>
-        <div class="container">
-          <a th:href="@{/reservation/showCart}">Show Cart</a>
-        </div>
+        <a th:href="@{/reservation/showCart}">Show Cart</a>
       </li>
-      <li>
-        <div class="container" th:if="${isUser}">
-          <a th:href="@{/userProfile}">Manage Profile</a>
-        </div>
+      <li th:if="${isUser}">
+        <a th:href="@{/userProfile}">Manage Profile</a>
       </li>
-      <li>
-        <div class="container" th:if="${!isUser}">
-          <a href="/oauth2/authorization/secureauthn?idp=users">Login</a>
-        </div>
+      <li th:if="${!isUser}">
+        <a href="/oauth2/authorization/secureauthn?idp=users">Login</a>
       </li>
     </ul>
   </nav>
