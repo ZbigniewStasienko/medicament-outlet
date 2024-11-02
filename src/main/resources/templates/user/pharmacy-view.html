@@ -1,48 +1,239 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Pharmacy Products</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f6f7f8;
+            color: #333;
+            margin: 0;
+            padding: 0;
+        }
+
+        header {
+            background-color: #0d1f33;
+            padding: 5px 0;
+            margin: 0;
+        }
+
+        .header {
+            padding: 0;
+            margin: 0;
+        }
+
+        .header img {
+            width: 80px;
+            height: auto;
+            display: block;
+            margin: 0 auto;
+        }
+
+        nav {
+            margin: 0;
+            padding: 0;
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+            margin: 0;
+            padding: 0;
+        }
+
+        nav ul li {
+            margin: 0 10px;
+            padding: 0;
+        }
+
+        nav ul li a {
+            color: white;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 14px;
+            line-height: 1;
+            margin: 0;
+            padding: 0;
+        }
+
+        nav ul li a:hover {
+            color: #bddfff;
+        }
+
+        .container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .pharmacy-info {
+            text-align: center;
+            margin: 20px auto;
+        }
+
+        .pharmacy-info img {
+            max-width: 200px;
+            height: auto;
+        }
+
+        .search-container {
+            padding: 20px;
+            border-radius: 10px;
+            width: 70%;
+            max-width: 600px;
+            margin: 20px auto;
+        }
+
+        .search-container form {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .search-input {
+            width: 60%;
+            padding: 8px;
+            margin-right: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        .search-button {
+            background-color: #0d1f33;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        .search-button:hover {
+            background-color: #0b1a2b;
+        }
+
+        .button-center {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+
+        .button-center form {
+            margin: 0 10px;
+        }
+
+        button {
+            background-color: #0d1f33;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        button:hover {
+            background-color: #0b1a2b;
+        }
+
+        table {
+            width: 90%;
+            margin: 0 auto 40px auto;
+            border-collapse: collapse;
+            background-color: #fff;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        table th, table td {
+            padding: 12px 15px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        table thead {
+            background-color: #06223b;
+        }
+
+        table thead th {
+            color: #fff;
+            text-transform: uppercase;
+            font-size: 14px;
+        }
+
+        table tbody tr:hover {
+            background-color: #e0effb;
+        }
+
+        .price-container s,
+        .price-container span {
+            display: block;
+        }
+
+        footer {
+            text-align: center;
+            font-size: 12px;
+            color: #626576;
+            margin: 80px auto 32px auto;
+        }
+    </style>
+</head>
 <body>
 
 <header>
+    <div class="header">
+        <a th:href="@{/}">
+            <img th:src="@{/images/logo.png}" alt="Medicament Outlet Logo">
+        </a>
+    </div>
+
     <nav>
         <ul>
             <li>
-                <div class="container">
-                    <a th:href="@{/reservation/showCart}">Show Cart</a>
-                </div>
+                <a th:href="@{/reservation/showCart}">Show Cart</a>
             </li>
-            <li>
-                <div class="container" th:if="${isUser}">
-                    <a th:href="@{/userProfile}">Manage profile</a>
-                </div>
+            <li th:if="${isUser}">
+                <a th:href="@{/userProfile}">Manage Profile</a>
             </li>
-            <li>
-                <div class="container" th:if="${!isUser}">
-                    <a href="/oauth2/authorization/secureauthn?idp=users">Login</a>
-                </div>
+            <li th:if="${!isUser}">
+                <a href="/oauth2/authorization/secureauthn?idp=users">Login</a>
             </li>
         </ul>
     </nav>
 </header>
 
-<h1 th:text="${pharmacy.name}">Pharmacy Name</h1>
-<p th:text="${pharmacy.address}">Pharmacy Address</p>
-<img th:src="@{'/pictures/' + ${pharmacy.picture.id}}" alt="Pharmacy Picture" width="200" height="200"/>
+<div class="pharmacy-info">
+    <h1 th:text="${pharmacy.name}">Pharmacy Name</h1>
+    <p th:text="${pharmacy.address}">Pharmacy Address</p>
+    <p th:text="${pharmacy.openingHours}">Opening Hours</p>
+    <p th:text="${pharmacy.email}">Opening Hours</p>
+    <div th:if="${pharmacy.picture != null}">
+        <img th:src="@{'/pictures/' + ${pharmacy.picture.id}}" alt="Pharmacy Picture" width="200" height="200"/>
+    </div>
+    <div th:if="${pharmacy.picture == null}">
+        No pharmacy picture
+    </div>
+</div>
 
-<form th:action="@{/viewPharmacy}" method="get">
-    <input type="hidden" name="pharmacyId" th:value="${pharmacy.id}"/>
-    <input type="text" name="searchTerm" placeholder="Search products..." th:value="${searchTerm}"/>
-    <button type="submit">Search</button>
-</form>
+<div class="search-container">
+    <form th:action="@{/viewPharmacy}" method="get">
+        <input type="hidden" name="pharmacyId" th:value="${pharmacy.id}"/>
+        <input type="text" name="searchTerm" placeholder="Search products..." th:value="${searchTerm}" class="search-input"/>
+        <button type="submit" class="search-button">Search</button>
+    </form>
+</div>
 
-<form th:action="@{/viewPharmacy}" method="get">
-    <input type="hidden" name="pharmacyId" th:value="${pharmacy.id}"/>
-    <input type="hidden" name="searchTerm" th:value="${param.searchTerm}"/>
-    <input type="hidden" name="sortBy" value="price"/>
-    <button type="submit">Sort by price</button>
-</form>
+<div class="button-center">
+    <form th:action="@{/viewPharmacy}" method="get">
+        <input type="hidden" name="pharmacyId" th:value="${pharmacy.id}"/>
+        <input type="hidden" name="searchTerm" th:value="${param.searchTerm}"/>
+        <input type="hidden" name="sortBy" value="price"/>
+        <button type="submit">Sort by Price</button>
+    </form>
+</div>
 
-
-<table border="1">
+<table>
     <thead>
     <tr>
         <th>Name</th>
@@ -60,11 +251,15 @@
         <td th:text="${product.medicine.description}"></td>
         <td th:text="${product.medicine.size}"></td>
         <td th:text="${product.expirationDate != null ? product.expirationDate : 'N/A'}"></td>
-        <td th:text="${product.price}"></td>
+        <td>
+            <div class="price-container">
+                <s th:text="${product.basePrice} + '$'"></s>
+                <span th:text="${product.price} + '$'"></span>
+            </div>
+        </td>
         <td>
             <div th:if="${product.medicine.picture != null}">
-                <img th:src="@{'/pictures/' + ${product.medicine.picture.id}}" alt="Medicine Picture" width="100"
-                     height="100"/>
+                <img th:src="@{'/pictures/' + ${product.medicine.picture.id}}" alt="Medicine Picture" width="100" height="100"/>
             </div>
             <div th:if="${product.medicine.picture == null}">
                 No medicine picture
@@ -79,6 +274,10 @@
     </tr>
     </tbody>
 </table>
+
+<footer>
+    <div>Copyright © 2024 Zbigniew Stasieńko. All Rights Reserved</div>
+</footer>
 
 </body>
 </html>
