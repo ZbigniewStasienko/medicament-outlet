@@ -1,25 +1,166 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-  <title>Add Medicine</title>
+  <meta charset="UTF-8">
+  <title>Add New Medicine</title>
+  <style>
+    body {
+        font-family: Arial, sans-serif;
+        background-color: #f6f7f8;
+        color: #333;
+        margin: 0;
+        padding: 0;
+    }
+
+    header {
+        background-color: #0d1f33;
+        padding: 5px 0;
+        margin: 0;
+    }
+
+    .header {
+        padding: 0;
+        margin: 0;
+    }
+
+    .header img {
+        width: 80px;
+        height: auto;
+        display: block;
+        margin: 0 auto;
+    }
+
+    nav {
+        margin: 0;
+        padding: 0;
+    }
+
+    nav ul {
+        list-style: none;
+        display: flex;
+        justify-content: flex-end;
+        align-items: center;
+        margin: 0;
+        padding: 0;
+    }
+
+    nav ul li {
+        margin: 0 10px;
+        padding: 0;
+    }
+
+    nav ul li a {
+        color: white;
+        text-decoration: none;
+        font-weight: bold;
+        font-size: 14px;
+        line-height: 1;
+        margin: 0;
+        padding: 0;
+    }
+
+    nav ul li a:hover {
+        color: #bddfff;
+    }
+
+    .container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding: 40px 20px;
+    }
+
+    h1 {
+        text-align: center;
+        margin: 20px auto;
+        color: #0d1f33;
+    }
+
+    form {
+        background-color: #fff;
+        padding: 30px;
+        border-radius: 8px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        width: 100%;
+        max-width: 500px;
+    }
+
+    label {
+        display: block;
+        margin-bottom: 8px;
+        font-weight: bold;
+        color: #0d1f33;
+    }
+
+    input[type="text"],
+    input[type="file"] {
+        width: 100%;
+        padding: 10px;
+        margin-bottom: 20px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        box-sizing: border-box;
+        font-size: 14px;
+    }
+
+    button {
+        background-color: #0d1f33;
+        color: white;
+        padding: 10px 20px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        font-size: 16px;
+        transition: background-color 0.3s ease;
+        width: 100%;
+    }
+
+    button:hover {
+        background-color: #0b1a2b;
+    }
+
+    footer {
+        text-align: center;
+        font-size: 12px;
+        color: #626576;
+        margin: 40px auto 32px auto;
+        width: 100%;
+    }
+  </style>
 </head>
 <body>
-<h1>Add New Medicine</h1>
 
-<form th:action="@{/pharmacy/addMedicine(pharmacyId=${pharmacyId})}" method="post" enctype="multipart/form-data">
-  <label for="name">Medicine Name:</label>
-  <input type="text" id="name" name="name" required/><br/>
+<header>
+  <div class="header">
+    <a th:href="@{/pharmacy}">
+      <img th:src="@{/images/logo.png}" alt="Medicament Outlet Logo">
+    </a>
+  </div>
+</header>
 
-  <label for="description">Description:</label>
-  <input type="text" id="description" name="description"/><br/>
+<div class="container">
+  <h1>Add New Medicine</h1>
 
-  <label for="size">Size:</label>
-  <input type="text" id="size" name="size"/><br/>
+  <form th:action="@{/pharmacy/addMedicine(pharmacyId=${pharmacyId})}" method="post" enctype="multipart/form-data">
+    <label for="name">Medicine Name:</label>
+    <input type="text" id="name" name="name" required/>
 
-  <input type="file" name="file" accept="image/*" required><br/>
+    <label for="description">Description:</label>
+    <input type="text" id="description" name="description"/>
 
-  <button type="submit">Save Medicine</button>
-</form>
+    <label for="size">Size:</label>
+    <input type="text" id="size" name="size"/>
+
+    <label for="file">Medicine Image:</label>
+    <input type="file" id="file" name="file" accept="image/*" required/>
+
+    <button type="submit">Save Medicine</button>
+  </form>
+</div>
+
+<footer>
+  <div>Copyright © 2024 Zbigniew Stasieńko. All Rights Reserved</div>
+</footer>
 
 </body>
 </html>
