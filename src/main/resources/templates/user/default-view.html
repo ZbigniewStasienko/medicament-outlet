@@ -156,6 +156,11 @@
         background-color: #e0effb;
     }
 
+    .price-container s,
+    .price-container span {
+        display: block;
+    }
+
     footer {
         text-align: center;
         font-size: 12px;
@@ -234,8 +239,10 @@
     <td th:text="${product.medicine.size}"></td>
     <td th:text="${product.expirationDate != null ? product.expirationDate : 'N/A'}"></td>
     <td>
-      <s th:text="${product.basePrice} + '$'"></s>
-      <span th:text="${product.price} + '$'"></span>
+      <div class="price-container">
+        <s th:text="${product.basePrice} + '$'"></s>
+        <span th:text="${product.price} + '$'"></span>
+      </div>
     </td>
     <td>
       <div th:if="${product.medicine.picture != null}">
