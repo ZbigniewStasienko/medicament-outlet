@@ -1,12 +1,130 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Purchase Successful</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f6f7f8;
+            color: #333;
+            margin: 0;
+            padding: 0;
+        }
+
+        header {
+            background-color: #0d1f33;
+            padding: 5px 0;
+            margin: 0;
+        }
+
+        .header {
+            padding: 0;
+            margin: 0;
+        }
+
+        .header img {
+            width: 80px;
+            height: auto;
+            display: block;
+            margin: 0 auto;
+        }
+
+        nav {
+            margin: 0;
+            padding: 0;
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+            margin: 0;
+            padding: 0;
+        }
+
+        nav ul li {
+            margin: 0 10px;
+            padding: 0;
+        }
+
+        nav ul li a {
+            color: white;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 14px;
+            line-height: 1;
+            margin: 0;
+            padding: 0;
+        }
+
+        nav ul li a:hover {
+            color: #bddfff;
+        }
+
+        .container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 40px 20px;
+        }
+
+        h1 {
+            text-align: center;
+            margin: 20px auto;
+            color: #0d1f33;
+        }
+
+        p {
+            font-size: 18px;
+            margin: 10px 0 20px 0;
+            text-align: center;
+        }
+
+        a.button {
+            background-color: #0d1f33;
+            color: white;
+            padding: 10px 20px;
+            text-decoration: none;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s ease;
+        }
+
+        a.button:hover {
+            background-color: #0b1a2b;
+        }
+
+        footer {
+            text-align: center;
+            font-size: 12px;
+            color: #626576;
+            margin: 80px auto 32px auto;
+        }
+    </style>
 </head>
 <body>
-<h1>Successfully purchased</h1>
-<p>You have purchased products from <span th:text="${numberOfPharmacies}"></span> pharmacy(ies).</p>
-<a th:href="@{/}">Return to Main Page</a>
+
+<header>
+    <div class="header">
+        <a th:href="@{/}">
+            <img th:src="@{/images/logo.png}" alt="Medicament Outlet Logo">
+        </a>
+    </div>
+</header>
+
+<div class="container">
+    <h1>Successfully Reserved</h1>
+    <p>You have reserved products from <span th:text="${numberOfPharmacies}"></span> pharmacy(ies).</p>
+    <a th:href="@{/}" class="button">Return to Main Page</a>
+</div>
+
+<footer>
+    <div>Copyright © 2024 Zbigniew Stasieńko. All Rights Reserved</div>
+</footer>
+
 </body>
 </html>
