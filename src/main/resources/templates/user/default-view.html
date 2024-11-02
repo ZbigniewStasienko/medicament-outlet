@@ -1,5 +1,145 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <title>Product List</title>
+  <style>
+    body {
+        font-family: Arial, sans-serif;
+        background-color: #f6f7f8;
+        color: #333;
+    }
+
+    header {
+        background-color: #0d1f33;
+        padding: 10px;
+    }
+
+    nav ul {
+        list-style: none;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin: 0;
+        padding: 0;
+    }
+
+    nav ul li {
+        margin: 0 20px;
+    }
+
+    nav ul li a {
+        color: white;
+        text-decoration: none;
+        font-weight: bold;
+    }
+
+    nav ul li a:hover {
+        color: #bddfff;
+    }
+
+    .container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .search-container {
+        /* Removed the background color */
+        padding: 20px;
+        border-radius: 10px;
+        width: 70%;
+        max-width: 600px;
+        margin: 20px auto;
+    }
+
+    .search-container form {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .search-input {
+        width: 60%;
+        padding: 8px;
+        margin-right: 10px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+    }
+
+    .search-button {
+        background-color: #0d1f33;
+        color: white;
+        padding: 10px 20px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        font-size: 16px;
+    }
+
+    .search-button:hover {
+        background-color: #0b1a2b;
+    }
+
+    .button-center {
+        display: flex;
+        justify-content: center;
+        margin-bottom: 20px;
+    }
+
+    .button-center form {
+        margin: 0 10px;
+    }
+
+    button {
+        background-color: #0d1f33;
+        color: white;
+        padding: 10px 20px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        font-size: 16px;
+    }
+
+    button:hover {
+        background-color: #0b1a2b;
+    }
+
+    table {
+        width: 90%;
+        margin: 0 auto 40px auto;
+        border-collapse: collapse;
+        background-color: #fff;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    table th, table td {
+        padding: 12px 15px;
+        text-align: left;
+        border-bottom: 1px solid #ddd;
+    }
+
+    table thead {
+        background-color: #06223b;
+    }
+
+    table thead th {
+        color: #fff;
+        text-transform: uppercase;
+        font-size: 14px;
+    }
+
+    table tbody tr:hover {
+        background-color: #e0effb;
+    }
+
+    footer {
+        text-align: center;
+        font-size: 12px;
+        color: #626576;
+        margin: 80px auto 32px auto;
+    }
+  </style>
+</head>
 <body>
 
 <header>
@@ -12,7 +152,7 @@
       </li>
       <li>
         <div class="container" th:if="${isUser}">
-          <a th:href="@{/userProfile}">Manage profile</a>
+          <a th:href="@{/userProfile}">Manage Profile</a>
         </div>
       </li>
       <li>
@@ -24,27 +164,30 @@
   </nav>
 </header>
 
-<form th:action="@{/}" method="get">
-  <input type="text" name="searchTerm" placeholder="Search products..." th:value="${searchTerm}" />
-  <button type="submit">Search</button>
-</form>
+<div class="search-container">
+  <form th:action="@{/}" method="get">
+    <input type="text" name="searchTerm" placeholder="Search products..." th:value="${searchTerm}" class="search-input" />
+    <button type="submit" class="search-button">Search</button>
+  </form>
+</div>
 
+<div class="button-center">
+  <form th:action="@{/}" method="get">
+    <input type="hidden" name="searchTerm" th:value="${param.searchTerm}" />
+    <input type="hidden" name="sortBy" value="price" />
+    <button type="submit">Sort by Price</button>
+  </form>
 
-<form th:action="@{/}" method="get">
-  <input type="hidden" name="searchTerm" th:value="${param.searchTerm}" />
-  <input type="hidden" name="sortBy" value="price" />
-  <button type="submit">Sort by price</button>
-</form>
+  <form id="locationForm" th:action="@{/}" method="get">
+    <input type="hidden" id="latitude" name="latitude" />
+    <input type="hidden" id="longitude" name="longitude" />
+    <input type="hidden" name="sortBy" value="location" />
+    <input type="hidden" name="searchTerm" th:value="${param.searchTerm}" />
+    <button type="button" onclick="getUserLocation()">Sort by Location</button>
+  </form>
+</div>
 
-<form id="locationForm" th:action="@{/}" method="get">
-  <input type="hidden" id="latitude" name="latitude" />
-  <input type="hidden" id="longitude" name="longitude" />
-  <input type="hidden" name="sortBy" value="location" />
-  <input type="hidden" name="searchTerm" th:value="${param.searchTerm}" />
-  <button type="button" onclick="getUserLocation()">Sort by Location</button>
-</form>
-
-<table border="1">
+<table>
   <thead>
   <tr>
     <th>Name</th>
@@ -72,7 +215,7 @@
     </td>
     <td>
       <div th:if="${product.medicine.picture != null}">
-        <img th:src="@{'/pictures/' + ${product.medicine.picture.id}}" alt="Medicine Picture" width="100" height="100"/>
+        <img th:src="@{'/pictures/' + ${product.medicine.picture.id}}" alt="Medicine Picture" width="100" height="100" />
       </div>
       <div th:if="${product.medicine.picture == null}">
         No medicine picture
@@ -84,7 +227,7 @@
     <td th:text="${product.medicine.pharmacy.address}"></td>
     <td>
       <div th:if="${product.medicine.pharmacy.picture != null}">
-        <img th:src="@{'/pictures/' + ${product.medicine.pharmacy.picture.id}}" alt="Pharmacy Picture" width="100" height="100"/>
+        <img th:src="@{'/pictures/' + ${product.medicine.pharmacy.picture.id}}" alt="Pharmacy Picture" width="100" height="100" />
       </div>
       <div th:if="${product.medicine.pharmacy.picture == null}">
         No pharmacy picture
@@ -103,17 +246,21 @@
   </tbody>
 </table>
 
+<footer>
+  &copy; 2024 Your Company. All rights reserved.
+</footer>
+
 <script>
   function getUserLocation() {
-    if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(position => {
-        document.getElementById("latitude").value = position.coords.latitude;
-        document.getElementById("longitude").value = position.coords.longitude;
-        document.getElementById("locationForm").submit();
-      });
-    } else {
-      console.log("Geolocation is not supported by this browser.");
-    }
+      if (navigator.geolocation) {
+          navigator.geolocation.getCurrentPosition(position => {
+              document.getElementById("latitude").value = position.coords.latitude;
+              document.getElementById("longitude").value = position.coords.longitude;
+              document.getElementById("locationForm").submit();
+          });
+      } else {
+          console.log("Geolocation is not supported by this browser.");
+      }
   }
 </script>
 
