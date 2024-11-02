@@ -53,6 +53,16 @@
             align-items: center;
             padding: 20px;
         }
+        .header {
+            display: flex;
+            justify-content: center;
+            padding: 20px;
+            background-color: #0075e2;
+        }
+        .header img {
+            width: 150px;
+            height: auto;
+        }
         .search-container {
             background-color: #e0effb;
             padding: 20px;
@@ -99,6 +109,11 @@
 </head>
 <body>
 <div class="container">
+    <div class="header">
+        <a th:href="@{/pharmacy}">
+            <img th:src="@{/images/logo.png}" alt="Medicament Outlet Logo">
+        </a>
+    </div>
     <h1>Add Product</h1>
 
     <div class="search-container">
