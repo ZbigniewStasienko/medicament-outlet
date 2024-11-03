@@ -175,6 +175,7 @@
     <h1 th:text="${pharmacy.name}">Pharmacy Name</h1>
     <p th:text="${pharmacy.address}">Pharmacy Address</p>
     <p>Phone: <span th:text="${pharmacy.phoneNumber}"></span></p>
+    <p th:text="${pharmacy.openingHours}">Opening Hours</p>
 
     <div th:if="${pharmacy.picture != null}">
         <img th:src="@{'/pictures/' + ${pharmacy.picture.id}}" alt="Pharmacy Picture" width="200" height="200"/>

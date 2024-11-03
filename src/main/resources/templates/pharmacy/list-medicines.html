@@ -159,6 +159,7 @@
         <thead>
         <tr>
             <th>Medicine Name</th>
+            <th>Picture</th>
             <th>Description</th>
             <th>Size</th>
             <th>Actions</th>
@@ -167,6 +168,12 @@
         <tbody>
         <tr th:each="medicine : ${medicines}">
             <td th:text="${medicine.name}"></td>
+            <td th:if="${medicine.picture != null}">
+                <img th:src="@{'/pictures/' + ${medicine.picture.id}}" alt="Medicine Picture" width="100" height="100"/>
+            </td>
+            <td th:if="${medicine.picture == null}">
+                No medicine picture
+            </td>
             <td th:text="${medicine.description}"></td>
             <td th:text="${medicine.size}"></td>
             <td class="action-links">

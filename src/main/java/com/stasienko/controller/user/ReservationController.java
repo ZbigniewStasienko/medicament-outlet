@@ -78,7 +78,7 @@ public class ReservationController {
         if (!AuthorizationService.isUser(principal)) {
             List<Product> productsInCart = (List<Product>) session.getAttribute("inCart");
             model.addAttribute("productsInCart", productsInCart);
-            model.addAttribute("error", "To purchase products you have to be logged in!");
+            model.addAttribute("error", "To reserve products you have to be logged in!");
             model.addAttribute("isUser", false);
             return "user/cart";
         }
