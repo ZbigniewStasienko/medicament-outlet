@@ -42,16 +42,19 @@ public class AdminController {
     }
 
     @PostMapping("/new")
-    public String addPharmacy(@ModelAttribute("pharmacy") Pharmacy pharmacy, @RequestParam("file") MultipartFile file) throws IOException {
+    public String addPharmacy(@ModelAttribute("pharmacy") Pharmacy pharmacy,
+                              @RequestParam("file") MultipartFile file,
+                              @RequestParam("pharmacyId") String idString) throws IOException {
         if (!file.isEmpty()) {
             Picture savedPicture = pictureService.addPicture(file);
             pharmacy.setPicture(savedPicture);
         }
+        pharmacy.setId(idString);
         pharmacyService.addPharmacy(pharmacy);
         return "redirect:/admin";
     }
 
-    @GetMapping("/delete/{id}")
+    @PostMapping("/delete/{id}")
     public String deletePharmacy(@PathVariable("id") UUID id) {
         pharmacyService.deletePharmacy(id);
         return "redirect:/admin";
