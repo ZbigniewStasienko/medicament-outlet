@@ -4,6 +4,7 @@ import com.stasienko.model.*;
 import com.stasienko.security.AuthorizationService;
 import com.stasienko.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Controller;
@@ -22,6 +23,9 @@ import java.util.UUID;
 @Controller
 @RequestMapping("/")
 public class UserController {
+
+    @Value("${PROFILE_LINK}")
+    private String profileLink;
 
     @Autowired
     UserService userService;
@@ -93,6 +97,7 @@ public class UserController {
             List<Product> productsReservation = productService.getProductsForReservation(reservedProducts);
             products.put(reservation.getId(), productsReservation);
         }
+        model.addAttribute("profileLink", profileLink);
         model.addAttribute("name", userName);
         model.addAttribute("dateToCompare", LocalDate.now().plusDays(2));
         model.addAttribute("reservations", reservations);
