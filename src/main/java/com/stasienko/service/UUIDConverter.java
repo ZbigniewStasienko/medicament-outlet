@@ -8,11 +8,15 @@ public class UUIDConverter {
 
     public static UUID convertToUUID(OAuth2User principal) {
         String inputId = principal.getAttribute("user_id");
+        assert inputId != null;
+        return convertStringToUUID(inputId);
+    }
+
+    public static UUID convertStringToUUID(String inputId) {
         String cleanedUUIDString = inputId.replaceAll("-", "");
 
         if (cleanedUUIDString.length() != 32) {
             System.out.println("Invalid UUID length: " + inputId);
-
             return null;
         }
 

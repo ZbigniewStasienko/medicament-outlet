@@ -1,5 +1,6 @@
 package com.stasienko.model;
 
+import com.stasienko.service.UUIDConverter;
 import jakarta.persistence.*;
 import java.util.UUID;
 
@@ -44,6 +45,9 @@ public class Pharmacy implements java.io.Serializable {
 
     public void setId(UUID id) {
         this.id = id;
+    }
+    public void setId(String id) {
+        this.id = UUIDConverter.convertStringToUUID(id);
     }
 
     public Picture getPicture() {

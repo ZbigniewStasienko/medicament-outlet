@@ -2,17 +2,169 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <title>Pharmacy List</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f6f7f8;
+            color: #333;
+            margin: 0;
+            padding: 0;
+        }
+
+        header {
+            background-color: #0d1f33;
+            padding: 5px 0;
+            margin: 0;
+        }
+
+        .header {
+            padding: 0;
+            margin: 0;
+        }
+
+        .header img {
+            width: 80px;
+            height: auto;
+            display: block;
+            margin: 0 auto;
+        }
+
+        nav {
+            margin: 0;
+            padding: 0;
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+            margin: 0;
+            padding: 0;
+        }
+
+        nav ul li {
+            margin: 0 10px;
+            padding: 0;
+        }
+
+        nav ul li a {
+            color: white;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 14px;
+            line-height: 1;
+            margin: 0;
+            padding: 0;
+        }
+
+        nav ul li a:hover {
+            color: #bddfff;
+        }
+
+        .container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 40px 20px;
+        }
+
+        h1 {
+            text-align: center;
+            margin: 20px auto;
+            color: #0d1f33;
+        }
+
+        p {
+            font-size: 16px;
+        }
+
+        a {
+            color: #0d1f33;
+            text-decoration: none;
+        }
+
+        a:hover {
+            color: #0b1a2b;
+        }
+
+        button, .add-button {
+            background-color: #0d1f33;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            margin: 10px;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        button:hover, .add-button:hover {
+            background-color: #0b1a2b;
+            color: white;
+        }
+
+        .add-button:hover {
+            color: white !important;
+        }
+
+        table {
+            width: 90%;
+            margin: 20px auto;
+            border-collapse: collapse;
+            background-color: #fff;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        table th, table td {
+            padding: 12px 15px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        table thead {
+            background-color: #06223b;
+        }
+
+        table thead th {
+            color: #fff;
+            text-transform: uppercase;
+            font-size: 14px;
+        }
+
+        table tbody tr:hover {
+            background-color: #e0effb;
+        }
+
+        footer {
+            text-align: center;
+            font-size: 12px;
+            color: #626576;
+            margin: 80px auto 32px auto;
+            width: 100%;
+        }
+    </style>
 </head>
 <body>
-<h1>Pharmacy List</h1>
+
+<header>
+    <div class="header">
+        <a th:href="@{/admin}">
+            <img th:src="@{/images/logo.png}" alt="Medicament Outlet Logo">
+        </a>
+    </div>
+</header>
 
 <div class="container" th:if="${!isSuperAdmin}">
     <p>Please <a href="/oauth2/authorization/secureauthn?idp=pharmacies">login</a> to see admin panel</p>
 </div>
 
 <div class="container" th:if="${isSuperAdmin}">
-    <a href="/admin/new">Add New Pharmacy</a>
-    <table border="1" class="table">
+    <h1>Pharmacy List</h1>
+    <a href="/admin/new" class="add-button">Add New Pharmacy</a>
+    <table>
         <thead>
         <tr>
             <th>Name</th>
@@ -32,19 +184,28 @@
             <td th:text="${pharmacy.email}"></td>
             <td th:text="${pharmacy.openingHours}"></td>
 
-            <td th:if="${pharmacy.picture != null}">
-                <img th:src="@{'/pictures/' + ${pharmacy.picture.id}}" alt="Pharmacy Picture" width="100" height="100"/>
-            </td>
-            <td th:if="${pharmacy.picture == null}">
-                No picture
+            <td>
+                <div th:if="${pharmacy.picture != null}">
+                    <img th:src="@{'/pictures/' + ${pharmacy.picture.id}}" alt="Pharmacy Picture" width="100" height="100"/>
+                </div>
+                <div th:if="${pharmacy.picture == null}">
+                    No picture
+                </div>
             </td>
 
             <td>
-                <a th:href="@{/admin/delete/{id}(id=${pharmacy.id})}">Delete</a>
+                <form th:action="@{/admin/delete/{id}(id=${pharmacy.id})}" method="post" style="display: inline;" onsubmit="return confirm('Are you sure you want to delete this pharmacy?');">
+                    <button type="submit">Delete</button>
+                </form>
             </td>
         </tr>
         </tbody>
     </table>
 </div>
+
+<footer>
+    <div>Copyright © 2024 Zbigniew Stasieńko. All Rights Reserved</div>
+</footer>
+
 </body>
 </html>
