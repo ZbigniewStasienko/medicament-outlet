@@ -3,16 +3,168 @@
 <head>
     <title>Pharmacy Products</title>
     <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f6f7f8;
+            color: #333;
+            margin: 0;
+            padding: 0;
+        }
+
+        header {
+            background-color: #0d1f33;
+            padding: 5px 0;
+            margin: 0;
+        }
+
+        .header {
+            padding: 0;
+            margin: 0;
+        }
+
+        .header img {
+            width: 80px;
+            height: auto;
+            display: block;
+            margin: 0 auto;
+        }
+
+        nav {
+            margin: 0;
+            padding: 0;
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+            margin: 0;
+            padding: 0;
+        }
+
+        nav ul li {
+            margin: 0 10px;
+            padding: 0;
+        }
+
+        nav ul li a {
+            color: white;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 14px;
+            line-height: 1;
+            margin: 0;
+            padding: 0;
+        }
+
+        nav ul li a:hover {
+            color: #bddfff;
+        }
+
+        .container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+        }
+
+        h1, h2 {
+            color: #0d1f33;
+        }
+
+        p {
+            font-size: 16px;
+        }
+
+        a {
+            color: #0d1f33;
+            text-decoration: none;
+        }
+
+        a:hover {
+            color: #0b1a2b;
+        }
+
+        button {
+            background-color: #0d1f33;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            margin: 5px;
+        }
+
+        button:hover {
+            background-color: #0b1a2b;
+        }
+
+        table {
+            width: 90%;
+            margin: 20px auto;
+            border-collapse: collapse;
+            background-color: #fff;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        table th, table td {
+            padding: 12px 15px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        table thead {
+            background-color: #06223b;
+        }
+
+        table thead th {
+            color: #fff;
+            text-transform: uppercase;
+            font-size: 14px;
+        }
+
+        table tbody tr:hover {
+            background-color: #e0effb;
+        }
+
         .pending-reservations {
             margin-left: 10px;
             font-weight: bold;
         }
+
         .pending-reservations.red {
             color: red;
+        }
+
+        .red {
+            color: red;
+        }
+
+        .button-center {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+
+        footer {
+            text-align: center;
+            font-size: 12px;
+            color: #626576;
+            margin: 80px auto 32px auto;
         }
     </style>
 </head>
 <body>
+
+<header>
+    <div class="header">
+        <a th:href="@{/pharmacy}">
+            <img th:src="@{/images/logo.png}" alt="Medicament Outlet Logo">
+        </a>
+    </div>
+</header>
 
 <div class="container" th:if="${!isPharmacy}">
     <p>Please <a href="/oauth2/authorization/secureauthn?idp=pharmacies">login</a> to see pharmacy panel</p>
@@ -22,16 +174,22 @@
 
     <h1 th:text="${pharmacy.name}">Pharmacy Name</h1>
     <p th:text="${pharmacy.address}">Pharmacy Address</p>
-    <p th:text="${pharmacy.phoneNumber}">Phone: </p>
-    <img th:src="@{'/pictures/' + ${pharmacy.picture.id}}" alt="Pharmacy Picture" width="200" height="200"/>
-    <a th:href="@{/pharmacy/listMedicines(pharmacyId=${pharmacy.id})}">
-        <button>Modify Medicines</button>
-    </a>
-    <a th:href="@{/pharmacy/edit(pharmacyId=${pharmacy.id})}">
-        <button>Modify Pharmacy</button>
-    </a>
+    <p>Phone: <span th:text="${pharmacy.phoneNumber}"></span></p>
 
-    <div style="display: inline-block; margin-left: 10px;">
+    <div th:if="${pharmacy.picture != null}">
+        <img th:src="@{'/pictures/' + ${pharmacy.picture.id}}" alt="Pharmacy Picture" width="200" height="200"/>
+    </div>
+    <div th:if="${pharmacy.picture == null}">
+        No pharmacy picture
+    </div>
+
+    <div class="button-center">
+        <a th:href="@{/pharmacy/listMedicines(pharmacyId=${pharmacy.id})}">
+            <button>Modify Medicines</button>
+        </a>
+        <a th:href="@{/pharmacy/edit(pharmacyId=${pharmacy.id})}">
+            <button>Modify Pharmacy</button>
+        </a>
         <a th:href="@{/pharmacy/listReservations(pharmacyId=${pharmacy.id})}">
             <button>Show Reservations</button>
         </a>
@@ -41,8 +199,13 @@
     </div>
 
     <h2>Products</h2>
-    <a th:href="@{/pharmacy/addProduct}">Add Product</a>
-    <table border="1">
+    <div class="button-center">
+        <a th:href="@{/pharmacy/addProduct}">
+            <button>Add Product</button>
+        </a>
+    </div>
+
+    <table>
         <thead>
         <tr>
             <th>Name</th>
@@ -50,7 +213,7 @@
             <th>Size</th>
             <th>Expiration Date</th>
             <th>Price</th>
-            <th>IsReserved</th>
+            <th>Is Reserved</th>
             <th>Picture</th>
             <th>Actions</th>
         </tr>
@@ -58,7 +221,6 @@
         <tbody>
         <tr th:each="product : ${products}">
             <td th:text="${product.medicine.name}"
-                class="pending-reservations"
                 th:classappend="${product.expirationDate != null and product.expirationDate.isBefore(todaysDate) ? ' red' : ''}">
             </td>
             <td th:text="${product.medicine.description}"></td>
@@ -66,23 +228,31 @@
             <td th:text="${product.expirationDate != null ? product.expirationDate : 'N/A'}"></td>
             <td th:text="${product.price}"></td>
             <td th:text="${product.isReserved}"></td>
-            <td th:if="${product.medicine.picture != null}">
-                <img th:src="@{'/pictures/' + ${product.medicine.picture.id}}" alt="Medicine Picture" width="100"
-                     height="100"/>
-            </td>
-            <td th:if="${product.medicine.picture == null}">
-                No medicine picture
+            <td>
+                <div th:if="${product.medicine.picture != null}">
+                    <img th:src="@{'/pictures/' + ${product.medicine.picture.id}}" alt="Medicine Picture" width="100" height="100"/>
+                </div>
+                <div th:if="${product.medicine.picture == null}">
+                    No medicine picture
+                </div>
             </td>
             <td>
-                <a th:href="@{/pharmacy/editProduct/{productId}(productId=${product.id})}">Edit</a>
+                <a th:href="@{/pharmacy/editProduct/{productId}(productId=${product.id})}">
+                    <button>Edit</button>
+                </a>
                 <form th:action="@{/pharmacy/deleteProduct/{productId}(productId=${product.id})}" method="post"
-                      onsubmit="return confirm('Are you sure you want to delete this product?');">
-                    <button type="submit">Delete Product</button>
+                      onsubmit="return confirm('Are you sure you want to delete this product?');" style="display: inline;">
+                    <button type="submit">Delete</button>
                 </form>
             </td>
         </tr>
         </tbody>
     </table>
 </div>
+
+<footer>
+    <div>Copyright © 2024 Zbigniew Stasieńko. All Rights Reserved</div>
+</footer>
+
 </body>
 </html>
