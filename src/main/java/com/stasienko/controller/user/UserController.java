@@ -42,6 +42,9 @@ public class UserController {
     @Autowired
     PharmacyService pharmacyService;
 
+    @Autowired
+    RetrieveNameService retrieveNameService;
+
     @GetMapping()
     public String getProducts(Model model,
                               @AuthenticationPrincipal OAuth2User principal,
@@ -88,7 +91,7 @@ public class UserController {
 
     @GetMapping("userProfile")
     public String viewProfile(Model model, @AuthenticationPrincipal OAuth2User principal) {
-        String userName = principal.getName();
+        List<String> userNameAndAddress = retrieveNameService.retrieveNameAndMail();
         UUID userId = UUIDConverter.convertToUUID(principal);
         List<Reservation> reservations = reservationService.getReservationByUserId(userId);
         Map<UUID, List<Product>> products = new HashMap<>();
@@ -98,7 +101,8 @@ public class UserController {
             products.put(reservation.getId(), productsReservation);
         }
         model.addAttribute("profileLink", profileLink);
-        model.addAttribute("name", userName);
+        model.addAttribute("name", userNameAndAddress.get(0));
+        model.addAttribute("mailAddress", userNameAndAddress.get(1));
         model.addAttribute("dateToCompare", LocalDate.now().plusDays(2));
         model.addAttribute("reservations", reservations);
         model.addAttribute("products", products);
