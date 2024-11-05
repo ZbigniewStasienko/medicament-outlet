@@ -23,6 +23,9 @@ public class SecurityConfiguration {
     @Autowired
     private CustomAuthenticationSuccessHandler successHandler;
 
+    @Autowired
+    private CustomLogoutSuccessHandler customLogoutSuccessHandler;
+
     RequestCache requestCache = new HttpSessionRequestCache();
 
     @Bean
@@ -40,7 +43,12 @@ public class SecurityConfiguration {
                 )
                 .oauth2Login(req -> req.authorizationEndpoint(res -> res.authorizationRequestResolver(
                         new CustomAuthorizationRequestResolver(this.clientRegistrationRepository)))
-                        .successHandler(successHandler) );
+                        .successHandler(successHandler))
+                .logout(logout -> logout
+                        .logoutSuccessHandler(customLogoutSuccessHandler)
+                        .permitAll()
+                );
+                ;
         return http.build();
     }
 }
