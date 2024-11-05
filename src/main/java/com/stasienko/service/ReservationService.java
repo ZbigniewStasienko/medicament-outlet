@@ -48,6 +48,11 @@ public class ReservationService {
                 reservation.setStatus(0);
                 reservationRepository.save(reservation);
                 reservations.put(pharmacyId, reservation);
+                try{
+                    //emailService.sendMail("New Reservation","System registered new reservation");
+                } catch (Exception e) {
+                    throw new RuntimeException(e);
+                }
             }
             reservedProductService.saveReservedProduct(product, reservation);
         }
