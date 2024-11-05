@@ -160,6 +160,22 @@
             color: white;
         }
 
+        .nav-button {
+            background: none;
+            color: white;
+            border: none;
+            font-weight: bold;
+            font-size: 14px;
+            cursor: pointer;
+            text-decoration: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .nav-button:hover {
+            color: #bddfff;
+        }
+
     </style>
 </head>
 <body>
@@ -170,13 +186,23 @@
             <img th:src="@{/images/logo.png}" alt="Medicament Outlet Logo">
         </a>
     </div>
+    <nav>
+        <ul>
+            <li>
+                <form th:action="@{/logout}" method="post">
+                    <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+                    <button type="submit" class="nav-button">Logout</button>
+                </form>
+            </li>
+        </ul>
+    </nav>
 </header>
+
 
 <div class="container">
 
     <div class="welcome-section">
         <p class="welcome-message">Welcome <span th:text="${name}"></span></p>
-        <p class="welcome-message">Logged using: <span th:text="${mailAddress}"></span></p>
         <a class="manage-profile" th:href="${profileLink}">
             Manage Profile
         </a>

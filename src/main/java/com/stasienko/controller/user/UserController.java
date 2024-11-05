@@ -102,7 +102,6 @@ public class UserController {
         }
         model.addAttribute("profileLink", profileLink);
         model.addAttribute("name", userNameAndAddress.get(0));
-        model.addAttribute("mailAddress", userNameAndAddress.get(1));
         model.addAttribute("dateToCompare", LocalDate.now().plusDays(2));
         model.addAttribute("reservations", reservations);
         model.addAttribute("products", products);
