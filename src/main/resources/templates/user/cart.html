@@ -237,7 +237,7 @@
 </div>
 
 <div class="button-center">
-    <form th:action="@{/reservation/purchase}" method="post">
+    <form th:action="@{/reservation/purchase}" method="post" onsubmit="return confirm('Are you sure you want to reserve these items?');">
         <button type="submit">Reserve</button>
     </form>
     <form th:action="@{/reservation/deleteProducts}" method="post">
