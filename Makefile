@@ -3,7 +3,7 @@ prepare:
 	bash wait.sh
 
 run:
-	./mvnw clean package -DskipTests && \
+	./mvnw clean package && \
     docker build -t medicament-outlet . && \
     docker run --env-file .env --rm -p 8080:8080 --network=medicament-outlet_system --name app medicament-outlet
 
